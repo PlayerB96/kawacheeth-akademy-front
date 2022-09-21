@@ -9,26 +9,34 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { DashComponent } from './dash/dash.component';
-import { TableEntregasComponent } from './table-entregas/table-entregas.component';
 import { TableCargasComponent } from './table-cargas/table-cargas.component';
 import { BodyComponent } from './body/body.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { TablePruebaComponent } from './table-prueba/table-prueba.component';
+import { DataTableComponent } from './data-table/data-table.component';
+// DATATABLE
+import { DataTablesModule } from "angular-datatables";
 
 @NgModule({
   declarations: [
     AppComponent,
     SidenavComponent,
     DashComponent,
-    TableEntregasComponent,
     TableCargasComponent,
-    BodyComponent
+    BodyComponent,
+    NavbarComponent,
+    TablePruebaComponent,
+    DataTableComponent
   ],
   imports: [
     BrowserModule,
+    DataTablesModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]
