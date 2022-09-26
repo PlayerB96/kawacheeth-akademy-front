@@ -8,25 +8,27 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { DashComponent } from './dash/dash.component';
-import { TableCargasComponent } from './table-cargas/table-cargas.component';
 import { BodyComponent } from './body/body.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { TablePruebaComponent } from './table-prueba/table-prueba.component';
 import { DataTableComponent } from './data-table/data-table.component';
 // DATATABLE
 import { DataTablesModule } from "angular-datatables";
+//HHTTP
+import { HttpClientModule } from "@angular/common/http";
+import { LoginComponent } from './login/login.component';
+//FORMS
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
     SidenavComponent,
-    DashComponent,
-    TableCargasComponent,
     BodyComponent,
     NavbarComponent,
-    TablePruebaComponent,
-    DataTableComponent
+    DataTableComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -36,6 +38,10 @@ import { DataTablesModule } from "angular-datatables";
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule
+
 
   ],
   providers: [],

@@ -1,1 +1,24 @@
-  <table datatable [dtOptions]="dtOptions" class="row-border hover"></table>
+<div class="mat-elevation-z8 p-4">
+      <h2 class="text-danger title" >EVENTO</h2>
+          <table class="full-width-table" *ngIf="alerts.length" datatable [dtOptions]="dtOptions" >
+              <thead >
+              <tr>
+                  <th>Id</th>
+                  <th>Descripcion</th>
+                  <th>Estado</th>
+                  <th>Evento</th>
+                  <th>Placa</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let alert of alerts">
+                  <td>{{alert.id}}</td>
+                  <td>{{alert.descripcion}}</td>
+                  <td>{{alert.estado}}</td>
+                  <td>{{alert.evento}}</td>
+                  <td>{{alert.placa}}</td>
+
+              </tr>
+              </tbody>
+          </table>
+</div>
