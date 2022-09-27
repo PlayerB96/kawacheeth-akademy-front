@@ -1,4 +1,10 @@
 export interface ResponseI {
-  status: string;
-  resposne: string;
+  data: DataI;
+  message: string;
+  status: boolean;
+}
+
+export interface DataI {
+  state: boolean;
+  token: string;
 }

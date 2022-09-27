@@ -1,4 +1,6 @@
 <div class="mat-elevation-z8 p-4">
+
+
       <h2 class="text-danger title" >EVENTO</h2>
           <table class="full-width-table" *ngIf="alerts.length" datatable [dtOptions]="dtOptions" >
               <thead >
@@ -21,4 +23,5 @@
               </tr>
               </tbody>
           </table>
+          <button  type="button" class="btn btn-danger" (click)="onLogout()">SALIR</button>
 </div>

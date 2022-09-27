@@ -3,6 +3,7 @@ import { Subject, Observable } from 'rxjs';
 import { ReqResponse } from './modelos/req-resp';
 import { LanguageApp } from './data-table.language';
 import { ApiServiceTableService } from './services/api.service.table.service';
+import { ServiciosService } from '../login/services/servicios.service';
 
 @Component({
   selector: 'app-data-table',
@@ -16,9 +17,11 @@ export class DataTableComponent implements  OnDestroy, OnInit {
   dtOptions: DataTables.Settings = {};
   dtTrigger = new Subject();
 
-  constructor(private service: ApiServiceTableService) {}
+  constructor(private service: ApiServiceTableService, private serviceLogin: ServiciosService) {}
 
   ngOnInit(): void {
+      this.serviceLogin.checkLocalStorage();
+
       this.dtOptions = {
         pagingType: 'full_numbers',
         pageLength: 10,
@@ -39,6 +42,9 @@ export class DataTableComponent implements  OnDestroy, OnInit {
     this.dtTrigger.unsubscribe();
   }
 
+  onLogout(): void{
+      this.serviceLogin.logout();
+  }
   // ngOnInit(): void {
   //   this.users();
   // }
