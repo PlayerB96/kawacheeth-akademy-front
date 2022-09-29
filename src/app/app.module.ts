@@ -9,15 +9,18 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { BodyComponent } from './body/body.component';
-import { NavbarComponent } from './navbar/navbar.component';
 import { DataTableComponent } from './data-table/data-table.component';
 // DATATABLE
 import { DataTablesModule } from "angular-datatables";
 //HHTTP
 import { HttpClientModule } from "@angular/common/http";
-import { LoginComponent } from './login/login.component';
 //FORMS
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { LogindesignComponent } from './logindesign/logindesign.component';
+import { BodyTComponent } from './body-t/body-t.component';
+import { UpdateventComponent } from './data-table/updatevent/updatevent.component';
+import { UpdateComponent } from './eventos/update/update.component';
+import { CreateComponent } from './eventos/create/create.component';
 
 
 
@@ -26,9 +29,12 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     AppComponent,
     SidenavComponent,
     BodyComponent,
-    NavbarComponent,
     DataTableComponent,
-    LoginComponent
+    LogindesignComponent,
+    BodyTComponent,
+    UpdateventComponent,
+    UpdateComponent,
+    CreateComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +46,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     MatSortModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+
 
 
   ],

@@ -5,44 +5,33 @@ import { ResponseI } from '../modelos/response.interface';
 import { LoginI } from '../modelos/login.interface';
 import { catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import {Md5} from 'ts-md5';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ServiciosService {
+export class LoginservicesService {
 
-  url: string = "http://192.168.1.43:3555/api/v1/user/login?"
+  url: string = "http://localhost:3222/api/v1/user/login?"
   constructor(private http: HttpClient, private router : Router) {
 
   }
 
 
-  loginByEmail( form: LoginI): Observable<ResponseI>{
+  public loginByEmail( form: LoginI): Observable<ResponseI>{
+    let passwmd5 = Md5.hashStr(form.password)
     let baseUrl = this.url;
-    let response = this.http.get<ResponseI>(baseUrl + 'user='+form.usuario +'&pass=' +form.password)
+    let response = this.http.get<ResponseI>(baseUrl + 'user='+form.usuario +'&pass=' +passwmd5)
 
     return response;
   }
 
-  public checkLocalStorage(){
-
-    if(localStorage.getItem('token')){
-      console.log("cambiar a home")
-    } else {
-      console.log("mantenerse en login")
-    }
-  }
-
-  public verifyLogged(): boolean {
-    const token = localStorage.getItem('token');
-   //  token ? true : false;
-    return !! token;
-  }
 
   public logout(): void {
-    console.log("hola")
     localStorage.removeItem("token");
     this.router.navigate(['login'])
   }
+
+
 
 }

@@ -1,23 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ServiciosService } from '../login/services/servicios.service';
-import { LoginI } from '../login/modelos/login.interface';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ResponseI } from '../login/modelos/response.interface';
+import { ResponseI } from './modelos/response.interface';
+import { LoginservicesService } from './services/login.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  selector: 'app-logindesign',
+  templateUrl: './logindesign.component.html',
+  styleUrls: ['./logindesign.component.scss']
 })
-export class LoginComponent implements OnInit {
-
-
-   loginForm = new FormGroup({
+export class LogindesignComponent implements OnInit {
+  loginForm = new FormGroup({
     usuario: new FormControl('', ),
     password: new FormControl('',)
   })
-  constructor(private serviceLogin : ServiciosService, private router : Router) { }
+  constructor(private serviceLogin : LoginservicesService, private router : Router) { }
 
   errorStatus: boolean = false;
   errorMsj: any = "";
@@ -45,7 +42,4 @@ export class LoginComponent implements OnInit {
       }
     })
   }
-
-
-
 }
