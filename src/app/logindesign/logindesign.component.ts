@@ -36,7 +36,8 @@ export class LogindesignComponent implements OnInit {
         this.router.navigate(["alertas"])
       }
       else if ( dataResponse.status == false){
-        console.log(dataResponse)
+        console.log(dataResponse.message)
+
         this.errorStatus = true;
         this.errorMsj = dataResponse.message;
       }

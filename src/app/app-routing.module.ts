@@ -7,24 +7,25 @@ import { UpdateComponent } from './eventos/update/update.component';
 import { LogindesignComponent } from './logindesign/logindesign.component';
 import { AuthGuard } from './shared/auth.guard';
 
-
-
 const routes: Routes = [
+  { path: 'login', component: LogindesignComponent },
+  { path: '', component: LogindesignComponent },
+  {
+    path: '',
+    component: BodyComponent,
+    canActivate: [AuthGuard],
 
-
-  { path: 'login', component: LogindesignComponent},
-  { path: '', component: BodyComponent, canActivate: [AuthGuard],
-          children: [
-             { path: 'alertas', component: DataTableComponent, pathMatch: 'full'},
-             { path: 'update', component: UpdateComponent, pathMatch: 'full'},
-             { path: 'create', component: CreateComponent, pathMatch: 'full'}
-          ]
-}
+    children: [
+      { path: 'alertas', component: DataTableComponent, pathMatch: 'full' },
+      { path: 'update', component: UpdateComponent, pathMatch: 'full' },
+      { path: 'update/:id', component: UpdateComponent, pathMatch: 'full' },
+      { path: 'create', component: CreateComponent, pathMatch: 'full' },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

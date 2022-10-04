@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -21,10 +21,16 @@ import { BodyTComponent } from './body-t/body-t.component';
 import { UpdateventComponent } from './data-table/updatevent/updatevent.component';
 import { UpdateComponent } from './eventos/update/update.component';
 import { CreateComponent } from './eventos/create/create.component';
-
+import { MatButtonModule } from '@angular/material/button';
+import { TableEventComponent } from './table-event/table-event.component';
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ],
+
   declarations: [
     AppComponent,
     SidenavComponent,
@@ -34,7 +40,9 @@ import { CreateComponent } from './eventos/create/create.component';
     BodyTComponent,
     UpdateventComponent,
     UpdateComponent,
-    CreateComponent
+    CreateComponent,
+    TableEventComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -47,8 +55,8 @@ import { CreateComponent } from './eventos/create/create.component';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-
-
+    MatButtonModule,
+    ToastrModule.forRoot()
 
   ],
   providers: [],

@@ -6,7 +6,7 @@ export interface ReqResponse {
   status:  boolean;
 }
 
-interface AlertInt {
+export interface AlertInt {
   descripcion: string;
   estado:      number;
   evento:      string;
