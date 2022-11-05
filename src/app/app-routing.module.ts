@@ -5,6 +5,7 @@ import { DataTableComponent } from './data-table/data-table.component';
 import { CreateComponent } from './eventos/create/create.component';
 import { UpdateComponent } from './eventos/update/update.component';
 import { LogindesignComponent } from './logindesign/logindesign.component';
+import { PruebasComponent } from './pruebas/pruebas.component';
 import { AuthGuard } from './shared/auth.guard';
 
 const routes: Routes = [
@@ -20,6 +21,7 @@ const routes: Routes = [
       { path: 'update', component: UpdateComponent, pathMatch: 'full' },
       { path: 'update/:id', component: UpdateComponent, pathMatch: 'full' },
       { path: 'create', component: CreateComponent, pathMatch: 'full' },
+      { path: 'pruebas', component: PruebasComponent, pathMatch: 'full' },
     ],
   },
 ];

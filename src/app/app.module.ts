@@ -20,10 +20,10 @@ import { LogindesignComponent } from './logindesign/logindesign.component';
 import { BodyTComponent } from './body-t/body-t.component';
 import { UpdateventComponent } from './data-table/updatevent/updatevent.component';
 import { UpdateComponent } from './eventos/update/update.component';
-import { CreateComponent } from './eventos/create/create.component';
 import { MatButtonModule } from '@angular/material/button';
 import { TableEventComponent } from './table-event/table-event.component';
 import { ToastrModule } from 'ngx-toastr';
+import { PruebasComponent } from './pruebas/pruebas.component';
 
 
 @NgModule({
@@ -40,8 +40,8 @@ import { ToastrModule } from 'ngx-toastr';
     BodyTComponent,
     UpdateventComponent,
     UpdateComponent,
-    CreateComponent,
     TableEventComponent,
+    PruebasComponent,
 
   ],
   imports: [

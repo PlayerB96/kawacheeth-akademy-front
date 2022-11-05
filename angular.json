@@ -104,7 +104,9 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "src/templates/demo7/dist/assets/js/custom/apps/ecommerce/catalog/products.js"
+            ]
           }
         }
       }
