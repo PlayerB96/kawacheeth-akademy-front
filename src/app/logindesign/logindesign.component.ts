@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ResponseI } from './modelos/response.interface';
 import { LoginservicesService } from './services/login.service';
+import { DataSharingService } from '../data-sharing.service';
 
 @Component({
   selector: 'app-logindesign',
@@ -11,33 +12,32 @@ import { LoginservicesService } from './services/login.service';
 })
 export class LogindesignComponent implements OnInit {
   loginForm = new FormGroup({
-    usuario: new FormControl('', ),
+    usuario: new FormControl('',),
     password: new FormControl('',)
   })
-  constructor(private serviceLogin : LoginservicesService, private router : Router) { }
+  constructor(private serviceLogin: LoginservicesService, private router: Router, private dataSharingService: DataSharingService) {
+    
+   }
 
   errorStatus: boolean = false;
   errorMsj: any = "";
 
   ngOnInit(): void {
     console.log("iniciando login")
-
   }
 
-
-
-  onLogin(form: any){
-    this.serviceLogin.loginByEmail(form).subscribe(data =>{
+  public onLogin(form: any) {
+    this.serviceLogin.loginByEmail(form).subscribe(data => {
       let dataResponse: ResponseI = data
       // console.log(dataResponse)
 
-      if ( dataResponse.status == true){
-        localStorage.setItem("token", dataResponse.data.token);
-        this.router.navigate(["alertas"])
+      if (dataResponse.status == true) {
+        localStorage.setItem("token", dataResponse.data.contrasena);
+        this.router.navigate(["profile"])
+         // Almacenar dataResponse en el servicio
       }
-      else if ( dataResponse.status == false){
+      else if (dataResponse.status == false) {
         console.log(dataResponse.message)
-
         this.errorStatus = true;
         this.errorMsj = dataResponse.message;
       }

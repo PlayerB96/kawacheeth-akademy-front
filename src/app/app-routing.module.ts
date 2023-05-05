@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BodyComponent } from './body/body.component';
-import { DataTableComponent } from './data-table/data-table.component';
-import { CreateComponent } from './eventos/create/create.component';
-import { UpdateComponent } from './eventos/update/update.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { HomeComponent } from './home/home.component';
 import { LogindesignComponent } from './logindesign/logindesign.component';
-import { PruebasComponent } from './pruebas/pruebas.component';
+import { ProfileComponent } from './profile/profile.component';
 import { AuthGuard } from './shared/auth.guard';
 
 const routes: Routes = [
@@ -17,11 +16,10 @@ const routes: Routes = [
     canActivate: [AuthGuard],
 
     children: [
-      { path: 'alertas', component: DataTableComponent, pathMatch: 'full' },
-      { path: 'update', component: UpdateComponent, pathMatch: 'full' },
-      { path: 'update/:id', component: UpdateComponent, pathMatch: 'full' },
-      { path: 'create', component: CreateComponent, pathMatch: 'full' },
-      { path: 'pruebas', component: PruebasComponent, pathMatch: 'full' },
+      { path: 'profile', component: ProfileComponent, pathMatch: 'full'},
+      { path: 'dashboard', component: DashboardComponent, pathMatch: 'full' },
+      { path: 'home', component: HomeComponent, pathMatch: 'full' },
+
     ],
   },
 ];

@@ -9,7 +9,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { BodyComponent } from './body/body.component';
-import { DataTableComponent } from './data-table/data-table.component';
 // DATATABLE
 import { DataTablesModule } from "angular-datatables";
 //HHTTP
@@ -18,12 +17,12 @@ import { HttpClientModule } from "@angular/common/http";
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { LogindesignComponent } from './logindesign/logindesign.component';
 import { BodyTComponent } from './body-t/body-t.component';
-import { UpdateventComponent } from './data-table/updatevent/updatevent.component';
-import { UpdateComponent } from './eventos/update/update.component';
 import { MatButtonModule } from '@angular/material/button';
 import { TableEventComponent } from './table-event/table-event.component';
 import { ToastrModule } from 'ngx-toastr';
-import { PruebasComponent } from './pruebas/pruebas.component';
+import { ProfileComponent } from './profile/profile.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { HomeComponent } from './home/home.component';
 
 
 @NgModule({
@@ -35,13 +34,12 @@ import { PruebasComponent } from './pruebas/pruebas.component';
     AppComponent,
     SidenavComponent,
     BodyComponent,
-    DataTableComponent,
     LogindesignComponent,
     BodyTComponent,
-    UpdateventComponent,
-    UpdateComponent,
     TableEventComponent,
-    PruebasComponent,
+    ProfileComponent,
+    DashboardComponent,
+    HomeComponent,
 
   ],
   imports: [

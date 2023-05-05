@@ -1,7 +1,17 @@
 export const navbarData = [
   {
-    routeLink: 'alertas',
-    icon: 'fal fa-solid fa-bells',
-    label: 'Alertas'
+    routeLink: 'profile',
+    icon: 'fal fa-solid fa-user',
+    label: 'Perfil'
+  },
+  {
+    routeLink: 'dashboard',
+    icon: 'fal fa-solid fa-feather',
+    label: 'Dashboard'
+  },
+  {
+    routeLink: 'home',
+    icon: 'fal fa-solid fa-home',
+    label: 'Home'
   }
 ];

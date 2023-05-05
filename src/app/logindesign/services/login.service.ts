@@ -5,33 +5,55 @@ import { ResponseI } from '../modelos/response.interface';
 import { LoginI } from '../modelos/login.interface';
 import { catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import {Md5} from 'ts-md5';
+import { Md5 } from 'ts-md5';
+import { tap } from 'rxjs/operators';
+import { DataSharingService } from 'src/app/data-sharing.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginservicesService {
+  public responseActual!: ResponseI;
 
-  url: string = "http://localhost:3222/api/v1/user/login?"
-  constructor(private http: HttpClient, private router : Router) {
-
-  }
+  url: string = "http://localhost:8000/api/v1/loginValidation"
+  constructor(private http: HttpClient, private router: Router, private sharedDataService: DataSharingService) {}
 
 
-  public loginByEmail( form: LoginI): Observable<ResponseI>{
-    let passwmd5 = Md5.hashStr(form.password)
-    let baseUrl = this.url;
-    let response = this.http.get<ResponseI>(baseUrl + 'user='+form.usuario +'&pass=' +passwmd5)
+  public loginByEmail(form: LoginI): Observable<ResponseI> {
+    const passwmd5 = Md5.hashStr(form.password);
+    const body = {
+      usuario: form.usuario,
+      contrasena: passwmd5
+    };
+  
+    const response = this.http.post<ResponseI>(this.url, body);
+
+    response.subscribe((res: ResponseI) => {
+      this.sharedDataService.setResponse(res);
+      
+    });
 
     return response;
   }
 
+  public setResponseActual(response: ResponseI): void {
+    localStorage.setItem('responseActual', JSON.stringify(response));
+  }
 
+  public getResponseActual(): ResponseI | null {
+    const responseStr = localStorage.getItem('responseActual');
+    if (responseStr) {
+      return JSON.parse(responseStr) as ResponseI;
+    } else {
+      return null;
+    }
+  }
+  
   public logout(): void {
     localStorage.removeItem("token");
     this.router.navigate(['login'])
   }
 
 
-
+  
 }
