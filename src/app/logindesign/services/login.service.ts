@@ -1,22 +1,22 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { BehaviorSubject , Observable, throwError } from 'rxjs';
 import { ResponseI } from '../modelos/response.interface';
 import { LoginI } from '../modelos/login.interface';
 import { catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Md5 } from 'ts-md5';
 import { tap } from 'rxjs/operators';
-import { DataSharingService } from 'src/app/data-sharing.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginservicesService {
   public responseActual!: ResponseI;
+  private responseSubject: BehaviorSubject<ResponseI | null> = new BehaviorSubject<ResponseI | null>(null);
 
   url: string = "http://localhost:8000/api/v1/loginValidation"
-  constructor(private http: HttpClient, private router: Router, private sharedDataService: DataSharingService) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
 
   public loginByEmail(form: LoginI): Observable<ResponseI> {
@@ -29,15 +29,14 @@ export class LoginservicesService {
     const response = this.http.post<ResponseI>(this.url, body);
 
     response.subscribe((res: ResponseI) => {
-      this.sharedDataService.setResponse(res);
-      
+      this.setResponse(res);
     });
-
     return response;
   }
-
-  public setResponseActual(response: ResponseI): void {
+  
+  public setResponse(response: ResponseI): void {
     localStorage.setItem('responseActual', JSON.stringify(response));
+    this.responseSubject.next(response);
   }
 
   public getResponseActual(): ResponseI | null {

@@ -3,7 +3,6 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ResponseI } from './modelos/response.interface';
 import { LoginservicesService } from './services/login.service';
-import { DataSharingService } from '../data-sharing.service';
 
 @Component({
   selector: 'app-logindesign',
@@ -15,7 +14,7 @@ export class LogindesignComponent implements OnInit {
     usuario: new FormControl('',),
     password: new FormControl('',)
   })
-  constructor(private serviceLogin: LoginservicesService, private router: Router, private dataSharingService: DataSharingService) {
+  constructor(private serviceLogin: LoginservicesService, private router: Router) {
     
    }
 
