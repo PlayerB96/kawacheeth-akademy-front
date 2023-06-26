@@ -6,9 +6,10 @@ import { HomeComponent } from './home/home.component';
 import { LogindesignComponent } from './logindesign/logindesign.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AuthGuard } from './shared/auth.guard';
+import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
-  { path: 'login', component: LogindesignComponent },
+  { path: 'register', component: RegisterComponent },
   { path: '', component: LogindesignComponent },
   {
     path: '',
@@ -16,7 +17,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
 
     children: [
-      { path: 'profile', component: ProfileComponent, pathMatch: 'full'},
+      { path: 'profile', component: ProfileComponent, pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent, pathMatch: 'full' },
       { path: 'home', component: HomeComponent, pathMatch: 'full' },
 
@@ -28,4 +29,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

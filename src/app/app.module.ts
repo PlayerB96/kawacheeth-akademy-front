@@ -18,11 +18,11 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { LogindesignComponent } from './logindesign/logindesign.component';
 import { BodyTComponent } from './body-t/body-t.component';
 import { MatButtonModule } from '@angular/material/button';
-import { TableEventComponent } from './table-event/table-event.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ProfileComponent } from './profile/profile.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomeComponent } from './home/home.component';
+import { RegisterComponent } from './register/register.component';
 
 
 @NgModule({
@@ -36,10 +36,10 @@ import { HomeComponent } from './home/home.component';
     BodyComponent,
     LogindesignComponent,
     BodyTComponent,
-    TableEventComponent,
     ProfileComponent,
     DashboardComponent,
     HomeComponent,
+    RegisterComponent,
 
   ],
   imports: [

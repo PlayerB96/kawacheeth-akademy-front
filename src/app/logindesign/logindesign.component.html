@@ -5,20 +5,14 @@
     </div>
     <div class="login-content">
       <form [formGroup]="loginForm" (ngSubmit)="onLogin(loginForm.value)">
-        <img src="assets/monitorS4-vertical.png" />
+        <img src="assets/LOGOCHEETH-v3.png" />
         <div class="input-div one">
           <div class="i">
             <i class="fas fa-user"></i>
           </div>
           <div class="div">
-            <input
-              type="text"
-              id="login"
-              class="fadeIn second"
-              name="login"
-              placeholder="Usuario"
-              formControlName="usuario"
-            />
+            <input type="text" id="login" class="fadeIn second" name="login" placeholder="Usuario"
+              formControlName="usuario" />
           </div>
         </div>
         <div class="input-div pass">
@@ -26,20 +20,16 @@
             <i class="fas fa-lock"></i>
           </div>
           <div class="div">
-            <input
-              type="password"
-              id="password"
-              class="fadeIn third"
-              name="login"
-              placeholder="Contraseña"
-              formControlName="password"  
-            />
+            <input type="password" id="password" class="fadeIn third" name="login" placeholder="Contraseña"
+              formControlName="password" />
           </div>
         </div>
-        <div class="alert alert-danger" role="alert" *ngIf="errorStatus" >
+        <div class="alert alert-danger" role="alert" *ngIf="errorStatus">
           {{errorMsj}}
         </div>
-        <input type="submit" class="btn" value="Log In" />
+        <input type="submit" class="btn" value="Ingresar" />
+        <input type="submit" class="btn" value="Registrarse" (click)="redirigir()" />
+
       </form>
     </div>
   </div>

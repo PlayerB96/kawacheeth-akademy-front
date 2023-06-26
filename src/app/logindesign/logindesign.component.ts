@@ -15,8 +15,8 @@ export class LogindesignComponent implements OnInit {
     password: new FormControl('',)
   })
   constructor(private serviceLogin: LoginservicesService, private router: Router) {
-    
-   }
+
+  }
 
   errorStatus: boolean = false;
   errorMsj: any = "";
@@ -33,7 +33,7 @@ export class LogindesignComponent implements OnInit {
       if (dataResponse.status == true) {
         localStorage.setItem("token", dataResponse.data.contrasena);
         this.router.navigate(["profile"])
-         // Almacenar dataResponse en el servicio
+        // Almacenar dataResponse en el servicio
       }
       else if (dataResponse.status == false) {
         console.log(dataResponse.message)
@@ -42,4 +42,9 @@ export class LogindesignComponent implements OnInit {
       }
     })
   }
+
+  redirigir() {
+    this.router.navigate(['/register']);
+  }
+
 }

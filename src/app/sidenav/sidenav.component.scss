@@ -8,7 +8,7 @@
   height: 100vh;
   box-shadow: 0.063rem 0 1.25rem 0 #8690a3;
 
-  .logo-container{
+  .logo-container {
     display: flex;
     align-items: center;
     padding: 0.938rem 0938rem 0 0.938rem;
@@ -24,7 +24,7 @@
     }
 
     .btn-close {
-      margin-left:auto;
+      margin-left: auto;
       cursor: pointer;
       width: 2rem;
       height: 1.5rem;
@@ -39,8 +39,8 @@
     }
 
     img {
-      width:4rem;
-      margin-left:  0.5rem;
+      width: 4rem;
+      margin-left: 0.5rem;
       padding-right: 1.5rem;
       text-align: center;
     }
@@ -48,14 +48,14 @@
 }
 
 .sidenav-collapsed {
-  width: 18rem;
+  width: 21rem;
 
 }
 
 .sidenav-nav {
   list-style: none;
   padding: 0.938rem;
-  margin:0;
+  margin: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -63,8 +63,8 @@
   cursor: pointer;
 
   .sidenav-nav-item {
-      width: 100%;
-      margin-bottom: 0.625rem;
+    width: 100%;
+    margin-bottom: 0.625rem;
 
     .sidenav-nav-link {
       display: flex;
@@ -83,7 +83,7 @@
         text-align: center;
       }
 
-      .sidenav-link-text{
+      .sidenav-link-text {
         margin-left: 1.5rem;
 
       }
@@ -92,7 +92,7 @@
   }
 
   .sidenav-nav-item:hover {
-    .sidenav-nav-link{
+    .sidenav-nav-link {
       background-color: #fff;
       color: #000;
     }
@@ -106,5 +106,11 @@
   .sidenav-link-icon,
   .sidenav-link-text {
     color: #000;
+  }
+}
+
+@media screen and (max-width: 1050px) {
+  .sidenav-collapsed {
+    width: 23rem;
   }
 }
