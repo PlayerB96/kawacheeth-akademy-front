@@ -19,7 +19,7 @@ export interface DataI {
 }
 
 export interface PlanDescripcion {
-  porcentaje_realizado: number;
+  porcentaje_realizado: string;
   nombre_plan: string;
 }
 
@@ -33,7 +33,7 @@ export interface Usuario {
   descripcion_plan: PlanDescripcion;
 }
 
-export interface Response {
+export interface ResponseIdetailProfile {
   data: Usuario;
   status: boolean;
   message: string;
