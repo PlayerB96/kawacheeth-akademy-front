@@ -14,5 +14,11 @@
         <span class="sidenav-link-text" *ngIf="collapsed">{{data.label}}</span>
       </a>
     </li>
+    <li class="sidenav-nav-item sidenav-nav-bottom">
+      <a class="sidenav-nav-link logout-button" [routerLink]="['logout']" (click)="logout()">
+        <i class="sidenav-link-icon fal fa-solid fa-sign-out"></i>
+        <span class="sidenav-link-text" *ngIf="collapsed">Cerrar sesión</span>
+      </a>
+    </li>
   </ul>
 </div>

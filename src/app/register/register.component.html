@@ -1,79 +1,63 @@
 <body>
-    <div class="container">
-      <div class="img">
-        <img src="assets/bg.svg" />
-      </div>
-      <div class="login-content">
-        <form >
-        <!-- <form [formGroup]="loginForm" (ngSubmit)="onLogin(loginForm.value)"> -->
-          <img src="assets/LOGOCHEETH-v3.png" />
-          <div class="input-div one">
-            <div class="i">
-              <i class="far fa-address-card"></i>
-            </div>
-            <div class="div">
-              <input
-                type="text"
-                id="login"
-                class="fadeIn second"
-                name="login"
-                placeholder="Ingrese su Nombre Completo"
-                formControlName="usuario"
-              />
-            </div>
+  <div class="container">
+    <div class="img">
+      <img src="assets/bg.svg" />
+    </div>
+    <div class="login-content">
+      <!-- <form > -->
+      <form [formGroup]="registerForm" (ngSubmit)="registeUser(registerForm.value)">
+        <img src="assets/LOGOCHEETH-v3.png" />
+        <div class="input-div one">
+          <div class="i">
+            <i class="far fa-address-card"></i>
           </div>
-          <div class="input-div one">
-            <div class="i">
-              <i class="fab fa-google"></i>
-            </div>
-            <div class="div">
-              <input
-                type="text"
-                id="login"
-                class="fadeIn second"
-                name="login"
-                placeholder="Ingrese su Correo Electronico"
-                formControlName="usuario"
-              />
-            </div>
+          <div class="div">
+            <input type="text" id="login" class="fadeIn second" name="login" placeholder="Ingrese su Nombre Completo"
+              formControlName="nombreCompleto" />
           </div>
-          <div class="input-div one">
-            <div class="i">
-              <i class="fas fa-user"></i>
-            </div>
-            <div class="div">
-              <input
-                type="text"
-                id="login"
-                class="fadeIn second"
-                name="login"
-                placeholder="Ingrese un Usuario"
-                formControlName="usuario"
-              />
-            </div>
+        </div>
+        <div class="input-div one">
+          <div class="i">
+            <i class="far fa-address-card"></i>
           </div>
-          <div class="input-div pass">
-            <div class="i">
-              <i class="fas fa-lock"></i>
-            </div>
-            <div class="div">
-              <input
-                type="password"
-                id="password"
-                class="fadeIn third"
-                name="login"
-                placeholder="Ingrese una Contraseña"
-                formControlName="password"   
-              />
-            </div>
+          <div class="div">
+            <input type="text" id="login" class="fadeIn second" name="login" placeholder="Ingrese sus Apellidos"
+              formControlName="apellido" />
           </div>
-          <!-- <div class="alert alert-danger" role="alert" *ngIf="errorStatus" >
+        </div>
+        <div class="input-div one">
+          <div class="i">
+            <i class="fab fa-google"></i>
+          </div>
+          <div class="div">
+            <input type="text" id="login" class="fadeIn second" name="login" placeholder="Ingrese su Correo Electronico"
+              formControlName="correo" />
+          </div>
+        </div>
+        <div class="input-div one">
+          <div class="i">
+            <i class="fas fa-user"></i>
+          </div>
+          <div class="div">
+            <input type="text" id="login" class="fadeIn second" name="login" placeholder="Ingrese un Usuario"
+              formControlName="usuario" />
+          </div>
+        </div>
+        <div class="input-div pass">
+          <div class="i">
+            <i class="fas fa-lock"></i>
+          </div>
+          <div class="div">
+            <input type="password" id="password" class="fadeIn third" name="login" placeholder="Ingrese una Contraseña"
+              formControlName="contrasena" />
+          </div>
+        </div>
+        <!-- <div class="alert alert-danger" role="alert" *ngIf="errorStatus" >
             {{errorMsj}}
           </div> -->
-          <input type="submit" class="btn" value="REGISTRAR"/>
-        </form>
-      </div>
+        <input type="submit" class="btn" value="REGISTRAR" />
+      </form>
     </div>
-    <script type="text/javascript" src="js/main.js"></script>
-  </body>
-  
+  </div>
+  <script type="text/javascript" src="js/main.js"></script>
+</body>}

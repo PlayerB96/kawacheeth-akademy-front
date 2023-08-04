@@ -18,22 +18,16 @@ export class RegisterService {
   constructor(private http: HttpClient, private router: Router) { }
 
 
-  public loginByEmail(form: RegisterI): Observable<ResponseI> {
+  public registeUser(form: RegisterI): Observable<ResponseI> {
     const body = {
       nombreCompleto: form.nombreCompleto,
+      apellido: form.apellido,
       correo: form.correo,
       usuario: form.usuario,
       contrasena: form.contrasena
     };
-
-    console.log(body)
-    console.log("***")
     const response = this.http.post<ResponseI>(this.url, body);
 
-    response.subscribe((res: ResponseI) => {
-      console.log(res)
-      console.log("-----")
-    });
     return response;
 
   }

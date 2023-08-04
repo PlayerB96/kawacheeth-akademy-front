@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { navbarData } from './nav-data';
+import { LoginservicesService } from '../logindesign/services/login.service';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -11,11 +12,15 @@ interface SideNavToggle {
   styleUrls: ['./sidenav.component.scss']
 })
 export class SidenavComponent implements OnInit {
+  constructor(
+    private loginservice: LoginservicesService
+  ) {
 
-  @Output() onToggleSideNav:  EventEmitter<SideNavToggle> = new EventEmitter();
+  }
+  @Output() onToggleSideNav: EventEmitter<SideNavToggle> = new EventEmitter();
   collapsed = false;
-  screenWidth= 0;
-  navData= navbarData
+  screenWidth = 0;
+  navData = navbarData
 
 
   ngOnInit(): void {
@@ -23,13 +28,16 @@ export class SidenavComponent implements OnInit {
   }
   toggleCollapse(): void {
     this.collapsed = !this.collapsed;
-    this.onToggleSideNav.emit({collapsed: this.collapsed, screenWidth: this.screenWidth});
+    this.onToggleSideNav.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth });
   }
 
   closeSidenav(): void {
     this.collapsed = false;
-    this.onToggleSideNav.emit({collapsed: this.collapsed, screenWidth: this.screenWidth});
+    this.onToggleSideNav.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth });
+  }
 
+  public logout(): void {
+    this.loginservice.logout()
   }
 
 }
