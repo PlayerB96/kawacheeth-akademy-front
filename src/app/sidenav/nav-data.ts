@@ -14,4 +14,5 @@ export const navbarData = [
     icon: 'fal fa-solid fa-home',
     label: 'Home'
   }
+
 ];

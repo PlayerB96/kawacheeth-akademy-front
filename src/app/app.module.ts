@@ -23,6 +23,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
+import { InviteComponent } from './invite/invite.component';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { RegisterComponent } from './register/register.component';
     DashboardComponent,
     HomeComponent,
     RegisterComponent,
+    InviteComponent,
 
   ],
   imports: [

@@ -7,6 +7,7 @@ import { LogindesignComponent } from './logindesign/logindesign.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AuthGuard } from './shared/auth.guard';
 import { RegisterComponent } from './register/register.component';
+import { InviteComponent } from './invite/invite.component';
 
 const routes: Routes = [
   { path: 'register', component: RegisterComponent },
@@ -22,6 +23,7 @@ const routes: Routes = [
       { path: 'profile', component: ProfileComponent, pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent, pathMatch: 'full' },
       { path: 'home', component: HomeComponent, pathMatch: 'full' },
+      { path: 'dashboard/invite', component: InviteComponent, pathMatch: 'full' },
 
     ],
   },
