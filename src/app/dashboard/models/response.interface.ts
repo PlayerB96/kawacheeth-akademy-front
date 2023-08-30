@@ -24,6 +24,14 @@ export interface Cursos {
     fecha_actualizacion: string;
     duracion: string;
     progreso: number;
+    plataformas: Plataformas[];
+
+}
+
+export interface Plataformas {
+    icon: string;
+    nombre: string;
+
 
 }
 
@@ -34,6 +42,7 @@ export interface DetailDashboard {
     estado: boolean;
     detalle: PlanDescripcion;
     lista_cursos: Cursos[];
+
 }
 // ------------------------ALL USER DASHBOARD-----------------------------
 

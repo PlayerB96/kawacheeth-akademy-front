@@ -31,10 +31,22 @@ export interface Usuario {
   cursos_terminados: number;
   estado_suscripcion: boolean;
   descripcion_plan: PlanDescripcion;
+  historial: Historial[];
+
 }
 
 export interface ResponseIdetailProfile {
   data: Usuario;
   status: boolean;
   message: string;
+}
+
+export interface Historial {
+  icon: string;
+  contenido: Contenido;
+}
+
+export interface Contenido {
+  titulo: string;
+  fecha: string;
 }

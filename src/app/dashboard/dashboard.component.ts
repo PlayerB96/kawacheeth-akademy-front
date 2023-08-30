@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DashboardService } from './services/dashboard.service';
 import { LoginservicesService } from '../logindesign/services/login.service';
 import { ResponseI } from './models/dashboard-models';
-import { Cursos, DataI, Last9User, ResponseIallUsersDashboard, ResponseIdetailDashboard } from './models/response.interface';
+import { Cursos, DataI, Last9User, Plataformas, ResponseIallUsersDashboard, ResponseIdetailDashboard } from './models/response.interface';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,6 +19,7 @@ export class DashboardComponent implements OnInit {
   cursos_completados: number | null = null
   cursos_poriniciar: number | null = null
   lista_cursos: Cursos[] | null = null
+  plataformas: Plataformas[] | null = null
   total_estudiante: number | null = null
   icon_more_estudiantes: number | null = null
   data_total_estudiantes: Last9User[] | null = null
@@ -62,8 +63,6 @@ export class DashboardComponent implements OnInit {
         this.dolares = this.tokens / 10;
         this.total = this.dolares + this.interes;
 
-        console.log(this.total)
-        console.log("###########")
       }
     });
   }

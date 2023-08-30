@@ -17,4 +17,16 @@ export interface DetailProfile {
     cursos_terminados: number;
     estado_suscripcion: boolean;
     descripcion_plan: PlanDescripcion;
+    historial: Historial[];
+
+}
+
+export interface Historial {
+    icon: string;
+    contenido: Contenido;
+}
+
+export interface Contenido {
+    titulo: string;
+    fecha: string;
 }

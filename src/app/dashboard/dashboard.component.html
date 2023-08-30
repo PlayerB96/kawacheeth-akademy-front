@@ -374,27 +374,20 @@
                                         </div>
                                         <!--end::Progress-->
                                         <!--begin::Users-->
+                                        <div class="fw-bold text-gray-400">Plataformas: </div>
+                                        <div style="width:20px"></div>
+
                                         <div class="symbol-group symbol-hover">
-                                            <!--begin::User-->
-                                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
-                                                title="Emma Smith">
-                                                <img alt="Pic" src="assets/media/avatars/150-1.jpg" />
-                                            </div>
-                                            <!--begin::User-->
-                                            <!--begin::User-->
-                                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
-                                                title="Rudy Stone">
-                                                <img alt="Pic" src="assets/media/avatars/150-2.jpg" />
-                                            </div>
-                                            <!--begin::User-->
-                                            <!--begin::User-->
-                                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
-                                                title="Susan Redwood">
-                                                <span
-                                                    class="symbol-label bg-primary text-inverse-primary fw-bolder">S</span>
-                                            </div>
-                                            <!--begin::User-->
+                                            <ng-container *ngFor="let platform of curso.plataformas">
+                                                <!--begin::User-->
+                                                <div class="symbol symbol-35px symbol-circle d-inline mx-2"
+                                                    data-bs-toggle="tooltip" title="{{platform.nombre}}">
+                                                    <img alt="Pic" src="assets/media/svg/{{platform.icon}}.svg" />
+                                                </div>
+                                                <!--end::User-->
+                                            </ng-container>
                                         </div>
+
                                         <!--end::Users-->
                                     </div>
                                     <!--end:: Card body-->
