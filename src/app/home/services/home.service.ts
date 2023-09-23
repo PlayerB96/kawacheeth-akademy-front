@@ -2,26 +2,26 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { ResponseIdetailProfile } from '../models/response.interface';
+import { ResponseIdetailHome } from '../models/response.interface';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProfileService {
+export class HomeService {
 
   public responseActual!: Response;
 
-  url: string = "http://localhost:8000/api/v1/detailProfile"
+  url: string = "http://localhost:8000/api/v1/detailHome"
   constructor(private http: HttpClient, private router: Router) {}
 
 
-  public getProfileDetails(profile: any): Observable<ResponseIdetailProfile> {
+  public getHomeDetails(cod_acceso: any): Observable<ResponseIdetailHome> {
     const body = {
-      cod_cuenta: profile,
+      cod_acceso: cod_acceso,
     };
     
-    const response = this.http.post<ResponseIdetailProfile>(this.url, body);
-
+    const response = this.http.post<ResponseIdetailHome>(this.url, body);
+   
     return response;
   }
 }

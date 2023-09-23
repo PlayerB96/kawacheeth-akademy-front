@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+@import "~bootstrap/dist/css/bootstrap.min.css";
 
 * {
   margin: 0;
@@ -7,5 +8,8 @@
   box-sizing: border-box;
 }
 
+#kt_modal_select_progreso {
+  z-index: 1; /* Ajusta el valor según sea necesario */
+}
 html, body { height: 100%; }
 
