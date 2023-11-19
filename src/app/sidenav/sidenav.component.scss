@@ -11,12 +11,12 @@
   .logo-container {
     display: flex;
     align-items: center;
-    padding: 0.938rem 0938rem 0 0.938rem;
+    // padding: 0.938rem 0938rem 0 0.938rem;
     width: 100%;
 
     .logo-text {
-      // margin-left:  1.6rem;
-      padding-right: 1.5rem;
+      margin-left: 1.6rem;
+      // padding-right: 1.5rem;
       font-size: 20px;
       font-weight: 700;
       color: #fff;
@@ -39,10 +39,9 @@
     }
 
     img {
-      width: 4rem;
-      margin-left: 0.5rem;
-      padding-right: 1.5rem;
+      width: 3.0rem;
       text-align: center;
+      margin: 1rem;
     }
   }
 }

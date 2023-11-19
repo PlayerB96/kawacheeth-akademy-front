@@ -80,7 +80,7 @@
                                     <!--begin: Pic-->
                                     <div class="me-7 mb-4">
                                         <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-                                            <img src="assets/media/avatars/150-26.jpg" alt="image" />
+                                            <img src="assets/media/avatars/blank.png" alt="image" />
                                             <div
                                                 class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-white h-20px w-20px">
                                             </div>
@@ -99,7 +99,8 @@
                                                         class="text-gray-900 text-hover-primary fs-2 fw-bolder me-1">{{nombreCompleto}}</a>
                                                     <a href="#">
                                                         <!--begin::Svg Icon | path: icons/duotune/general/gen026.svg-->
-                                                        <span *ngIf="estado_suscripcion" class="svg-icon svg-icon-1 svg-icon-primary">
+                                                        <span *ngIf="estado_suscripcion"
+                                                            class="svg-icon svg-icon-1 svg-icon-primary">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24px"
                                                                 height="24px" viewBox="0 0 24 24">
                                                                 <path
@@ -112,13 +113,10 @@
                                                         </span>
                                                         <!--end::Svg Icon-->
                                                     </a>
-                                                    <a class="btn btn-sm btn-light-success fw-bolder ms-2 fs-8 py-1 px-3"
+                                                    <a (click)="abrirModal('upgrade')"
+                                                        class="btn btn-sm btn-light-success fw-bolder ms-2 fs-8 py-1 px-3"
                                                         data-bs-toggle="modal" data-bs-target="#kt_modal_upgrade_plan"
                                                         id="kt_toolbar_primary_button">Mejorar Plan</a>
-
-
-
-
 
                                                 </div>
                                                 <!--end::Name-->
@@ -138,7 +136,7 @@
                                                                     fill="black" />
                                                             </svg>
                                                         </span>
-                                                        <!--end::Svg Icon-->{{rol}}</a>
+                                                        <!--end::Svg Icon-->{{usuario}}</a>
                                                     <a href="#"
                                                         class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
                                                         <!--begin::Svg Icon | path: icons/duotune/general/gen018.svg-->
@@ -153,7 +151,7 @@
                                                                     fill="black" />
                                                             </svg>
                                                         </span>
-                                                        <!--end::Svg Icon-->SF, Bay Area</a>
+                                                        <!--end::Svg Icon-->Lima, Perú</a>
                                                     <a href="#"
                                                         class="d-flex align-items-center text-gray-400 text-hover-primary mb-2">
                                                         <!--begin::Svg Icon | path: icons/duotune/communication/com011.svg-->
@@ -177,9 +175,8 @@
                                             <!--begin::Actions-->
                                             <div class="d-flex my-4">
 
-                                                <a href="#" class="btn btn-sm btn-primary me-2" data-bs-toggle="modal"
-                                                    data-bs-target="#kt_modal_select_progreso"
-                                                    *ngIf="estado_suscripcion">Progreso</a>
+                                                <a (click)="abrirModal('progress')" class="btn btn-sm btn-primary me-2"
+                                                    data-bs-toggle="modal">Progreso</a>
 
                                                 <!--begin::Menu-->
                                                 <div class="me-0">
@@ -379,7 +376,8 @@
                                             <!--end::Wrapper-->
                                             <!--begin::Progress-->
                                             <div class="d-flex align-items-center w-200px w-sm-300px flex-column mt-3">
-                                                <div *ngIf="estado_suscripcion" class="d-flex justify-content-between w-100 mt-auto mb-2">
+                                                <div *ngIf="estado_suscripcion"
+                                                    class="d-flex justify-content-between w-100 mt-auto mb-2">
                                                     <span class="fw-bold fs-6 text-gray-400">{{nombre_plan}}</span>
                                                     <span class="fw-bolder fs-6">{{porcentaje_plan}}<span
                                                             class="fs-5">%</span></span>
@@ -403,8 +401,7 @@
                                     class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bolder">
                                     <!--begin::Nav item-->
                                     <li class="nav-item mt-2">
-                                        <a class="nav-link text-active-primary ms-0 me-10 py-5 active"
-                                            href="../../demo7/dist/pages/profile/activity.html">Historial</a>
+                                        <a class="nav-link text-active-primary ms-0 me-10 py-5 active">Historial</a>
                                     </li>
                                     <!--end::Nav item-->
                                 </ul>
@@ -453,18 +450,17 @@
                                                 <!--begin::Timeline line-->
                                                 <div class="timeline-line w-40px"></div>
                                                 <!--end::Timeline line-->
-                                                <!--begin::Timeline icon-->
-                                                <div class="timeline-icon symbol symbol-circle symbol-40px me-4">
-                                                    <div class="symbol-label bg-light">
-                                                        <!--begin::Svg Icon | path: icons/duotune/communication/com003.svg-->
-                                                        <object [data]="getIconUrl(item)" type="image/svg+xml"
-                                                            width="24" height="24">
-
-                                                        </object>
-
-                                                        <!--end::Svg Icon-->
-                                                    </div>
-                                                </div>
+                                                <span class="svg-icon svg-icon-2 svg-icon-gray-500 me-3 lh-0">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"
+                                                        viewBox="0 0 24 24" fill="none">
+                                                        <path opacity="0.3"
+                                                            d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z"
+                                                            fill="black" />
+                                                        <path
+                                                            d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z"
+                                                            fill="black" />
+                                                    </svg>
+                                                </span>
                                                 <!--end::Timeline icon-->
                                                 <!--begin::Timeline content-->
                                                 <div class="timeline-content mb-10 mt-n1">
@@ -505,697 +501,7 @@
                 </div>
                 <!--end::Content-->
 
-            
-  <!--begin::Modal - Upgrade plan-->
-  <div class="modal fade" id="kt_modal_upgrade_plan" tabindex="-1" aria-hidden="true">
-    <!--begin::Modal dialog-->
-    <div class="modal-dialog modal-xl">
-        <!--begin::Modal content-->
-        <div class="modal-content rounded">
-            <!--begin::Modal header-->
-            <div class="modal-header justify-content-end border-0 pb-0">
-                <!--begin::Close-->
-                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
-                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-                    <span class="svg-icon svg-icon-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
-                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
-                        </svg>
-                    </span>
-                    <!--end::Svg Icon-->
-                </div>
-                <!--end::Close-->
-            </div>
-            <!--end::Modal header-->
-            <!--begin::Modal body-->
-            <div class="modal-body pt-0 pb-15 px-5 px-xl-20">
-                <!--begin::Heading-->
-                <div class="mb-13 text-center">
-                    <h1 class="mb-3">Mejorar Plan</h1>
-                    <div class="text-muted fw-bold fs-5">Selecciona un Plan Mensual en 
-                    <a href="dashboard" class="link-primary fw-bolder">CheethAkademy</a>.</div>
-                </div>
-                <!--end::Heading--> 
-                <!--begin::Plans-->
-                <div class="d-flex flex-column">
-                    <!--begin::Nav group-->
-                    <div class="nav-group nav-group-outline mx-auto" data-kt-buttons="true">
-                        <a class="btn btn-color-gray-400 btn-active btn-active-secondary px-6 py-3  active" data-kt-plan="month">Mensual</a>
-                    </div>
-                    <!--end::Nav group-->
-                    <!--begin::Row-->
-                    <div class="row mt-10">
-                        <!--begin::Col-->
-                        <div class="col-lg-6 mb-10 mb-lg-0">
-                            <!--begin::Tabs-->
-                            <div class="nav flex-column">
-                                <!--begin::Tab link-->
-                                <div class="nav-link btn btn-outline btn-outline-dashed btn-color-dark btn-active btn-active-primary d-flex flex-stack text-start p-6 active mb-6" data-bs-toggle="tab" data-bs-target="#kt_upgrade_plan_startup">
-                                    <!--end::Description-->
-                                    <div class="d-flex align-items-center me-2">
-                                        <!--begin::Radio-->
-                                        <div class="form-check form-check-custom form-check-solid form-check-success me-6">
-                                            <input class="form-check-input" type="radio" name="plan" checked="checked" value="startup" />
-                                        </div>
-                                        <!--end::Radio-->
-                                        <!--begin::Info-->
-                                        <div class="flex-grow-1">
-                                            <h2 class="d-flex align-items-center fs-2 fw-bolder flex-wrap">Startup</h2>
-                                            <div class="fw-bold opacity-50">Conoce la Plataforma</div>
-                                        </div>
-                                        <!--end::Info-->
-                                    </div>
-                                    <!--end::Description-->
-                                    <!--begin::Price-->
-                                    <div class="ms-5">
-                                        <span class="mb-2">$</span>
-                                        <span class="fs-3x fw-bolder" data-kt-plan-price-month="39" data-kt-plan-price-annual="399">15</span>
-                                        <span class="fs-7 opacity-50">/
-                                        <span data-kt-element="period">Mes</span></span>
-                                    </div>
-                                    <!--end::Price-->
-                                </div>
-                                <!--end::Tab link-->
-                                <!--begin::Tab link-->
-                                <div class="nav-link btn btn-outline btn-outline-dashed btn-color-dark btn-active btn-active-primary d-flex flex-stack text-start p-6 mb-6" data-bs-toggle="tab" data-bs-target="#kt_upgrade_plan_advanced">
-                                    <!--end::Description-->
-                                    <div class="d-flex align-items-center me-2">
-                                        <!--begin::Radio-->
-                                        <div class="form-check form-check-custom form-check-solid form-check-success me-6">
-                                            <input class="form-check-input" type="radio" name="plan" value="advanced" />
-                                        </div>
-                                        <!--end::Radio-->
-                                        <!--begin::Info-->
-                                        <div class="flex-grow-1">
-                                            <h2 class="d-flex align-items-center fs-2 fw-bolder flex-wrap">Estudiante</h2>
-                                            <div class="fw-bold opacity-50">Empieza tu formación con todos los Cursos</div>
-                                        </div>
-                                        <!--end::Info-->
-                                    </div>
-                                    <!--end::Description-->
-                                    <!--begin::Price-->
-                                    <div class="ms-5">
-                                        <span class="mb-2">$</span>
-                                        <span class="fs-3x fw-bolder" data-kt-plan-price-month="339" data-kt-plan-price-annual="3399">30</span>
-                                        <span class="fs-7 opacity-50">/
-                                        <span data-kt-element="period">Mes</span></span>
-                                    </div>
-                                    <!--end::Price-->
-                                </div>
-                                <!--end::Tab link-->
-                                <!--begin::Tab link-->
-                                <div class="nav-link btn btn-outline btn-outline-dashed btn-color-dark btn-active btn-active-primary d-flex flex-stack text-start p-6 mb-6" data-bs-toggle="tab" data-bs-target="#kt_upgrade_plan_enterprise">
-                                    <!--end::Description-->
-                                    <div class="d-flex align-items-center me-2">
-                                        <!--begin::Radio-->
-                                        <div class="form-check form-check-custom form-check-solid form-check-success me-6">
-                                            <input class="form-check-input" type="radio" name="plan" value="enterprise" />
-                                        </div>
-                                        <!--end::Radio-->
-                                        <!--begin::Info-->
-                                        <div class="flex-grow-1">
-                                            <h2 class="d-flex align-items-center fs-2 fw-bolder flex-wrap">Socio
-                                            <span class="badge badge-light-success ms-2 fs-7">Mejores Beneficios</span></h2>
-                                            <div class="fw-bold opacity-50">Sé parte del proyecto, y obtén +500 Ctokens <br> cada Mes</div>
-                                        </div>
-                                        <!--end::Info-->
-                                    </div>
-                                    <!--end::Description-->
-                                    <!--begin::Price-->
-                                    <div class="ms-5">
-                                        <span class="mb-2">$</span>
-                                        <span class="fs-3x fw-bolder" data-kt-plan-price-month="999" data-kt-plan-price-annual="9999">50</span>
-                                        <span class="fs-7 opacity-50">/
-                                        <span data-kt-element="period">Mes</span></span>
-                                    </div>
-                                    <!--end::Price-->
-                                </div>
-                                <!--end::Tab link-->
-                                <!--begin::Tab link-->
-                                <div class="nav-link btn btn-outline btn-outline-dashed btn-color-dark d-flex flex-stack text-start p-6">
-                                    <!--end::Description-->
-                                    <div class="d-flex align-items-center me-2">
-                                        <!--begin::Radio-->
-                                        <div class="form-check form-check-custom form-check-solid form-check-success me-6">
-                                            <input class="form-check-input" type="radio" name="plan" value="custom" />
-                                        </div>
-                                        <!--end::Radio-->
-                                        <!--begin::Info-->
-                                        <div class="flex-grow-1">
-                                            <h2 class="d-flex align-items-center fs-2 fw-bolder flex-wrap">Custom</h2>
-                                            <div class="fw-bold opacity-50">Requet a custom license</div>
-                                        </div>  
-                                        <!--end::Info-->
-                                    </div>
-                                    <!--end::Description-->
-                                    <!--begin::Price-->
-                                    <div class="ms-5">
-                                        <a href="#" class="btn btn-sm btn-primary">Contact Us</a>
-                                    </div>
-                                    <!--end::Price-->
-                                </div>
-                                <!--end::Tab link-->
-                            </div>
-                            <!--end::Tabs-->
-                        </div>
-                        <!--end::Col-->
-                        <!--begin::Col-->
-                        <div class="col-lg-6">
-                            <!--begin::Tab content-->
-                            <div class="tab-content rounded h-100 bg-light p-10">
-                                <!--begin::Tab Pane-->
-                                <div class="tab-pane fade show active" id="kt_upgrade_plan_startup">
-                                    <!--begin::Heading-->
-                                    <div class="pb-5">
-                                        <h2 class="fw-bolder text-dark">¿Qué hay en el Plan de inicio?</h2>
-                                        <div class="text-muted fw-bold">Óptimo para personas que desean empezar a conocer la plataforma</div>
-                                    </div>
-                                    <!--end::Heading-->
-                                    <!--begin::Body-->
-                                    <div class="pt-1">
-                                        <!--begin::Item-->
-                                        <div class="d-flex align-items-center mb-7">
-                                            <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Acceso a todos los Cursos (GRATUITOS) de CheethAkademy</span>
-                                            <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                            <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black" />
-                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="black" />
-                                                </svg>
-                                            </span>
-                                            <!--end::Svg Icon-->
-                                        </div>
-                                        <!--end::Item-->
-                                        <!--begin::Item-->
-                                        <div class="d-flex align-items-center mb-7">
-                                            <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Acceso a todos los BootCamps Online (GRATUITOS) de CheethAkademy</span>
-                                            <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                            <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black" />
-                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="black" />
-                                                </svg>
-                                            </span>
-                                            <!--end::Svg Icon-->
-                                        </div>
-                                        <!--end::Item-->
-                                        <!--begin::Item-->
-                                        <div class="d-flex align-items-center mb-7">
-                                            <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Gobernanza en CheethAkademy</span>
-                                            <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                            <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black" />
-                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="black" />
-                                                </svg>
-                                            </span>
-                                            <!--end::Svg Icon-->
-                                        </div>
-                                        <!--end::Item-->
-                                        <!--begin::Item-->
-                                        <div class="d-flex align-items-center mb-7">
-                                            <span class="fw-bold fs-5 text-muted flex-grow-1">Asesorías directas (chat) con Instructor del Curso</span>
-                                            <!--begin::Svg Icon | path: icons/duotune/general/gen040.svg-->
-                                            <span class="svg-icon svg-icon-1">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black" />
-                                                    <rect x="7" y="15.3137" width="12" height="2" rx="1" transform="rotate(-45 7 15.3137)" fill="black" />
-                                                    <rect x="8.41422" y="7" width="12" height="2" rx="1" transform="rotate(45 8.41422 7)" fill="black" />
-                                                </svg>
-                                            </span>
-                                            <!--end::Svg Icon-->
-                                        </div>
-                                        <!--end::Item-->
-                                        <!--begin::Item-->
-                                        <div class="d-flex align-items-center mb-7">
-                                            <span class="fw-bold fs-5 text-muted flex-grow-1">Acceso a todos los Cursos (PAGOS y GRATUITOS) de CheethAkademy</span>
-                                            <!--begin::Svg Icon | path: icons/duotune/general/gen040.svg-->
-                                            <span class="svg-icon svg-icon-1">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black" />
-                                                    <rect x="7" y="15.3137" width="12" height="2" rx="1" transform="rotate(-45 7 15.3137)" fill="black" />
-                                                    <rect x="8.41422" y="7" width="12" height="2" rx="1" transform="rotate(45 8.41422 7)" fill="black" />
-                                                </svg>
-                                            </span>
-                                            <!--end::Svg Icon-->
-                                        </div>
-                                        <!--end::Item-->
-                                        <!--begin::Item-->
-                                        <div class="d-flex align-items-center mb-7">
-                                            <span class="fw-bold fs-5 text-muted flex-grow-1">Acceso a todos los Bootcamps (PAGOS y GRATUITOS) de CheethAkademy</span>
-                                            <!--begin::Svg Icon | path: icons/duotune/general/gen040.svg-->
-                                            <span class="svg-icon svg-icon-1">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black" />
-                                                    <rect x="7" y="15.3137" width="12" height="2" rx="1" transform="rotate(-45 7 15.3137)" fill="black" />
-                                                    <rect x="8.41422" y="7" width="12" height="2" rx="1" transform="rotate(45 8.41422 7)" fill="black" />
-                                                </svg>
-                                            </span>
-                                            <!--end::Svg Icon-->
-                                        </div>
-                                        <!--end::Item-->
-                                        <!--begin::Item-->
-                                        <div class="d-flex align-items-center">
-                                            <span class="fw-bold fs-5 text-muted flex-grow-1">500 CTokens cada Mes</span>
-                                            <!--begin::Svg Icon | path: icons/duotune/general/gen040.svg-->
-                                            <span class="svg-icon svg-icon-1">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black" />
-                                                    <rect x="7" y="15.3137" width="12" height="2" rx="1" transform="rotate(-45 7 15.3137)" fill="black" />
-                                                    <rect x="8.41422" y="7" width="12" height="2" rx="1" transform="rotate(45 8.41422 7)" fill="black" />
-                                                </svg>
-                                            </span>
-                                            <!--end::Svg Icon-->
-                                        </div>
-                                        <!--end::Item-->
-                                    </div>
-                                    <!--end::Body-->
-                                </div>
-                                <!--end::Tab Pane-->
-                                <!--begin::Tab Pane-->
-                                <div class="tab-pane fade" id="kt_upgrade_plan_advanced">
-                                    <!--begin::Heading-->
-                                    <div class="pb-5">
-                                        <h2 class="fw-bolder text-dark">¿Qué hay en el Plan de Estudiante?</h2>
-                                        <div class="text-muted fw-bold">Óptimo para personas que desean tener acceso a todos los cursos y orientación directa</div>
-                                    </div>
-                                    <!--end::Heading-->
-                                    <!--begin::Body-->
-                                    <div class="pt-1">
-                                        <!--begin::Item-->
-                                        <div class="d-flex align-items-center mb-7">
-                                            <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Acceso a todos los Cursos (GRATUITOS) de CheethAkademy</span>
-                                            <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                            <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black" />
-                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="black" />
-                                                </svg>
-                                            </span>
-                                            <!--end::Svg Icon-->
-                                        </div>
-                                        <!--end::Item-->
-                                        <!--begin::Item-->
-                                        <div class="d-flex align-items-center mb-7">
-                                            <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Acceso a todos los BootCamps Online (GRATUITOS) de CheethAkademy</span>
-                                            <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                            <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black" />
-                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="black" />
-                                                </svg>
-                                            </span>
-                                            <!--end::Svg Icon-->
-                                        </div>
-                                        <!--end::Item-->
-                                        <!--begin::Item-->
-                                        <div class="d-flex align-items-center mb-7">
-                                            <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Gobernanza en CheethAkademy</span>
-                                            <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                            <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black" />
-                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="black" />
-                                                </svg>
-                                            </span>
-                                            <!--end::Svg Icon-->
-                                        </div>
-                                        <!--end::Item-->
-                                        <!--begin::Item-->
-                                        <div class="d-flex align-items-center mb-7">
-                                            <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Asesorías directas (chat) con Instructor del Curso</span>
-                                            <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                            <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black" />
-                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="black" />
-                                                </svg>
-                                            </span>
-                                            <!--end::Svg Icon-->
-                                        </div>
-                                        <!--end::Item-->
-                                        <!--begin::Item-->
-                                        <div class="d-flex align-items-center mb-7">
-                                            <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Acceso a todos los Cursos (PAGOS y GRATUITOS) de CheethAkademy</span>
-                                            <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                            <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black" />
-                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="black" />
-                                                </svg>
-                                            </span>
-                                            <!--end::Svg Icon-->
-                                        </div>
-                                        <!--end::Item-->
-                                        <!--begin::Item-->
-                                        <div class="d-flex align-items-center mb-7">
-                                            <span class="fw-bold fs-5 text-muted flex-grow-1">Acceso a todos los Bootcamps (PAGOS y GRATUITOS) de CheethAkademy</span>
-                                            <!--begin::Svg Icon | path: icons/duotune/general/gen040.svg-->
-                                            <span class="svg-icon svg-icon-1">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black" />
-                                                    <rect x="7" y="15.3137" width="12" height="2" rx="1" transform="rotate(-45 7 15.3137)" fill="black" />
-                                                    <rect x="8.41422" y="7" width="12" height="2" rx="1" transform="rotate(45 8.41422 7)" fill="black" />
-                                                </svg>
-                                            </span>
-                                            <!--end::Svg Icon-->
-                                        </div>
-                                        <!--end::Item-->
-                                        <!--begin::Item-->
-                                        <div class="d-flex align-items-center">
-                                            <span class="fw-bold fs-5 text-muted flex-grow-1">500 CTokens cada Mes</span>
-                                            <!--begin::Svg Icon | path: icons/duotune/general/gen040.svg-->
-                                            <span class="svg-icon svg-icon-1">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black" />
-                                                    <rect x="7" y="15.3137" width="12" height="2" rx="1" transform="rotate(-45 7 15.3137)" fill="black" />
-                                                    <rect x="8.41422" y="7" width="12" height="2" rx="1" transform="rotate(45 8.41422 7)" fill="black" />
-                                                </svg>
-                                            </span>
-                                            <!--end::Svg Icon-->
-                                        </div>
-                                        <!--end::Item-->
-                                    </div>
-                                    <!--end::Body-->
-                                </div>
-                                <!--end::Tab Pane-->
-                                <!--begin::Tab Pane-->
-                                <div class="tab-pane fade" id="kt_upgrade_plan_enterprise">
-                                    <!--begin::Heading-->
-                                    <div class="pb-5">
-                                        <h2 class="fw-bolder text-dark">¿Qué hay en el Plan de Socio?</h2>
-                                        <div class="text-muted fw-bold">Acceso Completo a toda la plataforma y sus Beneficios</div>
-                                    </div>
-                                    <!--end::Heading-->
-                                    <!--begin::Body-->
-                                    <div class="pt-1">
-                                        <!--begin::Item-->
-                                        <div class="d-flex align-items-center mb-7">
-                                            <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Acceso a todos los Cursos (GRATUITOS) de CheethAkademy</span>
-                                            <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                            <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black" />
-                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="black" />
-                                                </svg>
-                                            </span>
-                                            <!--end::Svg Icon-->
-                                        </div>
-                                        <!--end::Item-->
-                                        <!--begin::Item-->
-                                        <div class="d-flex align-items-center mb-7">
-                                            <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Acceso a todos los BootCamps Online (GRATUITOS) de CheethAkademy</span>
-                                            <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                            <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black" />
-                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="black" />
-                                                </svg>
-                                            </span>
-                                            <!--end::Svg Icon-->
-                                        </div>
-                                        <!--end::Item-->
-                                        <!--begin::Item-->
-                                        <div class="d-flex align-items-center mb-7">
-                                            <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Gobernanza en CheethAkademy</span>
-                                            <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                            <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black" />
-                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="black" />
-                                                </svg>
-                                            </span>
-                                            <!--end::Svg Icon-->
-                                        </div>
-                                        <!--end::Item-->
-                                        <!--begin::Item-->
-                                        <div class="d-flex align-items-center mb-7">
-                                            <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Asesorías directas (chat) con Instructor del Curso</span>
-                                            <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                            <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black" />
-                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="black" />
-                                                </svg>
-                                            </span>
-                                            <!--end::Svg Icon-->
-                                        </div>
-                                        <!--end::Item-->
-                                        <!--begin::Item-->
-                                        <div class="d-flex align-items-center mb-7">
-                                            <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Acceso a todos los Cursos (PAGOS y GRATUITOS) de CheethAkademy</span>
-                                            <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                            <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black" />
-                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="black" />
-                                                </svg>
-                                            </span>
-                                            <!--end::Svg Icon-->
-                                        </div>
-                                        <!--end::Item-->
-                                        <!--begin::Item-->
-                                        <div class="d-flex align-items-center mb-7">
-                                            <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Acceso a todos los Bootcamps (PAGOS y GRATUITOS) de CheethAkademy</span>
-                                            <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                            <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black" />
-                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="black" />
-                                                </svg>
-                                            </span>
-                                            <!--end::Svg Icon-->
-                                        </div>
-                                        <!--end::Item-->
-                                        <!--begin::Item-->
-                                        <div class="d-flex align-items-center">
-                                            <span class="fw-bold fs-5 text-gray-700 flex-grow-1">+500 CTokens cada primer día del Mes</span>
-                                            <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                            <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black" />
-                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="black" />
-                                                </svg>
-                                            </span>
-                                            <!--end::Svg Icon-->
-                                        </div>
-                                        <!--end::Item-->
-                                    </div>
-                                    <!--end::Body-->
-                                </div>
-                                <!--end::Tab Pane-->
-                            </div>
-                            <!--end::Tab content-->
-                        </div>
-                        <!--end::Col-->
-                    </div>
-                    <!--end::Row-->
-                </div>
-                <!--end::Plans-->
-                <!--begin::Actions-->
-                <div class="d-flex flex-center flex-row-fluid pt-12">
-                    <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Upgrade Plan</button>
-                </div>
-                <!--end::Actions-->
-            </div>
-            <!--end::Modal body-->
-        </div>
-        <!--end::Modal content-->
-    </div>
-    <!--end::Modal dialog-->
-</div>
 
-
-<!--begin::Modal - Select Users-->
-<div class="modal fade" id="kt_modal_select_progreso" tabindex="-1" aria-hidden="true">
-    <!--begin::Modal dialog-->
-    <div class="modal-dialog mw-700px">
-        <!--begin::Modal content-->
-        <div class="modal-content">
-            <!--begin::Modal header-->
-            <div class="modal-header pb-0 border-0 d-flex justify-content-end">
-                <!--begin::Close-->
-                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
-                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-                    <span class="svg-icon svg-icon-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
-                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
-                        </svg>
-                    </span>
-                    <!--end::Svg Icon-->
-                </div>
-                <!--end::Close-->
-            </div>
-            <!--end::Modal header-->
-            <!--begin::Modal body-->
-            <div class="modal-body scroll-y mx-5 mx-xl-10 pt-0 pb-15">
-                <!--begin::Heading-->
-                <div class="text-center mb-13">
-                    <!--begin::Title-->
-                    <h1 class="d-flex justify-content-center align-items-center mb-3">Actividades de Progreso
-                    <span class="badge badge-circle badge-secondary ms-3">1</span></h1>
-                    <!--end::Title-->
-                    <!--begin::Description-->
-                    <div class="text-muted fw-bold fs-5">Realiza todas las actividades para obtener más beneficios de
-                    <a href="dashboard" class="link-primary fw-bolder">CheethAkademy</a>.</div>
-                    <!--end::Description-->
-                </div>
-                <!--end::Heading-->
-                <!--begin::Users-->
-                <div class="mh-475px scroll-y me-n7 pe-7">
-                    <!--begin::User-->
-                    <div class="border border-hover-primary p-7 rounded mb-7">
-                        <!--begin::Info-->
-                        <div class="d-flex flex-stack pb-3">
-                            <!--begin::Info-->
-                            
-                            <!--begin::Stats-->
-                            <div clas="d-flex">
-                                <!--begin::Price-->
-                                <div class="text-end pb-3">
-                                    <span class="text-muted fs-7">NIVEL 1</span>
-                                </div>
-                                <!--end::Price-->
-                            </div>
-                            <!--end::Stats-->
-                        </div>
-                        <!--end::Info-->
-                        <!--begin::Wrapper-->
-                        <div class="p-0">
-                            <!--begin::Section-->
-                            <div class="d-flex flex-column">
-                                <!--begin::Text-->
-                                <p class="text-gray-700 fw-bold fs-6 mb-4">RECOMPENSA: +500 CTokens</p>
-                                <!--end::Text-->
-                                <!--begin::Tags-->
-                                <div class=" text-gray-700 fw-bold fs-7">
-                                    <!--begin::Tag-->
-                                    <span class="border border-2 rounded me-3 p-1 px-2">Invita 5 Personas a CheethAkademy y espera su suscripción </span>
-                                    <!--end::Tag-->
-                                    <!--begin::Tag-->
-                                    <div style="height: 10;"></div>
-                                    <br>
-                                    <span class="border border-2 rounded me-3 p-1 px-2">Sigué a CheethAkademy en toda sus Redes Sociales</span>
-                                    <!--end::Tag-->
-                                    <!--begin::Tag-->
-                                    <div style="height: 10;"></div>
-                                    <br>
-                                    <span class="border border-2 rounded me-3 p-1 px-2">Adquiere un Curso (PAGO) en CheethAkademy</span>
-                                    <!--end::Tag-->
-                                </div>
-                                <!--end::Tags-->
-                            </div>
-                            <!--end::Section-->
-                            <!--begin::Footer-->
-                            <div class="d-flex flex-column">
-                                <!--begin::Separator-->
-                                <div class="separator separator-dashed border-muted my-5"></div>
-                                <!--end::Separator-->
-                                <!--begin::Action-->
-                                <div class="d-flex flex-stack">
-                                    <!--begin::Progress-->
-                                    <div class="d-flex flex-column mw-200px">
-                                        <div class="d-flex align-items-center mb-2">
-                                            <span class="text-gray-700 fs-6 fw-bold me-2">90%</span>
-                                            <span class="text-muted fs-8">Tarea Realizada</span>
-                                        </div>
-                                        <div class="progress h-6px w-200px">
-                                            <div class="progress-bar bg-primary" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                    <!--end::Progress-->
-                                    <!--begin::Button-->
-                                    <!-- <button type="button" class="btn btn-sm" [ngClass]="{'btn-primary': {{jobComplet}}, 'btn-secondary': !{{esPrimario}}}" [disabled]="!esPrimario">Completado</button> -->
-                                    <!--end::Button-->
-                                </div>
-                                <!--end::Action-->
-                            </div>
-                            <!--end::Footer-->
-                        </div>
-                        <!--end::Wrapper-->
-                    </div>
-                    <!--end::User-->
-                    <!--begin::User-->
-                    <div class="border border-hover-primary p-7 rounded mb-7">
-                        <!--begin::Info-->
-                        <div class="d-flex flex-stack pb-3">
-                            
-                            <!--begin::Stats-->
-                            <div clas="d-flex">
-                                <!--begin::Price-->
-                                <div class="text-end pb-3">
-                                    <span class="text-muted fs-7">NIVEL 2</span>
-                                </div>
-                                <!--end::Price-->
-                            </div>
-                            <!--end::Stats-->
-                        </div>
-                        <!--end::Info-->
-                        <!--begin::Wrapper-->
-                        <div class="p-0">
-                            <!--begin::Section-->
-                            <div class="d-flex flex-column">
-                                <!--begin::Text-->
-                                <p class="text-gray-700 fw-bold fs-6 mb-4">Outlines keep you honest. They stop you from indulging.</p>
-                                <!--end::Text-->
-                                <!--begin::Tags-->
-                                <div class="d-flex text-gray-700 fw-bold fs-7">
-                                    <!--begin::Tag-->
-                                    <span class="border border-2 rounded me-3 p-1 px-2">HTML</span>
-                                    <!--end::Tag-->
-                                    <!--begin::Tag-->
-                                    <span class="border border-2 rounded me-3 p-1 px-2">Javascript</span>
-                                    <!--end::Tag-->
-                                    <!--begin::Tag-->
-                                    <span class="border border-2 rounded me-3 p-1 px-2">Python</span>
-                                    <!--end::Tag-->
-                                </div>
-                                <!--end::Tags-->
-                            </div>
-                            <!--end::Section-->
-                            <!--begin::Footer-->
-                            <div class="d-flex flex-column">
-                                <!--begin::Separator-->
-                                <div class="separator separator-dashed border-muted my-5"></div>
-                                <!--end::Separator-->
-                                <!--begin::Action-->
-                                <div class="d-flex flex-stack">
-                                    <!--begin::Progress-->
-                                    <div class="d-flex flex-column mw-200px">
-                                        <div class="d-flex align-items-center mb-2">
-                                            <span class="text-gray-700 fs-6 fw-bold me-2">58%</span>
-                                            <span class="text-muted fs-8">Tarea Realizada</span>
-                                        </div>
-                                        <div class="progress h-6px w-200px">
-                                            <div class="progress-bar bg-success" role="progressbar" style="width: 58%" aria-valuenow="58" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                    <!--end::Progress-->
-                                    <!--begin::Button-->
-                                    <a href="#" class="btn btn-sm btn-primary">Completado</a>
-                                    <!--end::Button-->
-                                </div>
-                                <!--end::Action-->
-                            </div>
-                            <!--end::Footer-->
-                        </div>
-                        <!--end::Wrapper-->
-                    </div>
-                   
-                </div>
-                <!--end::Users-->
-            </div>
-            <!--end::Modal Body-->
-        </div>
-        <!--end::Modal content-->
-    </div>
-    <!--end::Modal dialog-->
-</div>
-<!--end::Modal - Select Users-->
-                
                 <!--begin::Footer-->
                 <div class="footer py-4 d-flex flex-lg-column" id="kt_footer">
                     <!--begin::Container-->

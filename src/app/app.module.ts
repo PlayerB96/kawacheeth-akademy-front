@@ -1,4 +1,4 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -25,6 +25,15 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { InviteComponent } from './invite/invite.component';
 
+import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
+import { MdbModalModule, MdbModalRef } from 'mdb-angular-ui-kit/modal';
+import { ModalsComponent } from './profile/modals-progress/modals.component';
+import { ProgressComponent } from './progress/progress.component';
+import { TransferComponent } from './transfer/transfer.component';
+import { ModalsTransferencialocalComponent } from './transfer/modals-transferencialocal/modals-transferencialocal.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { ModalsHistorialComponent } from './transfer/modals-historial/modals-historial.component';
 
 @NgModule({
   schemas: [
@@ -42,6 +51,12 @@ import { InviteComponent } from './invite/invite.component';
     HomeComponent,
     RegisterComponent,
     InviteComponent,
+    ModalsComponent,
+    ProgressComponent,
+    TransferComponent,
+    ModalsTransferencialocalComponent,
+    ModalsHistorialComponent,
+
 
   ],
   imports: [
@@ -56,9 +71,15 @@ import { InviteComponent } from './invite/invite.component';
     ReactiveFormsModule,
     FormsModule,
     MatButtonModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    MdbCheckboxModule,
+    MdbModalModule,
+    MatFormFieldModule,
+    MatSelectModule,
 
   ],
+
+
   providers: [],
   bootstrap: [AppComponent]
 })

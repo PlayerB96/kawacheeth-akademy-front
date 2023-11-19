@@ -2,6 +2,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
 @import "~bootstrap/dist/css/bootstrap.min.css";
 
+
+// MDB SCSS
+@import "mdb-angular-ui-kit/assets/scss/mdb.scss";
+
 * {
   margin: 0;
   padding: 0;
@@ -9,7 +13,13 @@
 }
 
 #kt_modal_select_progreso {
-  z-index: 1; /* Ajusta el valor según sea necesario */
-}
-html, body { height: 100%; }
+  z-index: -1;
 
+  /* Ajusta el valor según sea necesario */
+}
+
+
+html,
+body {
+  height: 100%;
+}

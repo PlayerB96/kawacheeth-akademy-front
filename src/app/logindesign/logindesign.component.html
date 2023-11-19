@@ -1,37 +1,38 @@
-<body>
-  <div class="container">
-    <div class="img">
-      <img src="assets/bg.svg" />
+<div class="container">
+  <div class="logo">
+    <div class="logo__circle">
+      <img class="logo__img" src="assets/anonymous.png" alt="Descripción de la imagen">
     </div>
-    <div class="login-content">
-      <form [formGroup]="loginForm" (ngSubmit)="onLogin(loginForm.value)">
-        <img src="assets/LOGOCHEETH-v3.png" />
-        <div class="input-div one">
-          <div class="i">
-            <i class="fas fa-user"></i>
-          </div>
-          <div class="div">
-            <input type="text" id="login" class="fadeIn second" name="login" placeholder="Usuario"
-              formControlName="usuario" />
-          </div>
-        </div>
-        <div class="input-div pass">
-          <div class="i">
-            <i class="fas fa-lock"></i>
-          </div>
-          <div class="div">
-            <input type="password" id="password" class="fadeIn third" name="login" placeholder="Contraseña"
-              formControlName="password" />
-          </div>
-        </div>
-        <div class="alert alert-danger" role="alert" *ngIf="errorStatus">
-          {{errorMsj}}
-        </div>
-        <input type="submit" class="btn" value="Ingresar" />
-        <input type="submit" class="btn" value="Registrarse" (click)="redirigir()" />
 
-      </form>
-    </div>
   </div>
-  <script type="text/javascript" src="js/main.js"></script>
-</body>
+  <form class="form" [formGroup]="loginForm" (ngSubmit)="onLogin(loginForm.value)">
+    <div class="form__group">
+      <div class="form__icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+          <path
+            d="M5 5a5 5 0 0 1 10 0v2A5 5 0 0 1 5 7V5zM0 16.68A19.9 19.9 0 0 1 10 14c3.64 0 7.06.97 10 2.68V20H0v-3.32z" />
+        </svg></div>
+      <input class="form__control" type="text" placeholder="usuario" formControlName="usuario">
+    </div>
+    <div class="form__group">
+      <div class="form__icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+          <path
+            d="M4 8V6a6 6 0 1 1 12 0v2h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h1zm5 6.73V17h2v-2.27a2 2 0 1 0-2 0zM7 6v2h6V6a3 3 0 0 0-6 0z" />
+        </svg></div>
+      <input class="form__control" type="password" placeholder="contraseña" formControlName="password">
+    </div>
+    <div class="alert alert-danger" role="alert" *ngIf="errorStatus">
+      {{errorMsj}}
+    </div>
+
+    <div>
+
+      <button class="form__button" type="submit">
+        Ingresar
+      </button>
+      <br>
+      <button class="form__button" type="submit" (click)="redirigir()">
+        Registrarse
+      </button>
+    </div>
+  </form>
+</div>

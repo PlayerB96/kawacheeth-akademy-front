@@ -26,6 +26,7 @@ export class LogindesignComponent implements OnInit {
   }
 
   public onLogin(form: any) {
+    console.log("aaaaaaaaaaaaaaaa")
     this.serviceLogin.loginByEmail(form).subscribe(data => {
       let dataResponse: ResponseI = data
       // console.log(dataResponse)

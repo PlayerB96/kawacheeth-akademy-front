@@ -24,13 +24,10 @@
               "src/templates/demo7/dist/assets/plugins/global/plugins.bundle.css",
               "src/templates/demo7/dist/assets/css/style.bundle.css",
               "src/templates/demo7/dist/assets/plugins/custom/datatables/datatables.bundle.css"
-            ],  
+            ],
             "scripts": [
-              "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "node_modules/datatables.net/js/jquery.dataTables.min.js",
-              "src/templates/demo7/dist/assets/js/custom/apps/ecommerce/catalog/products.js"
-            ],  
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
+            ],
             "outputPath": "dist/your-project-name",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -38,11 +35,9 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/favicon.ico", 
+              "src/favicon.ico",
               "src/assets"
             ]
-            
-           
           },
           "configurations": {
             "production": {

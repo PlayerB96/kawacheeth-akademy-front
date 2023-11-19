@@ -4,6 +4,12 @@ export interface ResponseIdetailProfile {
     status: boolean;
 }
 
+export interface ResponseProgressProfile {
+    data: DetailProgress;
+    message: string;
+    status: boolean;
+}
+
 export interface PlanDescripcion {
     porcentaje_realizado: number;
     nombre_plan: string;
@@ -20,6 +26,35 @@ export interface DetailProfile {
     historial: Historial[];
 
 }
+
+
+export interface DetailProgress {
+    cod_cuenta: string;
+    usuario: string;
+    list_activities: ListActivities[];
+}
+
+export interface ListActivities {
+    titulo: string;
+    ctokens: string;
+    status: boolean;
+    detalle_status: string;
+    nivel: string;
+    progreso: number;
+    descripcion: string;
+    hitos: Hitos[];
+}
+
+export interface Hitos {
+    hito: string;
+    codigo: string;
+    status: boolean;
+    completed: boolean;
+
+
+}
+
+
 
 export interface Historial {
     icon: string;

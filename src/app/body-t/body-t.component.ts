@@ -8,7 +8,7 @@ interface SideNavToggle {
   templateUrl: './body-t.component.html',
   styleUrls: ['./body-t.component.scss']
 })
-export class BodyTComponent  {
+export class BodyTComponent {
 
 
   @Input() collapsed = false;
@@ -16,9 +16,9 @@ export class BodyTComponent  {
   getBodyClass(): string {
 
     let styleClass = '';
-    if(this.collapsed && this.screenWidth > 768){
+    if (this.collapsed && this.screenWidth > 768) {
       styleClass = 'body-trimmed';
-    }else if(this.collapsed && this.screenWidth <= 768 && this.screenWidth > 0){
+    } else if (this.collapsed && this.screenWidth <= 768 && this.screenWidth > 0) {
       styleClass = 'body-md-screen'
     }
     return styleClass;

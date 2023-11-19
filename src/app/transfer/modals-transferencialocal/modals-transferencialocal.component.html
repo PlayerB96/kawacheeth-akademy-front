@@ -1,0 +1,88 @@
+<div class="body-content">
+    <div class="header-select">
+        <select [(ngModel)]="selectedOptionPlan" (ngModelChange)="calculateAmount()"
+            class="form-select form-select-solid" data-control="select2" data-placeholder="Select an option"
+            data-allow-clear="true">
+            <option value="0">Seleccione</option>
+            <option value="9">
+                Asociado - $9.00
+            </option>
+            <option value="19">
+                Profesional - $19.00
+            </option>
+            <option value="25">
+                Socio - $25.00
+            </option>
+        </select>
+        <select [(ngModel)]="selectedOptionTime" (ngModelChange)="calculateAmount()"
+            class="form-select form-select-solid" data-control="select2" data-placeholder="Select an option"
+            data-allow-clear="true">
+            <option value="0">Seleccione</option>
+            <option value="1">
+                1 Mes
+            </option>
+            <option value="3">
+                3 Meses
+            </option>
+            <option value="6">
+                6 Meses
+            </option>
+            <option value="12">
+                12 Meses
+            </option>
+        </select>
+    </div>
+    <div class="notice d-flex bg-light-primary rounded border-success border border-dashed mb-12 p-6">
+        <!--begin::Wrapper-->
+        <div class="d-flex flex-stack flex-grow-1 ">
+            <!--begin::Content-->
+            <div class=" fw-semibold">
+                <h4 class="text-gray-900 fw-bold">Monto de Depósito:</h4>
+                <h2 class="text-gray-900 fw-bold">
+                    {{ calculatedAmount | number: '1.2-2' }} USD -
+
+                    <span style="font-size: 1rem; color: green; margin-left: 5px;">{{ discountMount }} Descuento</span>
+                </h2>
+                <span style="font-size: 1.5rem; color: gray;"> S/ {{ calculatedAmountSoles | number: '1.2-2' }}
+                </span>
+
+
+                <div class="fs-6 text-gray-700 ">
+                    <div *ngIf="calculatedAmount !== null" class="fs-6 text-gray-700 ">Por
+                        favor realice el deposite
+                        en la siguiente cuenta:
+
+                        <div class="containar-ncuenta">
+                            <div class="fs-6 text-gray-900 fw-bold">Nro.Cuenta : {{numeroCuenta}}
+                            </div>
+                            <div class="fs-6 text-gray-900 fw-bold">Titular: Bryan Hector Rafael Andia</div>
+                            <div class="fs-6 text-gray-900 fw-bold">Banco : {{bancoLocal}}</div>
+                            <div class="fs-6 text-gray-900 fw-bold">Ruc: 2015022245</div>
+                        </div>
+
+                    </div>
+
+                    <div class="fs-6 text-gray-700 ">
+                        Recuerda Tomar Captura del deposito y notificarlo en el
+                        enlace de abajo.
+
+                    </div>
+
+
+                </div>
+            </div>
+
+            <!--end::Content-->
+
+        </div>
+        <!--end::Wrapper-->
+    </div>
+    <div class="ms-1">
+        <!-- Agrega un input de tipo archivo oculto -->
+        <input type="file" #fileInput style="display: none" (change)="cargarImagen($event)">
+
+        <!-- Agrega un botón personalizado que activará el input de archivo -->
+        <button class="btn btn-sm btn-primary" (click)="activarCargadorImagen()">Cargar Imagen</button>
+
+    </div>
+</div>
