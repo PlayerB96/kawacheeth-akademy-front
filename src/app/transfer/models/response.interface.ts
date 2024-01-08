@@ -19,11 +19,17 @@ export interface ResponsePayment {
     status: boolean;
 }
 
+export interface ResponseImage {
+    data: string;
+    message: string;
+    status: boolean;
+}
+
 export interface PaymentData {
-    cod_cuenta: string;
-    usuario: string;
-    actual_payment: ActualPayment;
-    report_payments: ReportePayment[];
+    id: number;
+    status_payment: boolean;
+    state_payment: string;
+    hitos: HitosPayment[];
 }
 
 export interface ActualPayment {
@@ -32,17 +38,28 @@ export interface ActualPayment {
     hitos: HitosPayment[];
 }
 export interface HitosPayment {
-    codigo: string;
-    titulo: string;
-    fecha: string;
+    id: number;
+    code: string;
+    name: string;
+    date: string;
     status: boolean;
 }
 
-export interface ReportePayment {
+export interface Hitos {
     status_payment: number;
     state_payment: string;
     method_payment: string;
     date: string;
     pdf: string;
 
+}
+export interface ReportPayment {
+    id: number;
+    image: string;
+    date_created: string;
+    status: boolean;
+    state: string;
+    plan: string;
+    monto_usd: string;
+    user: number;
 }

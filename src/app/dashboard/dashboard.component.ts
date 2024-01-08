@@ -35,7 +35,7 @@ export class DashboardComponent implements OnInit {
   ) {
     this.responseActual = this.loginservice.getResponseActual();
 
-    this.cod_cuenta = this.responseActual?.data.cod_cuenta ?? null;
+    this.cod_cuenta = this.responseActual?.data.username ?? null;
     console.log(this.cod_cuenta)
 
   }

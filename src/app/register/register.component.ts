@@ -30,11 +30,7 @@ export class RegisterComponent implements OnInit {
   registeUser(form: any) {
     if (this.registerForm.valid) {
       this.serviceRegister.registeUser(form).subscribe(data => {
-        console.log(data.status)
-        if (data.status == false) {
-          this.errorStatus = true
-          this.errorMsj = 'Código no válido'
-        }
+        console.log(data.user)
         Swal.fire({
           icon: "success",
           title: "Cuenta Creado con Éxito",

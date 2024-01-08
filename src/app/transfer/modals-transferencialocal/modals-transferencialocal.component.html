@@ -63,12 +63,8 @@
                     </div>
 
                     <div class="fs-6 text-gray-700 ">
-                        Recuerda Tomar Captura del deposito y notificarlo en el
-                        enlace de abajo.
-
+                        Nota : Recuerda Tomar Captura del deposito y enviar la captura en formatos (.png, .jpg).
                     </div>
-
-
                 </div>
             </div>
 
@@ -77,12 +73,22 @@
         </div>
         <!--end::Wrapper-->
     </div>
+    <div *ngIf="imgStatus" class="notice d-flex bg-light-primary rounded border-success border border-dashed m-4 p-1">
+        {{imageName}}
+    </div>
     <div class="ms-1">
         <!-- Agrega un input de tipo archivo oculto -->
         <input type="file" #fileInput style="display: none" (change)="cargarImagen($event)">
 
         <!-- Agrega un botón personalizado que activará el input de archivo -->
         <button class="btn btn-sm btn-primary" (click)="activarCargadorImagen()">Cargar Imagen</button>
+        <button class="btn btn-sm btn-success ms-4" (click)="sendImage()" [disabled]="!imgStatus || loading">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            {{ loading ? 'Enviando Pago' : (imagenEnviada ? 'Pago Enviado ✔' : (errorAlProcesarImagen ? 'Enviar
+            Pago ❌' : 'Enviar Pago')) }}
+        </button>
+
+
 
     </div>
 </div>

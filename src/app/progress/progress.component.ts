@@ -2,10 +2,11 @@ import { Component, OnInit, Output } from '@angular/core';
 import { LoginservicesService } from '../logindesign/services/login.service';
 import { ProfileService } from '../profile/services/profile.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { Historial, ResponseI, ResponseIdetailProfile } from '../profile/models/profile-models';
+import { UserHistory, ResponseI, ResponseIdetailProfile, User } from '../profile/models/profile-models';
 import { Subject } from 'rxjs';
 import { ListActivities, ResponseProgressProfile } from '../profile/models/response.interface';
 import { Md5 } from 'ts-md5';
+import { ModalService } from './services/modal.service';
 
 @Component({
   selector: 'app-progress',
@@ -16,6 +17,7 @@ export class ProgressComponent implements OnInit {
 
   public responseActual: ResponseI | null = null;
   public response: any
+  selectedHito: any;
 
   nombreCompleto: string | null = null
   rol: string | null = null
@@ -26,29 +28,32 @@ export class ProgressComponent implements OnInit {
   cursos_pendientes: number | null = null
   cursos_terminados: number | null = null
   nombre_plan: string | null = null
-  historial: Historial[] | null = null
+  historial: UserHistory[] | null = null
   localidad: string | null = null
   list_activities: ListActivities[] | null = null
   usermd5: string | null = null
   copied: boolean = false;
 
-
-  porcentaje_plan: string | null = null
+  nombreValidation: string = '';
+  nivelValidation: string = '';
+  codigoValidation: string = '';
+  user_id: number | null = null
+  porcentaje_plan: number | null = null
   estado_suscripcion: boolean | null = null
   modalContent: string | null = null; // Inicializa modalContent con null
   selectedOption: string = '0'; // Propiedad para rastrear la opción seleccionada
 
   constructor(
-    private loginservice: LoginservicesService, private profileservice: ProfileService, private sanitizer: DomSanitizer
+    private modalServiceTransfer: ModalService, private loginservice: LoginservicesService, private profileservice: ProfileService, private sanitizer: DomSanitizer
   ) {
     this.responseActual = this.loginservice.getResponseActual();
 
-    this.cod_cuenta = this.responseActual?.data.cod_cuenta ?? null;
-    this.usuario = this.responseActual?.data.usuario ?? null;
+    this.user_id = this.responseActual?.data.id ?? null;
+    this.usuario = this.responseActual?.data.username ?? null;
     if (this.usuario !== null) {
       this.usermd5 = Md5.hashStr(this.usuario);
     }
-    console.log(this.cod_cuenta)
+    console.log(this.user_id)
 
   }
   @Output()
@@ -56,9 +61,11 @@ export class ProgressComponent implements OnInit {
   errorMsj: any = "";
 
   ngOnInit() {
+
     this.datosPersonales();
-    this.getProfileDetails(this.cod_cuenta)
-    this.getProfileProgress(this.cod_cuenta, this.usuario)
+    this.getProfileDetails(this.user_id)
+    this.getProfileProgress(this.user_id)
+
 
   }
 
@@ -66,47 +73,54 @@ export class ProgressComponent implements OnInit {
 
     if (this.responseActual != null) {
 
-      this.nombreCompleto = this.responseActual.data.nombres + " " + this.responseActual.data.apellidos;
-      this.correo = this.responseActual.data.correo;
+      this.nombreCompleto = this.responseActual.data.name + " " + this.responseActual.data.lastname;
+      this.correo = this.responseActual.data.email;
       this.rol = this.responseActual.data.rol;
 
     }
   }
 
-  public getProfileDetails(cod_cuenta: any) {
+  public getProfileDetails(user_id: any) {
 
-    this.response = this.profileservice.getProfileDetails(cod_cuenta)
-    this.response.subscribe((res: ResponseIdetailProfile) => {
+    this.response = this.profileservice.getProfileDetails(user_id)
+    this.response.subscribe((res: User) => {
       if (res != null) {
-        console.log(res)
-        this.cursos_adquiridos = res.data.cursos_adquiridos;
-        this.cursos_pendientes = res.data.cursos_pendientes;
-        this.cursos_terminados = res.data.cursos_terminados;
-        this.nombre_plan = res.data.descripcion_plan.nombre_plan;
-        this.porcentaje_plan = res.data.descripcion_plan.porcentaje_realizado;
-        this.estado_suscripcion = res.data.estado_suscripcion;
-        this.historial = res.data.historial;
+
+        this.cursos_adquiridos = res.courses_acquired;
+        this.cursos_pendientes = res.courses_pending;
+        this.cursos_terminados = res.courses_completed;
+        this.nombre_plan = res.subscription_plan.name;
+        this.porcentaje_plan = res.percentage_completed;
+        this.estado_suscripcion = res.subscription_state;
+        // this.historial = res.data.historial;
       }
     });
 
   }
 
-  public getProfileProgress(cod_cuenta: any, usuario: any) {
 
-    this.response = this.profileservice.getProfileProgress(cod_cuenta, usuario)
+
+  public getProfileProgress(user_id: any) {
+
+    this.response = this.profileservice.getProfileProgress(user_id)
     this.response.subscribe((res: ResponseProgressProfile) => {
       if (res != null) {
-        this.list_activities = res.data.list_activities
+        this.list_activities = res.data
       }
 
     });
 
   }
 
-  toggleDivs(option: string) {
-    this.selectedOption = option;
-  }
+  toggleDivs() {
+    if (this.selectedHito) {
+      console.log(this.selectedHito.code)
+      this.nombreValidation = this.selectedHito.name
+      this.nivelValidation = this.selectedHito.level
+      this.codigoValidation = this.selectedHito.code
 
+    }
+  }
   copyToClipboard() {
     if (this.usermd5 !== null) {
       const input = document.createElement('input');
@@ -125,5 +139,9 @@ export class ProgressComponent implements OnInit {
     }
   }
 
+  abrirModal(typeStateModal: string, selectedOption: string) {
 
+    this.modalServiceTransfer.abrirModal(typeStateModal, selectedOption);
+
+  }
 }

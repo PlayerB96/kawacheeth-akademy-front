@@ -1,11 +1,12 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output, ViewChild } from '@angular/core';
 import { LoginservicesService } from '../logindesign/services/login.service';
 import { ProfileService } from '../profile/services/profile.service';
 import { Subject } from 'rxjs';
-import { ResponseI, ResponseIdetailProfile } from '../profile/models/profile-models';
+import { ResponseI, User } from '../profile/models/profile-models';
 import { ModalService } from './services/modal.service';
 import { TransferService } from './services/transfer.service';
-import { ResponseChangedDolar } from './models/response.interface';
+import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-transfer',
   templateUrl: './transfer.component.html',
@@ -16,10 +17,19 @@ export class TransferComponent implements OnInit {
   public responseActual: ResponseI | null = null;
   public response: any
 
+
+  public responseImage: any
+  imageName: string = '';
+  public imagenSeleccionada: any
+  loading: boolean = false; // Añade esta línea para definir la propiedad loading
+  imagenEnviada: boolean = false;
+  errorAlProcesarImagen: boolean = false;
+
   nombreCompleto: string | null = null
   rol: string | null = null
   correo: string | null = null
   cod_cuenta: string | null = null
+  user_id: number | null = null
   usuario: string | null = null
   cursos_adquiridos: number | null = null
   cursos_pendientes: number | null = null
@@ -30,25 +40,27 @@ export class TransferComponent implements OnInit {
   planValueT: number | null = null
   timeValueT: number | null = null
   discountMount: string | null = null
+  id_user: number | null = null
+  imgStatus: boolean = false
 
 
 
-  porcentaje_plan: string | null = null
+  porcentaje_plan: number | null = null
   estado_suscripcion: boolean | null = null
   modalContent: string | null = null; // Inicializa modalContent con null
   selectedOptionPlan: string = '0'; // Propiedad para rastrear la opción seleccionada
   selectedOptionTime: string = '0'; // Propiedad para rastrear la opción seleccionada
   calculatedAmount: number | null = null; // Inicialmente no se muestra el monto calculado
   calculatedAmountSoles: number | null = null;
-
+  @ViewChild('fileInput') fileInput: any;
 
   constructor(
-    private modalServiceTransfer: ModalService, private loginservice: LoginservicesService, private profileservice: ProfileService
+    private modalService: ModalService, private transferservice: TransferService, private modalServiceTransfer: ModalService, private loginservice: LoginservicesService, private profileservice: ProfileService
   ) {
     this.responseActual = this.loginservice.getResponseActual();
 
-    this.cod_cuenta = this.responseActual?.data.cod_cuenta ?? null;
-    this.usuario = this.responseActual?.data.usuario ?? null;
+    this.user_id = this.responseActual?.data.id ?? null;
+    this.usuario = this.responseActual?.data.username ?? null;
   }
 
 
@@ -58,7 +70,7 @@ export class TransferComponent implements OnInit {
 
   ngOnInit() {
     this.datosPersonales();
-    this.getProfileDetails(this.cod_cuenta)
+    this.getProfileDetails(this.user_id)
   }
 
 
@@ -67,25 +79,26 @@ export class TransferComponent implements OnInit {
 
     if (this.responseActual != null) {
 
-      this.nombreCompleto = this.responseActual.data.nombres + " " + this.responseActual.data.apellidos;
-      this.correo = this.responseActual.data.correo;
+      this.nombreCompleto = this.responseActual.data.name + " " + this.responseActual.data.lastname;
+      this.correo = this.responseActual.data.email;
       this.rol = this.responseActual.data.rol;
 
     }
   }
 
-  public getProfileDetails(cod_cuenta: any) {
+  public getProfileDetails
+    (cod_cuenta: any) {
 
     this.response = this.profileservice.getProfileDetails(cod_cuenta)
-    this.response.subscribe((res: ResponseIdetailProfile) => {
+    this.response.subscribe((res: User) => {
       if (res != null) {
-        // console.log(res)
-        this.cursos_adquiridos = res.data.cursos_adquiridos;
-        this.cursos_pendientes = res.data.cursos_pendientes;
-        this.cursos_terminados = res.data.cursos_terminados;
-        this.nombre_plan = res.data.descripcion_plan.nombre_plan;
-        this.porcentaje_plan = res.data.descripcion_plan.porcentaje_realizado;
-        this.estado_suscripcion = res.data.estado_suscripcion;
+        console.log(res)
+        this.cursos_adquiridos = res.courses_acquired;
+        this.cursos_pendientes = res.courses_pending;
+        this.cursos_terminados = res.courses_completed;
+        this.nombre_plan = res.subscription_plan.name;
+        this.porcentaje_plan = res.percentage_completed;
+        this.estado_suscripcion = res.subscription_state;
       }
     });
 
@@ -160,14 +173,90 @@ export class TransferComponent implements OnInit {
 
   }
 
-  abrirVentanaCargarImagen(event: Event) {
-    event.preventDefault(); // Evita que el enlace navegue directamente a la URL
 
-    // Abre una nueva ventana (puedes ajustar los parámetros según tus necesidades)
-    const nuevaVentana = window.open('https://tu-url-para-cargar-imagen', '_blank', 'width=600,height=400');
+  sendImage() {
+    this.loading = true;
+    this.errorAlProcesarImagen = false; // Reiniciar el indicador de error
+    console.log("##############");
 
-    // Puedes realizar otras acciones aquí si es necesario
+    if (this.id_user && this.planValueT && this.timeValueT) {
+      this.responseImage = this.transferservice.setImage(this.imagenSeleccionada, this.id_user, this.planValueT, this.timeValueT);
+      this.responseImage.subscribe(
+        (res: any) => {
+          // Lógica de éxito
+          this.imageName = 'Pago Enviado con Éxito';
+          this.loading = false;
+          this.imagenEnviada = true;
+          console.log(this.planValueT);
+          console.log(this.timeValueT);
+
+          console.log("##############");
+
+          if (res.status === 400) {
+            this.modalService.cerrarModalTransfer('transferencia-local');
+
+            Swal.fire({
+              title: 'Error al Enviar Pago',
+              width: 400,
+              padding: "3em",
+              color: "#716add",
+              backdrop: `
+                rgba(0, 139, 123, 0.4)
+                left top
+                no-repeat
+              `
+            });
+          } else {
+            setTimeout(() => {
+              this.modalService.cerrarModalTransfer('transferencia-local');
+            }, 3000);
+          }
+
+
+        },
+        (error: any) => {
+          // Manejar el error
+          console.error(error);
+          this.imageName = 'Error: Ya tiene un Pago pendiente';
+          this.loading = false;
+          this.errorAlProcesarImagen = true; // Establecer a true cuando hay un error
+        }
+      );
+    } else {
+      this.imageName = 'Error: Seleccione un Plan de Suscripción';
+      this.loading = false;
+    }
   }
 
+  cargarImagen(event: any) {
+    const files = event.target.files;
+
+    if (files && files.length > 0) {
+      const imagen = files[0];
+
+      // Validar que el archivo sea una imagen (por extensión)
+      const extensionesValidas = ['jpg', 'jpeg', 'png', 'gif'];
+      const extension = imagen.name.split('.').pop().toLowerCase();
+
+      if (extensionesValidas.includes(extension)) {
+        this.imagenSeleccionada = imagen;
+        this.imageName = imagen.name;
+        this.imgStatus = true;
+      } else {
+        // Mostrar mensaje de error si el archivo no es una imagen
+        alert('Por favor, selecciona un archivo de imagen válido.');
+        this.resetearSeleccion();
+      }
+    }
+  }
+  activarCargadorImagen() {
+    // Simula un clic en el input de archivo cuando se hace clic en el botón
+    this.fileInput.nativeElement.click();
+  }
+  resetearSeleccion() {
+    this.imagenSeleccionada = null;
+    this.imageName = '';
+    this.imgStatus = false;
+  }
 
 }

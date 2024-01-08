@@ -1,64 +1,108 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { ResponseChangedDolar, ResponsePayment } from '../models/response.interface';
+import { Observable, Subject, catchError, tap } from 'rxjs';
+import { ReportPayment, ResponseChangedDolar, ResponseImage, ResponsePayment } from '../models/response.interface';
 import { FileItem, FileUploader, FileUploaderOptions } from 'ng2-file-upload';
+import { ConfigService } from 'src/config.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TransferService {
 
-
+  planName: string | null = null
+  // usuario: string | null = null
   public responseActual!: Response;
-  private uploadCompleteSubject = new Subject<any>();
 
-  url: string = "http://localhost:8000/api/v1/"
+  constructor(private http: HttpClient, private configService: ConfigService) {
 
-  public uploader: FileUploader = new FileUploader({ url: this.url + 'profile/imageUpload' });
-
-  constructor(private http: HttpClient) {
-    this.uploader.onBeforeUploadItem = (item: FileItem) => {
-      item.withCredentials = false;
-    };
-
-    this.uploader.onCompleteItem = (item: FileItem, response: string, status: number) => {
-      // Manejar la lógica de la respuesta aquí si es necesario
-      this.uploadCompleteSubject.next(response);
-    };
   }
 
 
-  public getValorDolar(): Observable<ResponseChangedDolar> {
+  // public getValorDolar(): Observable<ResponseChangedDolar> {
 
-    const response = this.http.get<ResponseChangedDolar>(this.url + 'profile/changedDolar');
+  //   const response = this.http.get<ResponseChangedDolar>(this.url + 'profile/changedDolar');
 
-    return response;
-  }
+  //   return response;
+  // }
 
 
-  public getPaymentData(cod_cuenta: string): Observable<ResponsePayment> {
+  public getPaymentData(user_id: string): Observable<ResponsePayment> {
+
     const body = {
-      cod_cuenta: cod_cuenta,
+      user_id: user_id,
     };
-    const response = this.http.post<ResponsePayment>(this.url + 'profile/detailPayment', body);
+    const url = this.configService.apiUrl;
+
+    const response = this.http.post<ResponsePayment>(url + 'user_historial_payment/', body);
 
     return response;
   }
 
-  public setImage(image: File, usuario: string): Observable<any> {
-    const options: FileUploaderOptions = {
-      url: this.url + 'profile/imageUpload',
-      additionalParameter: { usuario: usuario }
-    };
+  public setImage(image: File, usuario: number, planValue: number, timeValue: number): Observable<ResponseImage> {
 
-    const fileItem = new FileItem(this.uploader, image, options);
-    this.uploader.queue.push(fileItem);
+    console.log(planValue)
+    console.log(timeValue)
+    switch (planValue) {
+      case 9:
+        this.planName = "Asociado";
+        break;
+      case 19:
+        this.planName = "Profesional";
+        break;
+      default:
+        this.planName = "Socio";
+        break;
+    }
 
-    // Inicia la carga manualmente
-    fileItem.upload();
+    const montoCalculado = (planValue * timeValue).toFixed(2);
+    console.log(montoCalculado)
 
-    // Devuelve un observable que notifica cuando la carga está completa
-    return this.uploadCompleteSubject.asObservable();
+    const formData = new FormData();
+    formData.append('image', image);
+    formData.append('user', usuario.toString());
+    formData.append('plan', this.planName ?? ""); // Usar "" como valor predeterminado si this.planName es null
+    formData.append('monto_usd', montoCalculado.toString());
+
+
+    // Convertir FormData a un objeto simple
+    const formDataObject: { [key: string]: any } = {};
+    formData.forEach((value, key) => {
+      formDataObject[key] = value;
+    });
+
+    const url = this.configService.apiUrl;
+
+    const response = this.http.post<ResponseImage>(url + 'report_payment_validation/', formData)
+    // Enviar la solicitud HTTP usando HttpClient
+    console.log(response)
+    return response
   }
+
+  public setImageValidation(image: File, id_user: number, nivelActividad: string, nombreActividad: string): Observable<ReportPayment> {
+    const formData = new FormData();
+    console.log(id_user)
+    formData.append('image', image);
+    formData.append('user', id_user.toString());
+    formData.append('level', nivelActividad);
+    formData.append('name', nombreActividad);
+
+
+    // Convertir FormData a un objeto simple
+    const formDataObject: { [key: string]: any } = {};
+    formData.forEach((value, key) => {
+      formDataObject[key] = value;
+    });
+
+    const url = this.configService.apiUrl;
+
+    const response = this.http.post<ReportPayment>(url + 'report_validation/', formData)
+    // Enviar la solicitud HTTP usando HttpClient
+    return response
+  }
+
+
+
+
+
 }

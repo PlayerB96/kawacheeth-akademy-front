@@ -2,9 +2,10 @@
     <div class="d-print-none border border-dashed border-gray-300 card-rounded h-lg-100 min-w-md-350px p-9 bg-lighten">
         <!--begin::Labels-->
         <div class="mb-8">
-            <span *ngIf="this.state_payment=='filled'" class="badge badge-light-success me-2">Completando</span>
-            <span *ngIf="this.state_payment=='validate'" class="badge badge-secondary">Validando</span>
-            <span *ngIf="this.state_payment=='select'" class="badge badge-light-warning">Pago Pendiente</span>
+            <span *ngIf="this.state_payment=='filled'" class="badge badge-light-success me-2">Completado</span>
+            <span *ngIf="this.state_payment=='validated'" class="badge badge-secondary">Validando</span>
+            <span *ngIf="this.state_payment=='selected'" class="badge badge-light-warning">Pago Pendiente</span>
+            <span *ngIf="this.state_payment=='refused'" class="badge badge-warning">Rechazado</span>
 
         </div>
         <!--end::Labels-->
@@ -26,7 +27,7 @@
         <!--begin::Item-->
         <div class="mb-15">
             <div class="fw-bold text-gray-600 fs-7">Tiempo Aproximado de Validación:</div>
-            <div class="fw-bolder fs-6 text-gray-800 d-flex align-items-center">2 Días
+            <div class="fw-bolder fs-6 text-gray-800 d-flex align-items-center">24 Horas
                 <!-- <span class="fs-7 text-danger d-flex align-items-center">
                     <span class="bullet bullet-dot bg-danger mx-2"></span>Due in 7 days</span> -->
             </div>
@@ -57,8 +58,8 @@
                                 'text-muted': !item.status,
                                 'ps-3': true
                             }">
-                            {{item.titulo}} <br>
-                            <span *ngIf="item.fecha!=''" class="text-gray-600 fs-8">({{item.fecha}})</span>
+                            {{item.name}} <br>
+                            <span *ngIf="item.date!=''" class="text-gray-600 fs-8">({{item.date}})</span>
                         </div>
                     </div>
 

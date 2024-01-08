@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { ResponseI } from '../modelos/response.interface';
 import { LoginI } from '../modelos/login.interface';
 import { Router } from '@angular/router';
-import { Md5 } from 'ts-md5';
+import { ConfigService } from '../../../config.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,22 +12,21 @@ import { Md5 } from 'ts-md5';
 export class LoginservicesService {
   public responseActual!: ResponseI;
   private responseSubject: BehaviorSubject<ResponseI | null> = new BehaviorSubject<ResponseI | null>(null);
-
-  url: string = "http://localhost:8000/api/v1/loginValidation"
-  constructor(private http: HttpClient, private router: Router) { }
+  rol: string = '';
+  constructor(private http: HttpClient, private router: Router, private configService: ConfigService) { }
 
 
   public loginByEmail(form: LoginI): Observable<ResponseI> {
-    const passwmd5 = Md5.hashStr(form.password);
     const body = {
-      usuario: form.usuario,
-      contrasena: passwmd5
+      user: form.user,
+      password: form.password,
     };
 
-    const response = this.http.post<ResponseI>(this.url, body);
-
+    const url = this.configService.apiUrl + 'validate-user/';
+    const response = this.http.post<ResponseI>(url, body);
     response.subscribe((res: ResponseI) => {
       this.setResponse(res);
+      this.rol = res.data.rol
     });
     return response;
 
@@ -49,6 +48,8 @@ export class LoginservicesService {
 
   public logout(): void {
     localStorage.removeItem("token");
+    localStorage.removeItem("responseActual");
+
     this.router.navigate(['login'])
   }
 

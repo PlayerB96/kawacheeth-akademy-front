@@ -34,13 +34,26 @@ import { ModalsTransferencialocalComponent } from './transfer/modals-transferenc
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { ModalsHistorialComponent } from './transfer/modals-historial/modals-historial.component';
-
+import { ReportPaymentComponent } from './report-payment/report-payment.component';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatChipsModule } from '@angular/material/chips';
+import { ValidationActivitiesComponent } from './validation-activities/validation-activities.component';
+import { MatInputModule } from '@angular/material/input';
+import { DatePipe } from '@angular/common';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { ValidateProgressComponent } from './progress/models-validateProgress/validate-progress.component';
+// import { JwtModule } from '@auth0/angular-jwt';
+// export function tokenGetter() {
+//   return localStorage.getItem("token");
+// }
 @NgModule({
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ],
 
   declarations: [
+
     AppComponent,
     SidenavComponent,
     BodyComponent,
@@ -56,7 +69,9 @@ import { ModalsHistorialComponent } from './transfer/modals-historial/modals-his
     TransferComponent,
     ModalsTransferencialocalComponent,
     ModalsHistorialComponent,
-
+    ReportPaymentComponent,
+    ValidationActivitiesComponent,
+    ValidateProgressComponent,
 
   ],
   imports: [
@@ -75,12 +90,27 @@ import { ModalsHistorialComponent } from './transfer/modals-historial/modals-his
     MdbCheckboxModule,
     MdbModalModule,
     MatFormFieldModule,
+    MatInputModule,
     MatSelectModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
+    MatButtonModule,
+    MatChipsModule,
+    DatePipe,
+    // JwtModule.forRoot({
+    //   config: {
+    //     tokenGetter: tokenGetter,
+    //     allowedDomains: ["localhost:8000"],
+    //     disallowedRoutes: ["http://localhost:8000/api/token/refresh/"],
+    //   },
+    // }),
 
   ],
 
 
-  providers: [],
+  providers: [DatePipe, { provide: MAT_DATE_LOCALE, useValue: 'es-ES' }],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+}

@@ -641,8 +641,13 @@
                                             <!--end::Wrapper-->
                                         </div>
                                         <div class="ms-1">
-                                            <a href="javascript:void(0);" class="btn btn-sm btn-primary"
-                                                (click)="abrirVentanaCargarImagen($event)">NOTIFICAR</a>
+                                            <input type="file" #fileInput id="fileInput" style="display: none"
+                                                accept="image/*" (change)="cargarImagen($event)">
+                                            <button class="btn btn-sm btn-primary"
+                                                (click)="activarCargadorImagen()">Cargar Imagen</button>
+
+                                            <button type="button" class="btn btn-sm btn-primary"
+                                                style="margin-left: 10px;" (click)="sendImage()">ENVIAR</button>
 
                                             <button (click)="abrirModalHistorial('historial','Paypal')"
                                                 class="btn btn-sm btn-light btn-active-light-primary ms-5"

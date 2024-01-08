@@ -1,11 +1,7 @@
-export interface ResponseIdetailProfile {
-    data: DetailProfile;
-    message: string;
-    status: boolean;
-}
+
 
 export interface ResponseProgressProfile {
-    data: DetailProgress;
+    data: ListActivities[];
     message: string;
     status: boolean;
 }
@@ -16,42 +12,46 @@ export interface PlanDescripcion {
 }
 
 export interface DetailProfile {
-    cod_cuenta: string;
-    codigo_acceso: string;
-    cursos_adquiridos: number;
-    cursos_pendientes: number;
-    cursos_terminados: number;
-    estado_suscripcion: boolean;
-    descripcion_plan: PlanDescripcion;
-    historial: Historial[];
-
+    id: number;
+    subscription_plan: {
+        id: number;
+        name: string;
+    };
+    user: string;
+    password: string;
+    percentage_completed: number;
+    email: string;
+    lastname: string;
+    name: string;
+    dni: string;
+    rol: string;
+    state: boolean;
+    courses_acquired: number;
+    courses_pending: number;
+    courses_completed: number;
+    subscription_state: boolean;
 }
 
-
-export interface DetailProgress {
-    cod_cuenta: string;
-    usuario: string;
-    list_activities: ListActivities[];
-}
 
 export interface ListActivities {
-    titulo: string;
+    id: number;
+    title: string;
     ctokens: string;
     status: boolean;
-    detalle_status: string;
-    nivel: string;
-    progreso: number;
-    descripcion: string;
+    detail_status: string;
+    level: number;
+    progress: number;
+    description: string;
+    user: number;
     hitos: Hitos[];
 }
 
 export interface Hitos {
-    hito: string;
-    codigo: string;
+    id: number;
+    name: string;
+    code: string;
     status: boolean;
     completed: boolean;
-
-
 }
 
 

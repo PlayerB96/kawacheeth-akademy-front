@@ -27,6 +27,9 @@ export class ModalService {
       case 'upgrade':
         this.modalRefUp = this.modalService.open(ModalsUpgradeComponent);
         break;
+      case 'validateProgress':
+        this.modalRefUp = this.modalService.open(ModalsUpgradeComponent);
+        break;
       default:
         console.log('Sin Modal');
     }

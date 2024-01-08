@@ -5,48 +5,58 @@ export interface ResponseI {
 }
 
 export interface DataI {
-  estado: boolean;
-  cod_cuenta: string;
-  cod_acceso: string;
-  contrasena: string;
-  usuario: string;
+  id: number;
+  username: string;
   dni: string;
-  correo: string;
+  email: string;
   rol: string;
-  nombres: string;
-  apellidos: string;
+  name: string;
+  lastname: string;
+  access_token: string;
 
 }
-
 export interface PlanDescripcion {
   porcentaje_realizado: string;
   nombre_plan: string;
 }
 
-export interface Usuario {
-  cod_cuenta: string;
-  codigo_acceso: string;
-  cursos_adquiridos: number;
-  cursos_pendientes: number;
-  cursos_terminados: number;
-  estado_suscripcion: boolean;
-  descripcion_plan: PlanDescripcion;
-  historial: Historial[];
+export interface User {
+  id: number;
+  subscription_plan: {
+    id: number;
+    name: string;
+  };
+  user_history: UserHistory[];
+  user: string;
+  password: string;
+  percentage_completed: number;
+  email: string;
+  lastname: string;
+  name: string;
+  dni: string;
+  rol: string;
+  state: boolean;
+  courses_acquired: number;
+  courses_pending: number;
+  courses_completed: number;
+  subscription_state: boolean;
 
 }
 
 export interface ResponseIdetailProfile {
-  data: Usuario;
+  data: User;
   status: boolean;
   message: string;
 }
 
-export interface Historial {
-  icon: string;
-  contenido: Contenido;
+export interface UserHistory {
+
+  id: number;
+  timestamp: string;
+  title: string;
+  description: string;
+  user: number;
+  code: string;
+
 }
 
-export interface Contenido {
-  titulo: string;
-  fecha: string;
-}

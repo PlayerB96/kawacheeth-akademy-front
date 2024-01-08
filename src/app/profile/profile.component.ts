@@ -1,7 +1,7 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 import { LoginservicesService } from '../logindesign/services/login.service';
-import { ResponseIdetailProfile, ResponseI, Historial } from './models/profile-models';
+import { ResponseIdetailProfile, ResponseI, UserHistory, User } from './models/profile-models';
 import { ProfileService } from './services/profile.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 // import Swal from 'sweetalert2';
@@ -23,16 +23,16 @@ export class ProfileComponent implements OnInit {
   nombreCompleto: string | null = null
   rol: string | null = null
   correo: string | null = null
-  cod_cuenta: string | null = null
+  user_id: number | null = null
   usuario: string | null = null
   cursos_adquiridos: number | null = null
   cursos_pendientes: number | null = null
   cursos_terminados: number | null = null
   nombre_plan: string | null = null
-  historial: Historial[] | null = null
+  historial: UserHistory[] | null = null
   list_activities: ListActivities[] | null = null
 
-  porcentaje_plan: string | null = null
+  porcentaje_plan: number | null = null
   estado_suscripcion: boolean | null = null
   modalContent: string | null = null; // Inicializa modalContent con null
   modalRef: MdbModalRef<ModalsComponent> | undefined;
@@ -42,10 +42,8 @@ export class ProfileComponent implements OnInit {
   ) {
     this.responseActual = this.loginservice.getResponseActual();
 
-    this.cod_cuenta = this.responseActual?.data.cod_cuenta ?? null;
-    this.usuario = this.responseActual?.data.usuario ?? null;
-
-    console.log(this.cod_cuenta)
+    this.user_id = this.responseActual?.data.id ?? null;
+    this.usuario = this.responseActual?.data.username ?? null;
 
   }
 
@@ -56,8 +54,8 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.datosPersonales();
-    this.getProfileDetails(this.cod_cuenta)
-    this.getProfileProgress(this.cod_cuenta, this.usuario)
+    this.getProfileDetails(this.user_id)
+    this.getProfileProgress(this.user_id)
 
   }
   getIconUrl(item: any): SafeResourceUrl {
@@ -69,27 +67,26 @@ export class ProfileComponent implements OnInit {
 
     if (this.responseActual != null) {
 
-      this.nombreCompleto = this.responseActual.data.nombres + " " + this.responseActual.data.apellidos;
-      this.correo = this.responseActual.data.correo;
+      this.nombreCompleto = this.responseActual.data.name + " " + this.responseActual.data.lastname;
+      this.correo = this.responseActual.data.email;
       this.rol = this.responseActual.data.rol;
 
     }
   }
 
-  public getProfileDetails(cod_cuenta: any) {
+  public getProfileDetails(user_id: any) {
+    this.response = this.profileservice.getProfileDetails(user_id)
+    this.response.subscribe((res: User) => {
 
-    this.response = this.profileservice.getProfileDetails(cod_cuenta)
-    this.response.subscribe((res: ResponseIdetailProfile) => {
       if (res != null) {
-        console.log(res)
-        this.cursos_adquiridos = res.data.cursos_adquiridos;
-        this.cursos_pendientes = res.data.cursos_pendientes;
-        this.cursos_terminados = res.data.cursos_terminados;
-        this.nombre_plan = res.data.descripcion_plan.nombre_plan;
-        this.porcentaje_plan = res.data.descripcion_plan.porcentaje_realizado;
-        this.estado_suscripcion = res.data.estado_suscripcion;
-        this.historial = res.data.historial;
 
+        this.cursos_adquiridos = res.courses_acquired;
+        this.cursos_pendientes = res.courses_pending;
+        this.cursos_terminados = res.courses_completed;
+        this.nombre_plan = res.subscription_plan.name;
+        this.porcentaje_plan = res.percentage_completed;
+        this.estado_suscripcion = res.subscription_state;
+        this.historial = res.user_history;
 
       }
 
@@ -97,12 +94,12 @@ export class ProfileComponent implements OnInit {
 
   }
 
-  public getProfileProgress(cod_cuenta: any, usuario: any) {
+  public getProfileProgress(user_id: any) {
 
-    this.response = this.profileservice.getProfileProgress(cod_cuenta, usuario)
+    this.response = this.profileservice.getProfileProgress(user_id)
     this.response.subscribe((res: ResponseProgressProfile) => {
       if (res != null) {
-        this.list_activities = res.data.list_activities
+        this.list_activities = res.data
       }
 
     });
@@ -110,12 +107,19 @@ export class ProfileComponent implements OnInit {
   }
 
   abrirModal(typeStateModal: string) {
+    console.log("11111111111")
     if (this.list_activities !== null) {
+      console.log(this.list_activities)
+
       this.modalService.abrirModal(typeStateModal, this.list_activities);
     }
   }
 
 
-
+  redirectTransferProfile(codeRedirect: string): void {
+    // this.modalService.cerrarModal(typeStateModal)
+    console.log(codeRedirect)
+    this.profileservice.redirectTransferProfile(codeRedirect);
+  }
 
 }

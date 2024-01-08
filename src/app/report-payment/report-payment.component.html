@@ -1,0 +1,132 @@
+<div class="body-table">
+
+    <mat-form-field class="example-full-width mb-5" appearance="fill">
+        <mat-label>Selecciona una Fecha</mat-label>
+        <input matInput [matDatepicker]="pickerInicio" (dateInput)="onDateInput($event, 'inicio')">
+        <mat-hint>Fecha Inicio</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="pickerInicio"></mat-datepicker-toggle>
+        <mat-datepicker #pickerInicio></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width mb-5 mx-4" appearance="fill">
+        <mat-label>Selecciona una Fecha</mat-label>
+        <input matInput [matDatepicker]="pickerFin" (dateInput)="onDateInput($event, 'fin')">
+        <mat-hint>Fecha Fin</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="pickerFin"></mat-datepicker-toggle>
+        <mat-datepicker #pickerFin></mat-datepicker>
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="buscar()">Buscar</button>
+
+
+    <div class="legend">
+        <div class="legend-item">
+            <div class="circle legend-yellow"></div>
+            <span>Plan Seleccionado</span>
+        </div>
+        <div class="legend-item">
+            <div class="circle legend-orange"></div>
+            <span>Plan Validado</span>
+        </div>
+        <div class="legend-item">
+            <div class="circle legend-green"></div>
+            <span>Plan Completado</span>
+        </div>
+        <div class="legend-item">
+            <div class="circle legend-red"></div>
+            <span>Pago Rechazado</span>
+        </div>
+    </div>
+
+
+    <table mat-table [dataSource]="dataSource" matSort #table (matSortChange)="announceSortChange($event)"
+        class="mat-elevation-z8">
+
+        <ng-container matColumnDef="usuario">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
+                Usuario
+            </th>
+            <td mat-cell *matCellDef="let element"> {{element.user.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fecha_utc">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
+                Fecha
+            </th>
+            <td mat-cell *matCellDef="let element"> {{element.date_created }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="state_payment">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
+                Proceso
+            </th>
+            <td mat-cell *matCellDef="let element">
+                <ng-container [ngSwitch]="element.state">
+                    <div *ngSwitchCase="'selected'" class="circle" style="background-color: yellow;"></div>
+                    <div *ngSwitchCase="'validated'" class="circle" style="background-color: orange;"></div>
+                    <div *ngSwitchCase="'filled'" class="circle" style="background-color: green;"></div>
+                    <div *ngSwitchCase="'refused'" class="circle" style="background-color: red;"></div>
+
+                    <div *ngSwitchDefault>{{element.state}}</div>
+                </ng-container>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status_payment">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
+                Estado
+            </th>
+            <td mat-cell *matCellDef="let element"> {{element.status ? 'Terminado' : 'En Proceso'}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="plan">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
+                Plan
+            </th>
+            <td mat-cell *matCellDef="let element"> {{element.plan}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="monto_usd">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
+                Monto
+            </th>
+            <td mat-cell *matCellDef="let element"> {{element.monto_usd}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+            <td mat-cell *matCellDef="let element" style="white-space: nowrap;">
+                <button mat-icon-button
+                    [color]="element.status_payment === 1 ? 'primary' : (element.state_payment === 'validate' ? 'primary' : 'warn')"
+                    [disabled]="element.state === 'filled' || element.loadingState || element.state === 'refused'"
+                    (click)="changedStatePayment(element)">
+                    <i class="fa fa-bolt"
+                        [ngClass]="{'yellow-icon': element.state_payment === 'validate', 'green-icon': element.state_payment === 'filled', 'blue-icon': element.status_payment === 1, 'spinner-border': element.loadingState, 'spinner-border-sm': element.loadingState, 'me-2': element.loadingState}">
+                    </i>
+                </button>
+
+
+                <button mat-icon-button color="warn" (click)="showImage(element)">
+                    <i class="fa fa-image"></i>
+                </button>
+                <button mat-icon-button color="warn" [disabled]="element.state === 'refused'"
+                    (click)="changedRefusedStatePayment(element)"
+                    [disabled]="element.state === 'filled' || element.loadingState || element.state === 'refused' || element.state === 'validated'">
+
+                    <i class="fa fa-times"></i>
+                </button>
+
+            </td>
+        </ng-container>
+
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+    </mat-paginator>
+</div>

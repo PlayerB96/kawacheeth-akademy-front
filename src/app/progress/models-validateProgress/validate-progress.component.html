@@ -1,0 +1,60 @@
+<div class="body-content">
+
+    <div class=" mb-4 p-3">
+        <!--begin::Wrapper-->
+        <div class="d-flex flex-stack flex-grow-1 ">
+            <!--begin::Content-->
+            <div class=" fw-semibold ">
+                <div class="row mb-5">
+                    <div class="col">
+                        <div class="d-flex align-items-center justify-content">
+                            <div class="text-gray-900 fw-bold me-2">Usuario:</div>
+                            <div class="text-gray-700 fw-bold">{{usuario}}</div>
+                        </div>
+                        <div class="d-flex align-items-center justify-content">
+                            <div class="text-gray-900 fw-bold me-2">Nivel Actividad:</div>
+                            <div class="text-gray-700 fw-bold">{{nivelActividad}}</div>
+                        </div>
+                        <div class="d-flex align-items-center justify-content">
+                            <div class="text-gray-900 fw-bold me-2">Nombre Actividad:</div>
+                            <div class="text-gray-700 fw-bold">{{nombreActividad}}</div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="notice d-flex bg-light-primary rounded border-success border border-dashed mb-5 p-3">
+                    <div class="fs-6 text-gray-700 ">
+                        Nota : Recuerda tomar una captura clara de la imagen y enviarla en formatos (.png, .jpg).
+                    </div>
+
+                </div>
+            </div>
+
+            <!--end::Content-->
+
+        </div>
+        <!--end::Wrapper-->
+    </div>
+    <div *ngIf="imgStatus" class="notice d-flex bg-light-primary rounded border-success border border-dashed m-4 p-1">
+        {{imageName}}
+    </div>
+    <div class="ms-1">
+        <!-- Agrega un input de tipo archivo oculto -->
+        <input type="file" #fileInput style="display: none" (change)="cargarImagen($event)">
+
+        <!-- Agrega un botón personalizado que activará el input de archivo -->
+        <button class="btn btn-sm btn-primary" (click)="activarCargadorImagen()">Cargar Imagen</button>
+        <button class="btn btn-sm btn-success ms-4" (click)="sendImage()" [disabled]="!imgStatus || loading">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            {{ loading ? 'Enviando Imagen' : (imagenEnviada ? 'Imagen Enviada ✔' : (errorAlProcesarImagen ? 'Enviar
+            Imagen ❌' : 'Enviar Imagen')) }}
+        </button>
+
+    </div>
+
+
+
+</div>

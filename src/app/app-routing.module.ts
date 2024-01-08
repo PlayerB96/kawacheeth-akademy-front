@@ -10,6 +10,8 @@ import { RegisterComponent } from './register/register.component';
 import { InviteComponent } from './invite/invite.component';
 import { ProgressComponent } from './progress/progress.component';
 import { TransferComponent } from './transfer/transfer.component';
+import { ReportPaymentComponent } from './report-payment/report-payment.component';
+import { ValidationActivitiesComponent } from './validation-activities/validation-activities.component';
 
 const routes: Routes = [
   { path: 'register', component: RegisterComponent },
@@ -28,6 +30,8 @@ const routes: Routes = [
       { path: 'profile/progress', component: ProgressComponent, pathMatch: 'full' },
       { path: 'profile/transfer', component: TransferComponent, pathMatch: 'full' },
       { path: 'dashboard/invite', component: InviteComponent, pathMatch: 'full' },
+      { path: 'reportPayment', component: ReportPaymentComponent, pathMatch: 'full' },
+      { path: 'reportValidation', component: ValidationActivitiesComponent, pathMatch: 'full' },
 
     ],
   },

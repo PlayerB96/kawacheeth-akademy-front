@@ -61,3 +61,14 @@
 
 
 }
+
+.cursor-pointer {
+  cursor: pointer;
+  text-decoration: underline;
+  /* Añade subrayado al texto */
+}
+
+.hover-blue:hover {
+  color: blue;
+  /* Cambia el color del texto al azul al pasar el cursor */
+}

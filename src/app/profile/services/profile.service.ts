@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { ResponseIdetailProfile, ResponseProgressProfile } from '../models/response.interface';
+import { DetailProfile, ResponseProgressProfile } from '../models/response.interface';
+import { ConfigService } from '../../../config.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,27 +12,26 @@ export class ProfileService {
 
   public responseActual!: Response;
 
-  url: string = "http://localhost:8000/api/v1/"
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private configService: ConfigService) { }
 
 
-  public getProfileDetails(cod_cuenta: string): Observable<ResponseIdetailProfile> {
-    const body = {
-      cod_cuenta: cod_cuenta,
-    };
+  public getProfileDetails(id: number): Observable<DetailProfile> {
+    const url = this.configService.apiUrl + 'users/' + id + '/';
 
-    const response = this.http.post<ResponseIdetailProfile>(this.url + 'profile/detailProfile', body);
-
+    // Añadimos las cabeceras a la solicitud
+    const response = this.http.get<DetailProfile>(url);
     return response;
+
   }
 
-  public getProfileProgress(cod_cuenta: string, usuario: string): Observable<ResponseProgressProfile> {
-    const body = {
-      cod_cuenta: cod_cuenta,
-      usuario: usuario
-    };
 
-    const response = this.http.post<ResponseProgressProfile>(this.url + 'profile/detailProgress', body);
+  public getProfileProgress(user_id: number): Observable<ResponseProgressProfile> {
+    const body = {
+      user_id: user_id,
+    };
+    const url = this.configService.apiUrl + 'user-activities/';
+
+    const response = this.http.post<ResponseProgressProfile>(url, body);
 
     return response;
   }
@@ -41,6 +41,24 @@ export class ProfileService {
   }
 
   public redirectTransfer(): void {
+
     this.router.navigate(['profile/transfer'])
+
+
+  }
+
+  public redirectTransferProfile(codeRedirect: string): void {
+    switch (codeRedirect) {
+      case 'historial':
+        this.router.navigate(['profile/transfer']);
+        break;
+      case 'dashboard':
+        this.router.navigate(['dashboard']);
+        break;
+      default:
+        // Manejo para cualquier otro caso
+        break;
+    }
+
   }
 }

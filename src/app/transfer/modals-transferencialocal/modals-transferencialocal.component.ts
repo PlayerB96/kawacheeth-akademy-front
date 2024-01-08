@@ -1,8 +1,11 @@
 import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
-import { ModalService } from 'src/app/profile/services/modal.service';
 import { ProfileService } from 'src/app/profile/services/profile.service';
 import { TransferService } from '../services/transfer.service';
-import { ResponseChangedDolar } from '../models/response.interface';
+import { ReportPayment, ResponseChangedDolar, ResponseImage } from '../models/response.interface';
+import { LoginservicesService } from 'src/app/logindesign/services/login.service';
+import { ResponseI } from 'src/app/profile/models/profile-models';
+import { ModalService } from '../services/modal.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-modals-transferencialocal',
@@ -12,6 +15,15 @@ import { ResponseChangedDolar } from '../models/response.interface';
 })
 export class ModalsTransferencialocalComponent implements OnInit {
   public response: any
+  public responseImage: any
+
+  public responseActual: ResponseI | null = null;
+  public imagenSeleccionada: any
+  loading: boolean = false; // Añade esta línea para definir la propiedad loading
+  imagenEnviada: boolean = false;
+  errorAlProcesarImagen: boolean = false;
+
+  imageName: string = '';
 
   selectedOptionPlan: string = '0';
   selectedOptionTime: string = '0';
@@ -22,25 +34,25 @@ export class ModalsTransferencialocalComponent implements OnInit {
   disabledDepositar: boolean | null = null;
   discountMount: string | null = null;
   dolarValue: number | null = null
+  id_user: number | null = null
+  usuario: string | null = null
+  imgStatus: boolean = false
+
   bancoLocal: string = 'banco';
   numeroCuenta: string = 'n cuenta';
   @ViewChild('fileInput') fileInput: any;
 
 
-  constructor(private modalService: ModalService, private profileservice: ProfileService, private transferservice: TransferService) {
+  constructor(private modalService: ModalService, private loginservice: LoginservicesService, private profileservice: ProfileService, private transferservice: TransferService) {
+
+    this.responseActual = this.loginservice.getResponseActual();
+    this.usuario = this.responseActual?.data.username ?? null;
+    this.id_user = this.responseActual?.data.id ?? null;
 
   }
 
   ngOnInit(): void { this.getValorDolar(); }
 
-  cerrarModal(typeStateModal: string) {
-    this.modalService.cerrarModal(typeStateModal);
-  }
-
-  redirectTransfer(typeStateModal: string): void {
-    this.modalService.cerrarModal(typeStateModal);
-    this.profileservice.redirectTransfer();
-  }
 
   calculateAmount() {
     if (this.selectedOptionPlan && this.selectedOptionTime) {
@@ -84,7 +96,7 @@ export class ModalsTransferencialocalComponent implements OnInit {
   }
 
   public getValorDolar() {
-    this.response = this.transferservice.getValorDolar()
+    // this.response = this.transferservice.getValorDolar()
     this.response.subscribe((res: ResponseChangedDolar) => {
       if (res != null) {
         this.dolarValue = res.data.venta
@@ -98,14 +110,84 @@ export class ModalsTransferencialocalComponent implements OnInit {
   }
 
   cargarImagen(event: any) {
-    // Aquí puedes manejar la lógica para cargar la imagen
     const files = event.target.files;
+
     if (files && files.length > 0) {
-      const imagenSeleccionada = files[0];
-      this.transferservice.setImage(imagenSeleccionada, 'bryan');
-      // Puedes realizar acciones adicionales según tus necesidades
-      console.log('Imagen seleccionada:', imagenSeleccionada);
+      const imagen = files[0];
+
+      // Validar que el archivo sea una imagen (por extensión)
+      const extensionesValidas = ['jpg', 'jpeg', 'png', 'gif'];
+      const extension = imagen.name.split('.').pop().toLowerCase();
+
+      if (extensionesValidas.includes(extension)) {
+        this.imagenSeleccionada = imagen;
+        this.imageName = imagen.name;
+        this.imgStatus = true;
+      } else {
+        // Mostrar mensaje de error si el archivo no es una imagen
+        alert('Por favor, selecciona un archivo de imagen válido.');
+        this.resetearSeleccion();
+      }
     }
   }
+
+  resetearSeleccion() {
+    this.imagenSeleccionada = null;
+    this.imageName = '';
+    this.imgStatus = false;
+  }
+
+
+  sendImage() {
+    this.loading = true;
+    this.errorAlProcesarImagen = false; // Reiniciar el indicador de error
+
+    if (this.id_user && this.planValueT && this.timeValueT) {
+      this.responseImage = this.transferservice.setImage(this.imagenSeleccionada, this.id_user, this.planValueT, this.timeValueT);
+      this.responseImage.subscribe(
+        (res: any) => {
+          // Lógica de éxito
+          this.imageName = 'Pago Enviado con Éxito';
+          this.loading = false;
+          this.imagenEnviada = true;
+          console.log(res);
+          console.log("##############");
+
+          if (res.status === 400) {
+            this.modalService.cerrarModalTransfer('transferencia-local');
+
+            Swal.fire({
+              title: 'Error al Enviar Pago',
+              width: 400,
+              padding: "3em",
+              color: "#716add",
+              backdrop: `
+                rgba(0, 139, 123, 0.4)
+                left top
+                no-repeat
+              `
+            });
+          } else {
+            setTimeout(() => {
+              this.modalService.cerrarModalTransfer('transferencia-local');
+            }, 3000);
+          }
+
+
+        },
+        (error: any) => {
+          // Manejar el error
+          console.error(error);
+          this.imageName = 'Error: Ya tiene un Pago pendiente';
+          this.loading = false;
+          this.errorAlProcesarImagen = true; // Establecer a true cuando hay un error
+        }
+      );
+    } else {
+      this.imageName = 'Error: Seleccione un Plan de Suscripción';
+      this.loading = false;
+    }
+  }
+
 
 }

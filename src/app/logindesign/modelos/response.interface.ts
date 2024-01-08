@@ -5,15 +5,13 @@ export interface ResponseI {
 }
 
 export interface DataI {
-  estado: boolean;
-  cod_cuenta: string;
-  cod_acceso: string;
-  contrasena: string;
-  usuario: string;
+  id: number;
+  username: string;
   dni: string;
-  correo: string;
+  email: string;
   rol: string;
-  nombres: string;
-  apellidos: string;
+  name: string;
+  lastname: string;
+  access_token: string;
 
 }

@@ -1,0 +1,61 @@
+table {
+    width: 100%;
+    background-color: white;
+}
+
+.body-table {
+    margin: 40px
+}
+
+.mat-elevation-z8 {
+    margin: 0 auto; // Puedes ajustar el valor según tus necesidades
+}
+
+/* En tu hoja de estilos CSS */
+.yellow-icon {
+    color: orange;
+}
+
+.green-icon {
+    color: green;
+}
+
+.blue-icon {
+    color: blue;
+}
+
+.legend {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+}
+
+.legend-yellow {
+    background-color: yellow;
+}
+
+.legend-orange {
+    background-color: orange;
+}
+
+.legend-green {
+    background-color: green;
+}
+
+.legend-red {
+    background-color: red;
+}

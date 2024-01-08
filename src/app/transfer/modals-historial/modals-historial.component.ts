@@ -1,6 +1,6 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { TransferService } from '../services/transfer.service';
-import { ActualPayment, ResponsePayment } from '../models/response.interface';
+import { ActualPayment, PaymentData, ResponsePayment } from '../models/response.interface';
 import { ResponseI } from 'src/app/profile/models/profile-models';
 import { LoginservicesService } from 'src/app/logindesign/services/login.service';
 import { Subject } from 'rxjs';
@@ -20,12 +20,12 @@ export class ModalsHistorialComponent implements OnInit {
 
   cuenta: string = '';
   cod_cuenta: string | null = null
-  actualPayment: ActualPayment | null = null
+  user_id: number | null = null
+  actualPayment: PaymentData | null = null
 
   constructor(private transferService: TransferService, private loginservice: LoginservicesService) {
     this.responseActual = this.loginservice.getResponseActual();
-
-    this.cod_cuenta = this.responseActual?.data.cod_cuenta ?? null;
+    this.user_id = this.responseActual?.data.id ?? null;
 
   }
   @Output()
@@ -33,17 +33,21 @@ export class ModalsHistorialComponent implements OnInit {
   errorMsj: any = "";
 
   ngOnInit() {
-    this.getDataPayment(this.cod_cuenta);
+    this.getDataPayment(this.user_id);
 
   }
 
-  public getDataPayment(cod_cuenta: any) {
-    this.response = this.transferService.getPaymentData(cod_cuenta)
+  public getDataPayment(user_id: any) {
+    this.response = this.transferService.getPaymentData(user_id)
     this.response.subscribe((res: ResponsePayment) => {
       if (res != null) {
-        this.actualPayment = res.data.actual_payment
-        this.state_payment = res.data.actual_payment.state_payment
+        this.state_payment = res.data.state_payment
+        this.actualPayment = res.data
+        console.log("####################33")
         console.log(this.actualPayment)
+        console.log(this.actualPayment.state_payment)
+
+        console.log("####################33")
 
       }
     })

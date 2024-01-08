@@ -16,3 +16,18 @@ export const navbarData = [
   }
 
 ];
+
+export const navbarDataSupervisor = [
+  {
+    routeLink: 'reportPayment',
+    icon: 'fal fa-solid fa-home',
+    label: 'Reporte de Pagos'
+  },
+  {
+    routeLink: 'reportValidation',
+    icon: 'fal fa-solid fa-feather',
+    label: 'Validación de Actividades'
+  }
+
+];
+
