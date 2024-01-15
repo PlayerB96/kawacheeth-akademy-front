@@ -4,6 +4,14 @@ export interface ResponseIdetailDashboard {
     status: boolean;
 }
 
+export interface BalanceResponse {
+    mensaje: string;
+    balanceHbars: number;
+    balanceDollars: number;
+    balanceCtokens: string; // Puedes dejar este campo como string si es un identificador o valor que debe ser una cadena
+  }
+  
+
 export interface PlanDescripcion {
     cursos: number;
     estado_cursos: EstadoCursos;

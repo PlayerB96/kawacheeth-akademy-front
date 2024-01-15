@@ -1,0 +1,132 @@
+.body-content {
+    margin: 1rem;
+}
+
+.modal-title {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+
+.modal-description {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.custom-info-button {
+    display: inline-flex;
+
+}
+
+.activity-block {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 1rem;
+    margin: 2rem;
+}
+
+.activity-header {
+    text-align: right;
+}
+
+.activity-level {
+    font-size: 1rem;
+    color: #777;
+}
+
+.activity-button.btn-primary {
+    margin-top: 1rem;
+    /* Añade el margen inferior que desees */
+}
+
+.activity-button.btn-success {
+    margin-top: 1rem;
+    /* Añade el margen inferior que desees */
+}
+
+.activity-details {
+    margin-top: 1rem;
+}
+
+.activity-reward {
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.activity-tags {
+    font-weight: bold;
+}
+
+.activity-tag {
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.activity-progress {
+    margin-top: 1rem;
+}
+
+.progress-label {
+    font-weight: bold;
+}
+
+.progress-bar {
+    height: 6px;
+    background-color: #ccc;
+    border-radius: 3px;
+    margin-top: 0.5rem;
+}
+
+.progress-inner {
+    height: 100%;
+    background-color: #007bff;
+}
+
+.close-button {
+    background-color: transparent;
+    border-width: 0;
+}
+
+.activity-button {
+    width: 100%;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.tooltip-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tooltip-container:hover .bottom-0 {
+    background-color: white;
+}
+
+.tooltip-container:hover .bottom-0::before {
+    content: "Button that displays a tooltip when focused or hovered over";
+    display: block;
+    background-color: white;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+    width: max-content;
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+}

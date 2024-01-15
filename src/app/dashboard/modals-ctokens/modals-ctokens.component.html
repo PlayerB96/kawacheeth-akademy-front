@@ -1,0 +1,35 @@
+<div>
+  <!-- Primer bloque de contenido -->
+
+  <div class="modal-body">
+    <!-- Título del modal -->
+    <button class="close-button" (click)="cerrarModal('upgrade')">
+      <i class="fas fa-times"></i>
+    </button>
+
+    <h1 class="modal-title">Compra tu CTokens</h1>
+    <!-- Descripción del modal -->
+    <p class="modal-description">
+      Selecciona la cantidad de CTokens y escanea el QR
+    </p>
+  </div>
+
+  <div class="body-content text-center">
+    <img src="assets/QRCtokens.jpeg" style="width: 150px; height: 150px" />
+    <div class="m-1">Monto a Pagar: S/ 100.00</div>
+    <div class="mb-5">Cantidad a Recibir: 10000 CTokens</div>
+    <div class="m-2 fs-6 fw-bold text-gray-400">
+      Carga la Captura del Pago y Enviala
+    </div>
+    <button class="btn btn-sm btn-success">
+      <i class="fas fa-upload me-2"></i>Cargar
+    </button>
+  </div>
+
+  <div class="d-flex flex-center flex-row-fluid pt-12 m-5">
+    <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">
+      Cancel
+    </button>
+    <button class="btn btn-primary btn-sm">Enviar</button>
+  </div>
+</div>

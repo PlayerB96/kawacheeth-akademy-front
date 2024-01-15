@@ -9,44 +9,39 @@ import { throwError } from 'rxjs';
 @Component({
   selector: 'app-logindesign',
   templateUrl: './logindesign.component.html',
-  styleUrls: ['./logindesign.component.scss']
+  styleUrls: ['./logindesign.component.scss'],
 })
 export class LogindesignComponent implements OnInit {
   loginForm = new FormGroup({
-    user: new FormControl('',),
-    password: new FormControl('',)
-  })
-  constructor(private serviceLogin: LoginservicesService, private router: Router) {
-
-  }
-  public response: any
+    user: new FormControl(''),
+    password: new FormControl(''),
+  });
+  constructor(
+    private serviceLogin: LoginservicesService,
+    private router: Router
+  ) {}
+  public response: any;
 
   errorStatus: boolean = false;
-  errorMsj: any = "";
+  errorMsj: any = '';
 
   ngOnInit(): void {
-    console.log("iniciando login")
+    console.log('iniciando login');
   }
 
   public onLogin(form: any) {
-
-    this.response = this.serviceLogin.loginByEmail(form);
-
-
     this.response.subscribe(
       (res: ResponseI) => {
-
         let dataResponse: ResponseI = res;
 
         if (dataResponse.status === true) {
-          localStorage.setItem("token", dataResponse.data.access_token);
-          if (dataResponse.data.rol === "Administrador") {
-            this.router.navigate(["reportPayment"]);
+          localStorage.setItem('token', dataResponse.data.access_token);
+          if (dataResponse.data.rol === 'Administrador') {
+            this.router.navigate(['reportPayment']);
           } else {
-            this.router.navigate(["profile"]);
+            this.router.navigate(['profile']);
           }
         } else {
-
           this.errorStatus = true;
           this.errorMsj = dataResponse.message;
         }
@@ -55,14 +50,12 @@ export class LogindesignComponent implements OnInit {
         // Manejo de errores aquí
 
         this.errorStatus = true;
-        this.errorMsj = "Credenciales Inválidas";
+        this.errorMsj = 'Credenciales Inválidas';
       }
     );
   }
 
-
   redirigir() {
     this.router.navigate(['/register']);
   }
-
 }

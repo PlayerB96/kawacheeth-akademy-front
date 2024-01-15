@@ -27,12 +27,31 @@ const routes: Routes = [
       { path: 'profile', component: ProfileComponent, pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent, pathMatch: 'full' },
       { path: 'home', component: HomeComponent, pathMatch: 'full' },
-      { path: 'profile/progress', component: ProgressComponent, pathMatch: 'full' },
-      { path: 'profile/transfer', component: TransferComponent, pathMatch: 'full' },
-      { path: 'dashboard/invite', component: InviteComponent, pathMatch: 'full' },
-      { path: 'reportPayment', component: ReportPaymentComponent, pathMatch: 'full' },
-      { path: 'reportValidation', component: ValidationActivitiesComponent, pathMatch: 'full' },
-
+      {
+        path: 'profile/progress',
+        component: ProgressComponent,
+        pathMatch: 'full',
+      },
+      {
+        path: 'profile/transfer',
+        component: TransferComponent,
+        pathMatch: 'full',
+      },
+      {
+        path: 'dashboard/invite',
+        component: InviteComponent,
+        pathMatch: 'full',
+      },
+      {
+        path: 'reportPayment',
+        component: ReportPaymentComponent,
+        pathMatch: 'full',
+      },
+      {
+        path: 'reportValidation',
+        component: ValidationActivitiesComponent,
+        pathMatch: 'full',
+      },
     ],
   },
 ];
@@ -41,4 +60,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

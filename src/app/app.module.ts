@@ -10,9 +10,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { BodyComponent } from './body/body.component';
 // DATATABLE
-import { DataTablesModule } from "angular-datatables";
+import { DataTablesModule } from 'angular-datatables';
 //HHTTP
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule } from '@angular/common/http';
 //FORMS
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { LogindesignComponent } from './logindesign/logindesign.component';
@@ -43,17 +43,15 @@ import { MatInputModule } from '@angular/material/input';
 import { DatePipe } from '@angular/common';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { ValidateProgressComponent } from './progress/models-validateProgress/validate-progress.component';
+import { ModalsCtokensComponent } from './dashboard/modals-ctokens/modals-ctokens.component';
 // import { JwtModule } from '@auth0/angular-jwt';
 // export function tokenGetter() {
 //   return localStorage.getItem("token");
 // }
 @NgModule({
-  schemas: [
-    CUSTOM_ELEMENTS_SCHEMA
-  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
   declarations: [
-
     AppComponent,
     SidenavComponent,
     BodyComponent,
@@ -72,7 +70,7 @@ import { ValidateProgressComponent } from './progress/models-validateProgress/va
     ReportPaymentComponent,
     ValidationActivitiesComponent,
     ValidateProgressComponent,
-
+    ModalsCtokensComponent,
   ],
   imports: [
     BrowserModule,
@@ -104,13 +102,9 @@ import { ValidateProgressComponent } from './progress/models-validateProgress/va
     //     disallowedRoutes: ["http://localhost:8000/api/token/refresh/"],
     //   },
     // }),
-
   ],
 
-
   providers: [DatePipe, { provide: MAT_DATE_LOCALE, useValue: 'es-ES' }],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule {
-
-}
+export class AppModule {}
