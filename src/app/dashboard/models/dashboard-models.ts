@@ -5,7 +5,7 @@ export interface ResponseI {
 }
 
 export interface DataI {
-
+    id: number;
     username: string;
     dni: string;
     email: string;
@@ -13,7 +13,9 @@ export interface DataI {
     name: string;
     lastname: string;
     access_token: string;
-
+    operatorId: string;
+    operatorKey: string;
+    dashboardId: number;
 }
 
 export interface PlanDescripcion {

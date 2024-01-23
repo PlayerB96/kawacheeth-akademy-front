@@ -84,11 +84,11 @@ export class RegisterService {
         "hitos": [
           {
             "name": "Seleccione un Plan y un Método de Pago",
-            "code": "select"
+            "code": "selected"
           },
           {
             "name": "Realizando Validación de Pago...",
-            "code": "validate"
+            "code": "validated"
           },
           {
             "name": "Pago Validado",

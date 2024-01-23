@@ -57,10 +57,7 @@ export class TransferComponent implements OnInit {
   constructor(
     private modalService: ModalService, private transferservice: TransferService, private modalServiceTransfer: ModalService, private loginservice: LoginservicesService, private profileservice: ProfileService
   ) {
-    this.responseActual = this.loginservice.getResponseActual();
 
-    this.user_id = this.responseActual?.data.id ?? null;
-    this.usuario = this.responseActual?.data.username ?? null;
   }
 
 
@@ -69,8 +66,8 @@ export class TransferComponent implements OnInit {
   errorMsj: any = "";
 
   ngOnInit() {
-    this.datosPersonales();
-    this.getProfileDetails(this.user_id)
+
+    this.cargarResponseActual();
   }
 
 
@@ -102,6 +99,27 @@ export class TransferComponent implements OnInit {
       }
     });
 
+  }
+
+  cargarResponseActual() {
+
+    this.loginservice.getResponseActual().then((response) => {
+
+      this.responseActual = response;
+
+
+      if (this.responseActual) {
+        this.nombreCompleto = this.responseActual.data.name + " " + this.responseActual.data.lastname;
+        this.correo = this.responseActual.data.email;
+        this.rol = this.responseActual.data.rol;
+        this.usuario = this.responseActual.data.username;
+
+        this.getProfileDetails(this.responseActual.data.id)
+
+      } else {
+        // No hay respuesta disponible
+      }
+    });
   }
 
 
@@ -176,9 +194,7 @@ export class TransferComponent implements OnInit {
 
   sendImage() {
     this.loading = true;
-    this.errorAlProcesarImagen = false; // Reiniciar el indicador de error
-    console.log("##############");
-
+    this.errorAlProcesarImagen = false;
     if (this.id_user && this.planValueT && this.timeValueT) {
       this.responseImage = this.transferservice.setImage(this.imagenSeleccionada, this.id_user, this.planValueT, this.timeValueT);
       this.responseImage.subscribe(
@@ -187,9 +203,7 @@ export class TransferComponent implements OnInit {
           this.imageName = 'Pago Enviado con Éxito';
           this.loading = false;
           this.imagenEnviada = true;
-          console.log(this.planValueT);
-          console.log(this.timeValueT);
-
+          console.log(res);
           console.log("##############");
 
           if (res.status === 400) {

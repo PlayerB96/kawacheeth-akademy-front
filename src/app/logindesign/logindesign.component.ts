@@ -5,6 +5,7 @@ import { ResponseI } from './modelos/response.interface';
 import { LoginservicesService } from './services/login.service';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { LoginI } from './modelos/login.interface';
 
 @Component({
   selector: 'app-logindesign',
@@ -19,7 +20,7 @@ export class LogindesignComponent implements OnInit {
   constructor(
     private serviceLogin: LoginservicesService,
     private router: Router
-  ) {}
+  ) { }
   public response: any;
 
   errorStatus: boolean = false;
@@ -30,12 +31,12 @@ export class LogindesignComponent implements OnInit {
   }
 
   public onLogin(form: any) {
-    this.response.subscribe(
-      (res: ResponseI) => {
+    this.serviceLogin.loginByEmail(form)
+      .then((res: ResponseI) => {
         let dataResponse: ResponseI = res;
-
         if (dataResponse.status === true) {
           localStorage.setItem('token', dataResponse.data.access_token);
+
           if (dataResponse.data.rol === 'Administrador') {
             this.router.navigate(['reportPayment']);
           } else {
@@ -45,15 +46,15 @@ export class LogindesignComponent implements OnInit {
           this.errorStatus = true;
           this.errorMsj = dataResponse.message;
         }
-      },
-      (error: any) => {
+      })
+      .catch((error: any) => {
         // Manejo de errores aquí
-
         this.errorStatus = true;
-        this.errorMsj = 'Credenciales Inválidas';
-      }
-    );
+        this.errorMsj = error.message || 'Error desconocido';
+      });
   }
+
+
 
   redirigir() {
     this.router.navigate(['/register']);

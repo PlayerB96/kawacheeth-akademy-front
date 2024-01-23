@@ -325,7 +325,7 @@
                                         <select [(ngModel)]="selectedHito" (ngModelChange)="toggleDivs()"
                                             class="form-select form-select-solid" data-control="select2"
                                             data-placeholder="Select an option" data-allow-clear="true">
-                                            <option value="">Seleccione</option>
+                                            <option value="0">Seleccione</option>
                                             <ng-container *ngFor="let item of list_activities">
                                                 <ng-container *ngFor="let hito of item.hitos">
                                                     <option *ngIf="hito.status" [ngValue]="hito">{{hito.name}}</option>

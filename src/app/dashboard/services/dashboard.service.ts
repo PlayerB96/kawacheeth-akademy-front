@@ -1,9 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BalanceResponse, ResponseIallUsersDashboard, ResponseIdetailDashboard } from '../models/response.interface';
-import { Observable } from 'rxjs';
-const baseurl: string = "http://localhost:3000";
+import { AsociateResponse, BalanceResponse, DetailStatusResponse, ResponseIallUsersDashboard, ResponseIdetailDashboard, ValidationResponse } from '../models/response.interface';
+import { Observable, catchError, flatMap, throwError } from 'rxjs';
+import { ConfigService } from '../../../config.service';
+
+
+const baseurHashGraph: string = "http://localhost:3000";
+const baseurl: string = "http://localhost:8000";
 
 @Injectable({
   providedIn: 'root'
@@ -12,23 +16,57 @@ const baseurl: string = "http://localhost:3000";
 
 
 export class DashboardService {
-  detailDashboard: string = `${baseurl}/api/balance`;
-  // allUsersDashboard: string = `${baseurl}/api/v1/detailDashboard/AllUsers`;
+  detailDashboardAPI: string = `${baseurHashGraph}/api/balance`;
+  validationAccountaAPI: string = `${baseurl}/api/validation_account_email`;
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private configService: ConfigService) { }
 
-  public getDashboardDetails(cod_cuenta: any): Observable<BalanceResponse> {
+  public getDashboardDetails(operatorId: string, operatorKey: string): Observable<BalanceResponse> {
     const body = {
-      operatorKey: "302e020100300506032b6570042204201035935f406bd29f6e4128b2f86ae7c7fca24a5c9ee88413fa37f7502f969110",
-      operatorId: "0.0.6768696"
+      accountKey: operatorKey,
+
+      accountId: operatorId
     };
-    const response = this.http.post<BalanceResponse>(this.detailDashboard, body);
-    response.subscribe((res: BalanceResponse) => {
-
-    });
-
+    const response = this.http.post<BalanceResponse>(this.configService.apiUrlHashGraph + 'balance/', body);
     return response;
   }
+
+  public getDashboardStatusAccount(id: number): Observable<DetailStatusResponse> {
+
+    const response = this.http.get<DetailStatusResponse>(this.configService.apiUrl + 'dashboard/' + id);
+    return response;
+  }
+
+  public validationAccount(operatorId: string, operatorKey: string, name: string, email: string): Observable<ValidationResponse> {
+    const body = {
+      name: name,
+      email: email,
+      affair: "Activación de Cuenta CheethAkademy",
+      operatorKey: operatorKey,
+      operatorId: operatorId
+    };
+    const bodyAsociate = {
+      accountKey: operatorKey,
+      accountId: operatorId
+    };
+
+    return this.http.post<AsociateResponse>(this.configService.apiUrlHashGraph + 'asociar-token/', bodyAsociate)
+      .pipe(
+        flatMap((asociateResponse: AsociateResponse) => {
+          if (asociateResponse && asociateResponse.status === 200) {
+            return this.http.post<ValidationResponse>(this.configService.apiUrl + 'validation_account_email/', body);
+          } else {
+            return throwError('Error en la petición balance');
+          }
+        }),
+        catchError((error) => {
+          console.error('Error en la petición validation_account_email:', error);
+          return throwError('Error en la petición validation_account_email');
+        })
+      );
+  }
+
+
 
 
   // public getDashboardallUser(): Observable<ResponseIallUsersDashboard> {

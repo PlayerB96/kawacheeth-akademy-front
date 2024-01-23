@@ -13,7 +13,8 @@ export interface DataI {
   name: string;
   lastname: string;
   access_token: string;
-
+  operatorId: string;
+  operatorKey: string;
 }
 export interface PlanDescripcion {
   porcentaje_realizado: string;

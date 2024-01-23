@@ -9,8 +9,26 @@ export interface BalanceResponse {
     balanceHbars: number;
     balanceDollars: number;
     balanceCtokens: string; // Puedes dejar este campo como string si es un identificador o valor que debe ser una cadena
-  }
-  
+}
+
+export interface AsociateResponse {
+    mensaje: string;
+    recibido: any;
+    status: number;
+}
+
+export interface ValidationResponse {
+    message: string;
+}
+
+export interface DetailStatusResponse {
+    id: number;
+    operatorKey: string;
+    operatorId: string; // Puedes dejar este campo como string si es un identificador o valor que debe ser una cadena
+    status: boolean;
+    user: string; // Puedes dejar este campo como string si es un identificador o valor que debe ser una cadena
+}
+
 
 export interface PlanDescripcion {
     cursos: number;

@@ -8,28 +8,81 @@
     </button>
 
     <h1 class="modal-title">Compra tu CTokens</h1>
-    <!-- Descripción del modal -->
+
     <p class="modal-description">
       Selecciona la cantidad de CTokens y escanea el QR
     </p>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <!-- Tu select actual -->
+          <select [(ngModel)]="selectedOptionPlan" (ngModelChange)="calculateAmount()"
+            class="form-select form-select-solid mt-2" data-control="select2" data-placeholder="Select an option"
+            data-allow-clear="true">
+            <option value="0">Seleccione</option>
+            <option value="50">CTokens - 50</option>
+            <option value="100">CTokens - 100</option>
+            <option value="200">CTokens - 200</option>
+            <option value="500">CTokens - 500</option>
+            <option value="1000">CTokens - 1000</option>
+          </select>
+        </div>
+
+        <div class="col-md-12 mt-4">
+          <!-- Ofertas adicionales -->
+          <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed flex-shrink-0">
+            <div class="card-body">
+              <h5 class="card-title">Ofertas Especiales</h5>
+              <ul class="list-unstyled">
+                <li>
+
+                  <label>
+                    <input type="radio" [(ngModel)]="selectedOptionPlan" value="500"
+                      (ngModelChange)="calculateAmount()">
+                    +50 CTokens - Gratis
+                  </label>
+                </li>
+                <li>
+                  <label>
+                    <input type="radio" [(ngModel)]="selectedOptionPlan" value="1000"
+                      (ngModelChange)="calculateAmount()">
+                    +100 CTokens - Gratis
+                  </label>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
   </div>
 
   <div class="body-content text-center">
-    <img src="assets/QRCtokens.jpeg" style="width: 150px; height: 150px" />
-    <div class="m-1">Monto a Pagar: S/ 100.00</div>
-    <div class="mb-5">Cantidad a Recibir: 10000 CTokens</div>
-    <div class="m-2 fs-6 fw-bold text-gray-400">
-      Carga la Captura del Pago y Enviala
-    </div>
-    <button class="btn btn-sm btn-success">
-      <i class="fas fa-upload me-2"></i>Cargar
-    </button>
-  </div>
 
-  <div class="d-flex flex-center flex-row-fluid pt-12 m-5">
-    <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">
-      Cancel
-    </button>
-    <button class="btn btn-primary btn-sm">Enviar</button>
+    <img src="assets/QRCtokens.jpeg" style="width: 150px; height: 150px" />
+    <div *ngIf="calculatedAmount !== null">
+      <span style="font-weight: bold; color: #000000;">Monto a Pagar:</span>
+      <span style="font-weight: semi-bold; color: #888;"> S/ {{calculatedAmount}}</span>
+    </div>
+    <div *ngIf="calculatedAmount !== null" class="mb-5">
+      <span style="font-weight: bold; color: #000000;"> Cantidad a Recibir:</span>
+      <span style="font-weight: semi-bold; color: #888;"> {{planValue}} CTokens</span>
+
+      <div class="m-2 fs-6 fw-bold text-gray-400">
+        Carga la Captura del Pago y Enviala
+      </div>
+      <button [disabled]="disabledDepositar" class="btn btn-sm btn-success">
+        <i class="fas fa-upload me-2"></i>Cargar
+      </button>
+
+    </div>
+
+    <div class="d-flex flex-center flex-row-fluid pt-6 m-5">
+      <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">
+        Cancel
+      </button>
+      <button [disabled]="disabledDepositar" class="btn btn-primary btn-sm">Enviar</button>
+    </div>
   </div>
-</div>

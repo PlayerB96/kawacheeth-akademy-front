@@ -24,7 +24,7 @@ export class ModalsHistorialComponent implements OnInit {
   actualPayment: PaymentData | null = null
 
   constructor(private transferService: TransferService, private loginservice: LoginservicesService) {
-    this.responseActual = this.loginservice.getResponseActual();
+    // this.responseActual = this.loginservice.getResponseActual();
     this.user_id = this.responseActual?.data.id ?? null;
 
   }
@@ -33,7 +33,7 @@ export class ModalsHistorialComponent implements OnInit {
   errorMsj: any = "";
 
   ngOnInit() {
-    this.getDataPayment(this.user_id);
+    this.cargarResponseActual();
 
   }
 
@@ -51,6 +51,19 @@ export class ModalsHistorialComponent implements OnInit {
 
       }
     })
+  }
+
+
+  cargarResponseActual() {
+
+    this.loginservice.getResponseActual().then((response) => {
+      this.responseActual = response;
+      if (this.responseActual) {
+        this.getDataPayment(this.responseActual.data.id)
+      } else {
+        // No hay respuesta disponible
+      }
+    });
   }
 
 }

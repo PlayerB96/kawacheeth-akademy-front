@@ -13,5 +13,9 @@ export interface DataI {
   name: string;
   lastname: string;
   access_token: string;
+  operatorId: string;
+  operatorKey: string;
+  operatorStatus: boolean;
+  dashboardId: number;
 
 }

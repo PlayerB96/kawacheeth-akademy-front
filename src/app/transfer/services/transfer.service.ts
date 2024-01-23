@@ -19,12 +19,13 @@ export class TransferService {
   }
 
 
-  // public getValorDolar(): Observable<ResponseChangedDolar> {
+  public getValorDolar(): Observable<ResponseChangedDolar> {
+    const url = this.configService.apiUrl;
 
-  //   const response = this.http.get<ResponseChangedDolar>(this.url + 'profile/changedDolar');
+    const response = this.http.get<ResponseChangedDolar>(url + 'changed_dolar');
 
-  //   return response;
-  // }
+    return response;
+  }
 
 
   public getPaymentData(user_id: string): Observable<ResponsePayment> {
@@ -41,8 +42,6 @@ export class TransferService {
 
   public setImage(image: File, usuario: number, planValue: number, timeValue: number): Observable<ResponseImage> {
 
-    console.log(planValue)
-    console.log(timeValue)
     switch (planValue) {
       case 9:
         this.planName = "Asociado";
@@ -54,28 +53,20 @@ export class TransferService {
         this.planName = "Socio";
         break;
     }
-
     const montoCalculado = (planValue * timeValue).toFixed(2);
-    console.log(montoCalculado)
-
     const formData = new FormData();
     formData.append('image', image);
     formData.append('user', usuario.toString());
     formData.append('plan', this.planName ?? ""); // Usar "" como valor predeterminado si this.planName es null
     formData.append('monto_usd', montoCalculado.toString());
-
-
     // Convertir FormData a un objeto simple
     const formDataObject: { [key: string]: any } = {};
     formData.forEach((value, key) => {
       formDataObject[key] = value;
     });
-
+    console.log(formData)
     const url = this.configService.apiUrl;
-
     const response = this.http.post<ResponseImage>(url + 'report_payment_validation/', formData)
-    // Enviar la solicitud HTTP usando HttpClient
-    console.log(response)
     return response
   }
 

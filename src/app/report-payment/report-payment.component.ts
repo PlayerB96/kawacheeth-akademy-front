@@ -33,14 +33,14 @@ export class ReportPaymentComponent implements OnInit {
   constructor(private datePipe: DatePipe, private _liveAnnouncer: LiveAnnouncer, private reportService: ReportPaymentService, private loginservice: LoginservicesService) {
     this.fechaInicio = this.getFormattedDate(new Date());
     this.fechaFin = this.getFormattedDate(new Date(), true);
-    this.responseActual = this.loginservice.getResponseActual();
-    this.usuario = this.responseActual?.data.username ?? null;
+    // this.responseActual = this.loginservice.getResponseActual();
     const currentYear = new Date().getFullYear();
     this.minDate = new Date(currentYear - 20, 0, 1);
     this.maxDate = new Date(currentYear + 1, 11, 31);
   }
   ngOnInit(): void {
     const fechaActual = new Date();
+    this.cargarResponseActual();
 
     // Formatear la fecha al formato 'yyyy-MM-dd'
     this.fechaInicio = this.datePipe.transform(fechaActual, 'yyyy-MM-dd') + 'T00:00:00';
@@ -85,6 +85,23 @@ export class ReportPaymentComponent implements OnInit {
       return `${day}-${month}-${year} 00:00`;
     }
   }
+
+
+  cargarResponseActual() {
+    this.loginservice.getResponseActual().then((response) => {
+      this.responseActual = response;
+      console.log(this.responseActual)
+      console.log("#####")
+
+      if (this.responseActual) {
+        this.usuario = this.responseActual.data.username
+
+      } else {
+        // No hay respuesta disponible
+      }
+    });
+  }
+
 
   private padZero(num: number): string {
     return num < 10 ? `0${num}` : `${num}`;
@@ -131,6 +148,7 @@ export class ReportPaymentComponent implements OnInit {
 
 
   public changedStatePayment(element: any) {
+    console.log("###################11")
 
     if (this.usuario != null) {
       element.loadingState = true;

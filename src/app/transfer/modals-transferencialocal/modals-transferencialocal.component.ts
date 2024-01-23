@@ -43,15 +43,14 @@ export class ModalsTransferencialocalComponent implements OnInit {
   @ViewChild('fileInput') fileInput: any;
 
 
-  constructor(private modalService: ModalService, private loginservice: LoginservicesService, private profileservice: ProfileService, private transferservice: TransferService) {
-
-    this.responseActual = this.loginservice.getResponseActual();
-    this.usuario = this.responseActual?.data.username ?? null;
-    this.id_user = this.responseActual?.data.id ?? null;
+  constructor(private modalService: ModalService, private loginservice: LoginservicesService, private transferservice: TransferService) {
 
   }
 
-  ngOnInit(): void { this.getValorDolar(); }
+  ngOnInit() {
+    this.getValorDolar();
+    this.cargarResponseActual();
+  }
 
 
   calculateAmount() {
@@ -95,8 +94,23 @@ export class ModalsTransferencialocalComponent implements OnInit {
     }
   }
 
+  cargarResponseActual() {
+    this.loginservice.getResponseActual().then((response) => {
+      this.responseActual = response;
+
+
+      if (this.responseActual) {
+        this.id_user = this.responseActual?.data.id;
+      } else {
+        // No hay respuesta disponible
+      }
+    });
+  }
+
+
+
   public getValorDolar() {
-    // this.response = this.transferservice.getValorDolar()
+    this.response = this.transferservice.getValorDolar()
     this.response.subscribe((res: ResponseChangedDolar) => {
       if (res != null) {
         this.dolarValue = res.data.venta
@@ -140,18 +154,19 @@ export class ModalsTransferencialocalComponent implements OnInit {
 
   sendImage() {
     this.loading = true;
-    this.errorAlProcesarImagen = false; // Reiniciar el indicador de error
+    this.errorAlProcesarImagen = false;
 
     if (this.id_user && this.planValueT && this.timeValueT) {
       this.responseImage = this.transferservice.setImage(this.imagenSeleccionada, this.id_user, this.planValueT, this.timeValueT);
+
       this.responseImage.subscribe(
         (res: any) => {
-          // Lógica de éxito
           this.imageName = 'Pago Enviado con Éxito';
           this.loading = false;
           this.imagenEnviada = true;
-          console.log(res);
-          console.log("##############");
+          console.log(res.status);
+          console.log("#########################");
+
 
           if (res.status === 400) {
             this.modalService.cerrarModalTransfer('transferencia-local');
@@ -178,6 +193,8 @@ export class ModalsTransferencialocalComponent implements OnInit {
         (error: any) => {
           // Manejar el error
           console.error(error);
+          console.log("#########################");
+
           this.imageName = 'Error: Ya tiene un Pago pendiente';
           this.loading = false;
           this.errorAlProcesarImagen = true; // Establecer a true cuando hay un error

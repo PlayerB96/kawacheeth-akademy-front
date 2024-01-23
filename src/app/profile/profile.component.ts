@@ -23,6 +23,8 @@ export class ProfileComponent implements OnInit {
   nombreCompleto: string | null = null
   rol: string | null = null
   correo: string | null = null
+  operatorId: string | null = null
+  operatorKey: string | null = null
   user_id: number | null = null
   usuario: string | null = null
   cursos_adquiridos: number | null = null
@@ -40,10 +42,10 @@ export class ProfileComponent implements OnInit {
   constructor(
     private modalService: ModalService, private loginservice: LoginservicesService, private profileservice: ProfileService, private sanitizer: DomSanitizer
   ) {
-    this.responseActual = this.loginservice.getResponseActual();
 
     this.user_id = this.responseActual?.data.id ?? null;
     this.usuario = this.responseActual?.data.username ?? null;
+
 
   }
 
@@ -53,26 +55,31 @@ export class ProfileComponent implements OnInit {
   errorMsj: any = "";
 
   ngOnInit() {
-    this.datosPersonales();
-    this.getProfileDetails(this.user_id)
-    this.getProfileProgress(this.user_id)
-
+    this.cargarResponseActual()
   }
-  getIconUrl(item: any): SafeResourceUrl {
-    // Genera la URL segura para el icono SVG
-    const iconUrl = `assets/media/icons/duotune/${item.icon}.svg`;
-    return this.sanitizer.bypassSecurityTrustResourceUrl(iconUrl);
+
+  cargarResponseActual() {
+
+    this.loginservice.getResponseActual().then((response) => {
+
+      this.responseActual = response;
+
+      if (this.responseActual) {
+        this.nombreCompleto = this.responseActual.data.name + " " + this.responseActual.data.lastname;
+        this.correo = this.responseActual.data.email;
+        this.rol = this.responseActual.data.rol;
+        this.usuario = this.responseActual.data.username;
+
+
+        this.getProfileDetails(this.responseActual.data.id)
+        this.getProfileProgress(this.responseActual.data.id)
+
+      } else {
+        // No hay respuesta disponible
+      }
+    });
   }
-  public datosPersonales() {
 
-    if (this.responseActual != null) {
-
-      this.nombreCompleto = this.responseActual.data.name + " " + this.responseActual.data.lastname;
-      this.correo = this.responseActual.data.email;
-      this.rol = this.responseActual.data.rol;
-
-    }
-  }
 
   public getProfileDetails(user_id: any) {
     this.response = this.profileservice.getProfileDetails(user_id)
@@ -107,10 +114,7 @@ export class ProfileComponent implements OnInit {
   }
 
   abrirModal(typeStateModal: string) {
-    console.log("11111111111")
     if (this.list_activities !== null) {
-      console.log(this.list_activities)
-
       this.modalService.abrirModal(typeStateModal, this.list_activities);
     }
   }
@@ -121,5 +125,26 @@ export class ProfileComponent implements OnInit {
     console.log(codeRedirect)
     this.profileservice.redirectTransferProfile(codeRedirect);
   }
+
+
+  selectedAvatar: string = 'assets/media/avatars/blank.png'; // Avatar por defecto
+  avatarList: string[] = [
+    'assets/media/avatars/150-1.jpg',
+    'assets/media/avatars/150-2.jpg',
+    'assets/media/avatars/150-3.jpg',
+    'assets/media/avatars/150-4.jpg',
+    'assets/media/avatars/150-5.jpg',
+  ];
+
+
+  // openAvatarModal(): void {
+  //   // const modalRef: MdbModalRef = this.modalService.open(AvatarModalComponent);
+  //   modalRef.componentInstance.avatarList = this.avatarList;
+  //   modalRef.result.then((selectedAvatar: string) => {
+  //     if (selectedAvatar) {
+  //       this.selectedAvatar = selectedAvatar;
+  //     }
+  //   });
+  // }
 
 }

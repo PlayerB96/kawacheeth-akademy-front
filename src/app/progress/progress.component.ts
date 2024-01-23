@@ -17,7 +17,7 @@ export class ProgressComponent implements OnInit {
 
   public responseActual: ResponseI | null = null;
   public response: any
-  selectedHito: any;
+  selectedHito: any = 0;
 
   nombreCompleto: string | null = null
   rol: string | null = null
@@ -46,14 +46,7 @@ export class ProgressComponent implements OnInit {
   constructor(
     private modalServiceTransfer: ModalService, private loginservice: LoginservicesService, private profileservice: ProfileService, private sanitizer: DomSanitizer
   ) {
-    this.responseActual = this.loginservice.getResponseActual();
 
-    this.user_id = this.responseActual?.data.id ?? null;
-    this.usuario = this.responseActual?.data.username ?? null;
-    if (this.usuario !== null) {
-      this.usermd5 = Md5.hashStr(this.usuario);
-    }
-    console.log(this.user_id)
 
   }
   @Output()
@@ -61,12 +54,7 @@ export class ProgressComponent implements OnInit {
   errorMsj: any = "";
 
   ngOnInit() {
-
-    this.datosPersonales();
-    this.getProfileDetails(this.user_id)
-    this.getProfileProgress(this.user_id)
-
-
+    this.cargarResponseActual();
   }
 
   public datosPersonales() {
@@ -77,8 +65,33 @@ export class ProgressComponent implements OnInit {
       this.correo = this.responseActual.data.email;
       this.rol = this.responseActual.data.rol;
 
+
     }
   }
+
+  cargarResponseActual() {
+
+    this.loginservice.getResponseActual().then((response) => {
+
+      this.responseActual = response;
+
+
+      if (this.responseActual) {
+        this.nombreCompleto = this.responseActual.data.name + " " + this.responseActual.data.lastname;
+        this.correo = this.responseActual.data.email;
+        this.rol = this.responseActual.data.rol;
+        this.usuario = this.responseActual.data.username;
+        this.usermd5 = Md5.hashStr(this.usuario);
+
+        this.getProfileDetails(this.responseActual.data.id)
+        this.getProfileProgress(this.responseActual.data.id)
+
+      } else {
+        // No hay respuesta disponible
+      }
+    });
+  }
+
 
   public getProfileDetails(user_id: any) {
 
@@ -114,7 +127,7 @@ export class ProgressComponent implements OnInit {
 
   toggleDivs() {
     if (this.selectedHito) {
-      console.log(this.selectedHito.code)
+      // console.log(this.selectedHito.code)
       this.nombreValidation = this.selectedHito.name
       this.nivelValidation = this.selectedHito.level
       this.codigoValidation = this.selectedHito.code

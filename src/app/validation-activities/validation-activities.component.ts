@@ -31,15 +31,14 @@ export class ValidationActivitiesComponent implements OnInit {
   constructor(private datePipe: DatePipe, private _liveAnnouncer: LiveAnnouncer, private validationService: ValidationActitiesService, private loginservice: LoginservicesService) {
     this.fechaInicio = this.getFormattedDate(new Date());
     this.fechaFin = this.getFormattedDate(new Date(), true);
-    this.responseActual = this.loginservice.getResponseActual();
-    this.usuario = this.responseActual?.data.username ?? null;
+    // this.responseActual = this.loginservice.getResponseActual();
 
   }
 
   ngOnInit(): void {
     // Obtener la fecha actual
     const fechaActual = new Date();
-
+    this.cargarResponseActual();
     // Formatear la fecha al formato 'yyyy-MM-dd'
     this.fechaInicio = this.datePipe.transform(fechaActual, 'yyyy-MM-dd') + 'T00:00:00';
     this.fechaFin = this.datePipe.transform(fechaActual, 'yyyy-MM-dd') + 'T23:59:59';
@@ -69,6 +68,22 @@ export class ValidationActivitiesComponent implements OnInit {
 
   public response: any
   dataSource = new MatTableDataSource<DataItem>(ELEMENT_DATAV2);
+
+  cargarResponseActual() {
+    this.loginservice.getResponseActual().then((response) => {
+      this.responseActual = response;
+      console.log(this.responseActual)
+      console.log("#####")
+
+      if (this.responseActual) {
+        this.usuario = this.responseActual?.data.username;
+
+      } else {
+        // No hay respuesta disponible
+      }
+    });
+  }
+
 
   private getFormattedDate(date: Date, endOfMonth: boolean = false): string {
     const year = date.getFullYear();
@@ -112,9 +127,11 @@ export class ValidationActivitiesComponent implements OnInit {
   }
 
   public changedStateValidate(element: any) {
+    console.log("#####11")
 
     if (this.usuario != null) {
       element.loadingState = true;
+      console.log("#####11")
       this.response = this.validationService.changedStateValidate(element["user"]["id"], element["name"], true);
 
       this.response.subscribe((res: ResponseReport) => {

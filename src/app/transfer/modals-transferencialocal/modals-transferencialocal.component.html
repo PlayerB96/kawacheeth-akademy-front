@@ -74,8 +74,10 @@
         <!--end::Wrapper-->
     </div>
     <div *ngIf="imgStatus" class="notice d-flex bg-light-primary rounded border-success border border-dashed m-4 p-1">
+
         {{imageName}}
     </div>
+
     <div class="ms-1">
         <!-- Agrega un input de tipo archivo oculto -->
         <input type="file" #fileInput style="display: none" (change)="cargarImagen($event)">

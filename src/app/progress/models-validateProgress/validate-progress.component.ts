@@ -37,12 +37,11 @@ export class ValidateProgressComponent implements OnInit {
   @ViewChild('fileInput') fileInput: any;
 
   constructor(private loginservice: LoginservicesService, private modalService: ModalService, private transferservice: TransferService) {
-    this.responseActual = this.loginservice.getResponseActual();
-    this.id_user = this.responseActual?.data.id ?? null;
-    this.usuario = this.responseActual?.data.username ?? null;
+
   }
 
   ngOnInit(): void {
+    this.cargarResponseActual();
   }
 
 
@@ -78,6 +77,22 @@ export class ValidateProgressComponent implements OnInit {
       }
     }
   }
+
+  cargarResponseActual() {
+    this.loginservice.getResponseActual().then((response) => {
+      this.responseActual = response;
+      console.log(this.responseActual)
+      console.log("#####")
+
+      if (this.responseActual) {
+        this.id_user = this.responseActual?.data.id;
+        this.usuario = this.responseActual?.data.username;
+      } else {
+        // No hay respuesta disponible
+      }
+    });
+  }
+
 
   sendImage() {
     this.loading = true;
