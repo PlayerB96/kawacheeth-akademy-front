@@ -24,6 +24,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { InviteComponent } from './invite/invite.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
 import { MdbModalModule, MdbModalRef } from 'mdb-angular-ui-kit/modal';
@@ -95,6 +96,7 @@ import { ModalsCtokensComponent } from './dashboard/modals-ctokens/modals-ctoken
     MatButtonModule,
     MatChipsModule,
     DatePipe,
+    MatMenuModule,
     // JwtModule.forRoot({
     //   config: {
     //     tokenGetter: tokenGetter,

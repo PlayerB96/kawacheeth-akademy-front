@@ -10,43 +10,39 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-transfer',
   templateUrl: './transfer.component.html',
-  styleUrls: ['./transfer.component.scss']
+  styleUrls: ['./transfer.component.scss'],
 })
 export class TransferComponent implements OnInit {
-
   public responseActual: ResponseI | null = null;
-  public response: any
+  public response: any;
 
-
-  public responseImage: any
+  public responseImage: any;
   imageName: string = '';
-  public imagenSeleccionada: any
+  public imagenSeleccionada: any;
   loading: boolean = false; // Añade esta línea para definir la propiedad loading
   imagenEnviada: boolean = false;
   errorAlProcesarImagen: boolean = false;
 
-  nombreCompleto: string | null = null
-  rol: string | null = null
-  correo: string | null = null
-  cod_cuenta: string | null = null
-  user_id: number | null = null
-  usuario: string | null = null
-  cursos_adquiridos: number | null = null
-  cursos_pendientes: number | null = null
-  cursos_terminados: number | null = null
-  nombre_plan: string | null = null
-  localidad: string | null = null
-  disabledDepositar: boolean | null = null
-  planValueT: number | null = null
-  timeValueT: number | null = null
-  discountMount: string | null = null
-  id_user: number | null = null
-  imgStatus: boolean = false
+  nombreCompleto: string | null = null;
+  rol: string | null = null;
+  correo: string | null = null;
+  cod_cuenta: string | null = null;
+  user_id: number | null = null;
+  usuario: string | null = null;
+  cursos_adquiridos: number | null = null;
+  cursos_pendientes: number | null = null;
+  cursos_terminados: number | null = null;
+  nombre_plan: string | null = null;
+  localidad: string | null = null;
+  disabledDepositar: boolean | null = null;
+  planValueT: number | null = null;
+  timeValueT: number | null = null;
+  discountMount: string | null = null;
+  id_user: number | null = null;
+  imgStatus: boolean = false;
 
-
-
-  porcentaje_plan: number | null = null
-  estado_suscripcion: boolean | null = null
+  porcentaje_plan: number | null = null;
+  estado_suscripcion: boolean | null = null;
   modalContent: string | null = null; // Inicializa modalContent con null
   selectedOptionPlan: string = '0'; // Propiedad para rastrear la opción seleccionada
   selectedOptionTime: string = '0'; // Propiedad para rastrear la opción seleccionada
@@ -55,41 +51,35 @@ export class TransferComponent implements OnInit {
   @ViewChild('fileInput') fileInput: any;
 
   constructor(
-    private modalService: ModalService, private transferservice: TransferService, private modalServiceTransfer: ModalService, private loginservice: LoginservicesService, private profileservice: ProfileService
-  ) {
-
-  }
-
+    private modalService: ModalService,
+    private transferservice: TransferService,
+    private modalServiceTransfer: ModalService,
+    private loginservice: LoginservicesService,
+    private profileservice: ProfileService
+  ) {}
 
   @Output()
   emitter = new Subject<any>();
-  errorMsj: any = "";
+  errorMsj: any = '';
 
   ngOnInit() {
-
     this.cargarResponseActual();
   }
 
-
-
   public datosPersonales() {
-
     if (this.responseActual != null) {
-
-      this.nombreCompleto = this.responseActual.data.name + " " + this.responseActual.data.lastname;
+      this.nombreCompleto =
+        this.responseActual.data.name + ' ' + this.responseActual.data.lastname;
       this.correo = this.responseActual.data.email;
       this.rol = this.responseActual.data.rol;
-
     }
   }
 
-  public getProfileDetails
-    (cod_cuenta: any) {
-
-    this.response = this.profileservice.getProfileDetails(cod_cuenta)
+  public getProfileDetails(cod_cuenta: any) {
+    this.response = this.profileservice.getProfileDetails(cod_cuenta);
     this.response.subscribe((res: User) => {
       if (res != null) {
-        console.log(res)
+        console.log(res);
         this.cursos_adquiridos = res.courses_acquired;
         this.cursos_pendientes = res.courses_pending;
         this.cursos_terminados = res.courses_completed;
@@ -98,36 +88,32 @@ export class TransferComponent implements OnInit {
         this.estado_suscripcion = res.subscription_state;
       }
     });
-
   }
 
   cargarResponseActual() {
-
     this.loginservice.getResponseActual().then((response) => {
-
       this.responseActual = response;
 
-
       if (this.responseActual) {
-        this.nombreCompleto = this.responseActual.data.name + " " + this.responseActual.data.lastname;
+        this.nombreCompleto =
+          this.responseActual.data.name +
+          ' ' +
+          this.responseActual.data.lastname;
         this.correo = this.responseActual.data.email;
         this.rol = this.responseActual.data.rol;
         this.usuario = this.responseActual.data.username;
+        this.id_user = this.responseActual?.data.id;
 
-        this.getProfileDetails(this.responseActual.data.id)
-
+        this.getProfileDetails(this.responseActual.data.id);
       } else {
         // No hay respuesta disponible
       }
     });
   }
 
-
   toggleDivs(option: string) {
     this.selectedOptionPlan = option;
-
   }
-
 
   toggleDivsTime(option: string) {
     this.selectedOptionTime = option;
@@ -149,15 +135,15 @@ export class TransferComponent implements OnInit {
       this.discountMount = discountMountT;
 
       switch (true) {
-        case (this.timeValueT == 3):
+        case this.timeValueT == 3:
           this.discountMount = '5%';
           discount = 0.95;
           break;
-        case (this.timeValueT == 6):
+        case this.timeValueT == 6:
           this.discountMount = '10%';
-          discount = 0.90;
+          discount = 0.9;
           break;
-        case (this.timeValueT == 12):
+        case this.timeValueT == 12:
           this.discountMount = '25%';
           discount = 0.75;
           break;
@@ -166,37 +152,46 @@ export class TransferComponent implements OnInit {
 
       if (this.planValueT == 0 && this.timeValueT == 0) {
         this.calculatedAmount = null;
-
-
       } else if (this.calculatedAmount != 0) {
         this.disabledDepositar = false;
-
       }
-
     }
   }
 
-
   abrirModal(typeStateModal: string, banco: string, ncuenta: string) {
-
-    this.modalServiceTransfer.abrirModal(typeStateModal, banco, ncuenta, true, '', '');
-
+    this.modalServiceTransfer.abrirModal(
+      typeStateModal,
+      banco,
+      ncuenta,
+      true,
+      '',
+      ''
+    );
   }
 
   abrirModalHistorial(typeStateModal: string, metodPayment: string) {
     if (this.estado_suscripcion != null && this.nombreCompleto != null) {
-      this.modalServiceTransfer.abrirModal(typeStateModal, '', '', this.estado_suscripcion, metodPayment, this.nombreCompleto);
-
+      this.modalServiceTransfer.abrirModal(
+        typeStateModal,
+        '',
+        '',
+        this.estado_suscripcion,
+        metodPayment,
+        this.nombreCompleto
+      );
     }
-
   }
-
 
   sendImage() {
     this.loading = true;
     this.errorAlProcesarImagen = false;
     if (this.id_user && this.planValueT && this.timeValueT) {
-      this.responseImage = this.transferservice.setImage(this.imagenSeleccionada, this.id_user, this.planValueT, this.timeValueT);
+      this.responseImage = this.transferservice.setImage(
+        this.imagenSeleccionada,
+        this.id_user,
+        this.planValueT,
+        this.timeValueT
+      );
       this.responseImage.subscribe(
         (res: any) => {
           // Lógica de éxito
@@ -204,7 +199,7 @@ export class TransferComponent implements OnInit {
           this.loading = false;
           this.imagenEnviada = true;
           console.log(res);
-          console.log("##############");
+          console.log('##############');
 
           if (res.status === 400) {
             this.modalService.cerrarModalTransfer('transferencia-local');
@@ -212,21 +207,19 @@ export class TransferComponent implements OnInit {
             Swal.fire({
               title: 'Error al Enviar Pago',
               width: 400,
-              padding: "3em",
-              color: "#716add",
+              padding: '3em',
+              color: '#716add',
               backdrop: `
                 rgba(0, 139, 123, 0.4)
                 left top
                 no-repeat
-              `
+              `,
             });
           } else {
             setTimeout(() => {
               this.modalService.cerrarModalTransfer('transferencia-local');
             }, 3000);
           }
-
-
         },
         (error: any) => {
           // Manejar el error
@@ -272,5 +265,4 @@ export class TransferComponent implements OnInit {
     this.imageName = '';
     this.imgStatus = false;
   }
-
 }

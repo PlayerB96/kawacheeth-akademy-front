@@ -2,18 +2,23 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { DetailProfile, ResponseProgressProfile } from '../models/response.interface';
+import {
+  DetailProfile,
+  ResponseProgressProfile,
+} from '../models/response.interface';
 import { ConfigService } from '../../../config.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProfileService {
-
   public responseActual!: Response;
 
-  constructor(private http: HttpClient, private router: Router, private configService: ConfigService) { }
-
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private configService: ConfigService
+  ) {}
 
   public getProfileDetails(id: number): Observable<DetailProfile> {
     const url = this.configService.apiUrl + 'users/' + id + '/';
@@ -21,11 +26,11 @@ export class ProfileService {
     // Añadimos las cabeceras a la solicitud
     const response = this.http.get<DetailProfile>(url);
     return response;
-
   }
 
-
-  public getProfileProgress(user_id: number): Observable<ResponseProgressProfile> {
+  public getProfileProgress(
+    user_id: number
+  ): Observable<ResponseProgressProfile> {
     const body = {
       user_id: user_id,
     };
@@ -37,14 +42,11 @@ export class ProfileService {
   }
 
   public redirectProgress(): void {
-    this.router.navigate(['profile/progress'])
+    this.router.navigate(['profile/progress']);
   }
 
   public redirectTransfer(): void {
-
-    this.router.navigate(['profile/transfer'])
-
-
+    this.router.navigate(['profile/transfer']);
   }
 
   public redirectTransferProfile(codeRedirect: string): void {
@@ -52,6 +54,9 @@ export class ProfileService {
       case 'historial':
         this.router.navigate(['profile/transfer']);
         break;
+      case 'progress':
+        this.router.navigate(['profile/progress']);
+        break; 
       case 'dashboard':
         this.router.navigate(['dashboard']);
         break;
@@ -59,6 +64,5 @@ export class ProfileService {
         // Manejo para cualquier otro caso
         break;
     }
-
   }
 }

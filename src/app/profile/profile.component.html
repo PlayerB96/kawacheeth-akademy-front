@@ -106,6 +106,9 @@
                                                     <a>
                                                         <!--begin::Svg Icon | path: icons/duotune/general/gen026.svg-->
                                                         <span *ngIf="estado_suscripcion"
+                                                        data-bs-toggle="tooltip"
+                                                        data-bs-placement="top"
+                                                        title={{nombre_plan}}
                                                             class="svg-icon svg-icon-1 svg-icon-primary">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24px"
                                                                 height="24px" viewBox="0 0 24 24">
@@ -119,7 +122,7 @@
                                                         </span>
                                                         <!--end::Svg Icon-->
                                                     </a>
-                                                    <a (click)="abrirModal('upgrade')"
+                                                    <a *ngIf="!estado_suscripcion" (click)="abrirModal('upgrade')"
                                                         class="btn btn-sm btn-light-success fw-bolder ms-2 fs-8 py-1 px-3">Mejorar
                                                         Plan</a>
 
@@ -184,16 +187,17 @@
                                                     class="btn btn-sm btn-primary me-2">Progreso</a>
 
                                                 <!--begin::Menu-->
+                                               <!-- app.component.html -->
                                                 <div class="me-0">
-                                                    <button
-                                                        class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary"
-                                                        data-kt-menu-trigger="click"
-                                                        data-kt-menu-placement="bottom-end">
-                                                        <i class="bi bi-three-dots fs-3"></i>
+                                                    <button mat-icon-button [matMenuTriggerFor]="menu">
+                                                    <i class="bi bi-three-dots fs-3"></i>
                                                     </button>
-
+                                                    <mat-menu #menu="matMenu" xPosition="before">
+                                                    <button mat-menu-item (click)="opcionSeleccionada('historial')">Transferencias</button>
+                                                    <button mat-menu-item (click)="opcionSeleccionada('progress')">Progresos</button>
+                                                    </mat-menu>
                                                 </div>
-                                                <!--end::Menu-->
+  
                                             </div>
                                             <!--end::Actions-->
                                         </div>
