@@ -165,7 +165,6 @@ export class ModalsTransferencialocalComponent implements OnInit {
           this.loading = false;
           this.imagenEnviada = true;
           console.log(res.status);
-          console.log("#########################");
 
 
           if (res.status === 400) {

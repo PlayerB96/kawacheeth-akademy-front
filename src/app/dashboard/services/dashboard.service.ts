@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AsociateResponse, BalanceResponse, DetailStatusResponse, ResponseIallUsersDashboard, ResponseIdetailDashboard, ValidationResponse } from '../models/response.interface';
 import { Observable, catchError, flatMap, throwError } from 'rxjs';
 import { ConfigService } from '../../../config.service';
+import { ResponseChangedDolar, ResponseImage } from 'src/app/transfer/models/response.interface';
 
 
 const baseurHashGraph: string = "http://localhost:3000";
@@ -18,6 +19,12 @@ const baseurl: string = "http://localhost:8000";
 export class DashboardService {
   detailDashboardAPI: string = `${baseurHashGraph}/api/balance`;
   validationAccountaAPI: string = `${baseurl}/api/validation_account_email`;
+  planName: string | null = null;
+  discountMount: string | null = null;
+  calculatedAmount: number | null = null;
+  public response: any
+  dolarValue: number | null = null
+
 
   constructor(private http: HttpClient, private router: Router, private configService: ConfigService) { }
 
@@ -67,17 +74,52 @@ export class DashboardService {
   }
 
 
+  public setImage(
+    image: File,
+    usuario: number,
+    planValue: number
+  ): Observable<ResponseImage> {
+
+    let discountMountT = '0%'; // Por defecto, sin descuento
+    this.discountMount = discountMountT;
+
+    this.calculatedAmount = planValue / 2;
+
+    const montoCalculado = this.calculatedAmount.toFixed(2);
+
+    console.log(usuario.toString());
+    console.log(this.planName);
+    console.log(montoCalculado.toString());
+    console.log(image);
+
+    console.log('####');
+
+    const formData = new FormData();
+    formData.append('image', image);
+    formData.append('user', usuario.toString());
+    formData.append('plan', this.planName ?? ''); // Usar "" como valor predeterminado si this.planName es null
+    formData.append('monto_usd', montoCalculado.toString());
+    // Convertir FormData a un objeto simple
+    const formDataObject: { [key: string]: any } = {};
+    formData.forEach((value, key) => {
+      formDataObject[key] = value;
+    });
+    const url = this.configService.apiUrl;
+    const response = this.http.post<ResponseImage>(
+      url + 'report_payment_1validation/',
+      formData
+    );
+    return response;
+  }
 
 
-  // public getDashboardallUser(): Observable<ResponseIallUsersDashboard> {
-
-  //   const response = this.http.get<ResponseIallUsersDashboard>(this.allUsersDashboard);
-  //   response.subscribe((res: ResponseIallUsersDashboard) => {
-  //     console.log("***")
-  //     console.log(res)
-  //     console.log("***")
-  //   });
-
-  //   return response;
-  // }
+  public getValorDolar() {
+    const url = this.configService.apiUrl;
+    this.response = this.http.get<ResponseChangedDolar>(url + 'changed_dolar');
+    this.response.subscribe((res: ResponseChangedDolar) => {
+      if (res != null) {
+        this.dolarValue = res.data.venta
+      }
+    });
+  }
 }

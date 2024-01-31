@@ -73,9 +73,28 @@
       <div class="m-2 fs-6 fw-bold text-gray-400">
         Carga la Captura del Pago y Enviala
       </div>
-      <button [disabled]="disabledDepositar" class="btn btn-sm btn-success">
-        <i class="fas fa-upload me-2"></i>Cargar
-      </button>
+      <div class="ms-1">
+        <input type="file" #fileInput id="fileInput" style="display: none" accept="image/*"
+          (change)="cargarImagen($event)" />
+        <button class="btn btn-sm btn-primary" (click)="activarCargadorImagen()">
+          Cargar Imagen
+        </button>
+
+        <button class="btn btn-sm btn-success ms-4" (click)="sendImage()" [disabled]="!imgStatus || loading">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+          {{
+          loading
+          ? "Enviando Pago"
+          : imagenEnviada
+          ? "Pago Enviado ✔"
+          : errorAlProcesarImagen
+          ? "Enviar
+          Pago ❌"
+          : "Enviar Pago"
+          }}
+        </button>
+
+      </div>
 
     </div>
 

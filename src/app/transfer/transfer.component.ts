@@ -56,7 +56,7 @@ export class TransferComponent implements OnInit {
     private modalServiceTransfer: ModalService,
     private loginservice: LoginservicesService,
     private profileservice: ProfileService
-  ) {}
+  ) { }
 
   @Output()
   emitter = new Subject<any>();
@@ -256,10 +256,12 @@ export class TransferComponent implements OnInit {
       }
     }
   }
+
   activarCargadorImagen() {
     // Simula un clic en el input de archivo cuando se hace clic en el botón
     this.fileInput.nativeElement.click();
   }
+
   resetearSeleccion() {
     this.imagenSeleccionada = null;
     this.imageName = '';
