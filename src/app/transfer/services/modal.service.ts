@@ -4,29 +4,42 @@ import { ModalsTransferencialocalComponent } from '../modals-transferencialocal/
 import { ModalsHistorialComponent } from '../modals-historial/modals-historial.component';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ModalService {
-
-  modalRefTransferenciaLocal: MdbModalRef<ModalsTransferencialocalComponent> | undefined;
+  modalRefTransferenciaLocal:
+    | MdbModalRef<ModalsTransferencialocalComponent>
+    | undefined;
   modalRefHistorial: MdbModalRef<ModalsHistorialComponent> | undefined;
 
-  constructor(private modalService: MdbModalService) { }
+  constructor(private modalService: MdbModalService) {}
 
-  public abrirModal(typeStateModal: string, banco: string, ncuenta: string, estado_suscripcion: boolean, metodPayment: string, account: string) {
-
+  public abrirModal(
+    typeStateModal: string,
+    banco: string,
+    ncuenta: string,
+    estado_suscripcion: boolean,
+    metodPayment: string,
+    account: string,
+    nombrePlan: string
+  ) {
     switch (typeStateModal) {
       case 'transferencia-local':
-        this.modalRefTransferenciaLocal = this.modalService.open(ModalsTransferencialocalComponent);
-        this.modalRefTransferenciaLocal.component.bancoLocal = banco
-        this.modalRefTransferenciaLocal.component.numeroCuenta = ncuenta
+        this.modalRefTransferenciaLocal = this.modalService.open(
+          ModalsTransferencialocalComponent
+        );
+        this.modalRefTransferenciaLocal.component.bancoLocal = banco;
+        this.modalRefTransferenciaLocal.component.numeroCuenta = ncuenta;
+        this.modalRefTransferenciaLocal.component.nombrePlan = nombrePlan;
+
         break;
       case 'historial':
-        this.modalRefHistorial = this.modalService.open(ModalsHistorialComponent);
-        this.modalRefHistorial.component.stateSuscription = estado_suscripcion
-        this.modalRefHistorial.component.metodoPago = metodPayment
-        this.modalRefHistorial.component.cuenta = account
-
+        this.modalRefHistorial = this.modalService.open(
+          ModalsHistorialComponent
+        );
+        this.modalRefHistorial.component.stateSuscription = estado_suscripcion;
+        this.modalRefHistorial.component.metodoPago = metodPayment;
+        this.modalRefHistorial.component.cuenta = account;
 
         break;
       default:
@@ -34,19 +47,15 @@ export class ModalService {
     }
   }
 
-
   public cerrarModalTransfer(typeStateModal: string) {
-
     switch (typeStateModal) {
-
       case 'transferencia-local':
         if (this.modalRefTransferenciaLocal) {
           this.modalRefTransferenciaLocal.close();
-        } break;
+        }
+        break;
       default:
         console.log('Sin Modal');
     }
-
   }
-
 }

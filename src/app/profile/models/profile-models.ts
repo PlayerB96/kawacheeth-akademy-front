@@ -15,6 +15,7 @@ export interface DataI {
   access_token: string;
   operatorId: string;
   operatorKey: string;
+  dashboardId: number;
 }
 export interface PlanDescripcion {
   porcentaje_realizado: string;
@@ -41,7 +42,8 @@ export interface User {
   courses_pending: number;
   courses_completed: number;
   subscription_state: boolean;
-
+  subscription_days: number;
+  subscription_time: number;
 }
 
 export interface ResponseIdetailProfile {
@@ -51,13 +53,10 @@ export interface ResponseIdetailProfile {
 }
 
 export interface UserHistory {
-
   id: number;
   timestamp: string;
   title: string;
   description: string;
   user: number;
   code: string;
-
 }
-

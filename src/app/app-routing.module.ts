@@ -12,6 +12,7 @@ import { ProgressComponent } from './progress/progress.component';
 import { TransferComponent } from './transfer/transfer.component';
 import { ReportPaymentComponent } from './report-payment/report-payment.component';
 import { ValidationActivitiesComponent } from './validation-activities/validation-activities.component';
+import { PlandetailComponent } from './profile/plandetail/plandetail.component';
 
 const routes: Routes = [
   { path: 'register', component: RegisterComponent },
@@ -35,6 +36,11 @@ const routes: Routes = [
       {
         path: 'profile/transfer',
         component: TransferComponent,
+        pathMatch: 'full',
+      },
+      {
+        path: 'profile/plan',
+        component: PlandetailComponent,
         pathMatch: 'full',
       },
       {

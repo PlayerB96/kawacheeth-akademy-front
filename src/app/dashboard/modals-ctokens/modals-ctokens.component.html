@@ -16,9 +16,14 @@
       <div class="row">
         <div class="col-md-12">
           <!-- Tu select actual -->
-          <select [(ngModel)]="selectedOptionPlan" (ngModelChange)="calculateAmount()"
-            class="form-select form-select-solid mt-2" data-control="select2" data-placeholder="Select an option"
-            data-allow-clear="true">
+          <select
+            [(ngModel)]="selectedOptionPlan"
+            (ngModelChange)="calculateAmount()"
+            class="form-select form-select-solid mt-2"
+            data-control="select2"
+            data-placeholder="Select an option"
+            data-allow-clear="true"
+          >
             <option value="0">Seleccione</option>
             <option value="50">CTokens - 50</option>
             <option value="100">CTokens - 100</option>
@@ -30,22 +35,31 @@
 
         <div class="col-md-12 mt-4">
           <!-- Ofertas adicionales -->
-          <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed flex-shrink-0">
+          <div
+            class="notice d-flex bg-light-primary rounded border-primary border border-dashed flex-shrink-0"
+          >
             <div class="card-body">
               <h5 class="card-title">Ofertas Especiales</h5>
               <ul class="list-unstyled">
                 <li>
-
                   <label>
-                    <input type="radio" [(ngModel)]="selectedOptionPlan" value="500"
-                      (ngModelChange)="calculateAmount()">
+                    <input
+                      type="radio"
+                      [(ngModel)]="selectedOptionPlan"
+                      value="500"
+                      (ngModelChange)="calculateAmount()"
+                    />
                     +50 CTokens - Gratis
                   </label>
                 </li>
                 <li>
                   <label>
-                    <input type="radio" [(ngModel)]="selectedOptionPlan" value="1000"
-                      (ngModelChange)="calculateAmount()">
+                    <input
+                      type="radio"
+                      [(ngModel)]="selectedOptionPlan"
+                      value="1000"
+                      (ngModelChange)="calculateAmount()"
+                    />
                     +100 CTokens - Gratis
                   </label>
                 </li>
@@ -55,53 +69,72 @@
         </div>
       </div>
     </div>
-
-
   </div>
 
   <div class="body-content text-center">
-
     <img src="assets/QRCtokens.jpeg" style="width: 150px; height: 150px" />
     <div *ngIf="calculatedAmount !== null">
-      <span style="font-weight: bold; color: #000000;">Monto a Pagar:</span>
-      <span style="font-weight: semi-bold; color: #888;"> S/ {{calculatedAmount}}</span>
+      <span style="font-weight: bold; color: #000000">Monto a Pagar:</span>
+      <span style="font-weight: semi-bold; color: #888">
+        S/ {{ calculatedAmount }}</span
+      >
     </div>
     <div *ngIf="calculatedAmount !== null" class="mb-5">
-      <span style="font-weight: bold; color: #000000;"> Cantidad a Recibir:</span>
-      <span style="font-weight: semi-bold; color: #888;"> {{planValue}} CTokens</span>
+      <span style="font-weight: bold; color: #000000">
+        Cantidad a Recibir:</span
+      >
+      <span style="font-weight: semi-bold; color: #888">
+        {{ planValue }} CTokens</span
+      >
 
       <div class="m-2 fs-6 fw-bold text-gray-400">
         Carga la Captura del Pago y Enviala
       </div>
+      <div
+        *ngIf="imgStatus"
+        class="notice d-flex bg-light-primary rounded border-success border border-dashed m-4 p-1"
+      >
+        {{ imageName }}
+      </div>
       <div class="ms-1">
-        <input type="file" #fileInput id="fileInput" style="display: none" accept="image/*"
-          (change)="cargarImagen($event)" />
-        <button class="btn btn-sm btn-primary" (click)="activarCargadorImagen()">
+        <input
+          type="file"
+          #fileInput
+          id="fileInput"
+          style="display: none"
+          accept="image/*"
+          (change)="cargarImagen($event)"
+        />
+        <button
+          class="btn btn-sm btn-primary"
+          (click)="activarCargadorImagen()"
+        >
           Cargar Imagen
         </button>
 
-        <button class="btn btn-sm btn-success ms-4" (click)="sendImage()" [disabled]="!imgStatus || loading">
-          <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+        <button
+          class="btn btn-sm btn-success ms-4"
+          (click)="sendImage()"
+          [disabled]="!imgStatus || loading"
+        >
+          <span
+            *ngIf="loading"
+            class="spinner-border spinner-border-sm me-2"
+            role="status"
+            aria-hidden="true"
+          ></span>
           {{
-          loading
-          ? "Enviando Pago"
-          : imagenEnviada
-          ? "Pago Enviado ✔"
-          : errorAlProcesarImagen
-          ? "Enviar
+            loading
+              ? "Enviando Pago"
+              : imagenEnviada
+              ? "Pago Enviado ✔"
+              : errorAlProcesarImagen
+              ? "Enviar
           Pago ❌"
-          : "Enviar Pago"
+              : "Enviar Pago"
           }}
         </button>
-
       </div>
-
-    </div>
-
-    <div class="d-flex flex-center flex-row-fluid pt-6 m-5">
-      <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">
-        Cancel
-      </button>
-      <button [disabled]="disabledDepositar" class="btn btn-primary btn-sm">Enviar</button>
     </div>
   </div>
+</div>

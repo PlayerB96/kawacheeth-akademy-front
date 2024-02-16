@@ -6,6 +6,8 @@ import { ResponseI, User } from '../profile/models/profile-models';
 import { ModalService } from './services/modal.service';
 import { TransferService } from './services/transfer.service';
 import Swal from 'sweetalert2';
+import { ResponseChangedDolar } from './models/response.interface';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-transfer',
@@ -40,14 +42,22 @@ export class TransferComponent implements OnInit {
   discountMount: string | null = null;
   id_user: number | null = null;
   imgStatus: boolean = false;
+  dolarValue: number | null = null;
+  time: number | null = null;
+  fechaFormateada: string | null = null;
 
   porcentaje_plan: number | null = null;
+  subscripcion_days: number | null = null;
+  subscripcion_time: number | null = null;
   estado_suscripcion: boolean | null = null;
   modalContent: string | null = null; // Inicializa modalContent con null
   selectedOptionPlan: string = '0'; // Propiedad para rastrear la opción seleccionada
   selectedOptionTime: string = '0'; // Propiedad para rastrear la opción seleccionada
   calculatedAmount: number | null = null; // Inicialmente no se muestra el monto calculado
   calculatedAmountSoles: number | null = null;
+  percentagePlan: number | null = null; // Propiedad para rastrear la opción seleccionada
+  differenceDaysPlan: number | null = null; // Propiedad para rastrear la opción seleccionada
+
   @ViewChild('fileInput') fileInput: any;
 
   constructor(
@@ -55,14 +65,16 @@ export class TransferComponent implements OnInit {
     private transferservice: TransferService,
     private modalServiceTransfer: ModalService,
     private loginservice: LoginservicesService,
-    private profileservice: ProfileService
-  ) { }
+    private profileservice: ProfileService,
+    private datePipe: DatePipe
+  ) {}
 
   @Output()
   emitter = new Subject<any>();
   errorMsj: any = '';
 
   ngOnInit() {
+    this.getValorDolar();
     this.cargarResponseActual();
   }
 
@@ -80,14 +92,36 @@ export class TransferComponent implements OnInit {
     this.response.subscribe((res: User) => {
       if (res != null) {
         console.log(res);
+
         this.cursos_adquiridos = res.courses_acquired;
         this.cursos_pendientes = res.courses_pending;
         this.cursos_terminados = res.courses_completed;
         this.nombre_plan = res.subscription_plan.name;
         this.porcentaje_plan = res.percentage_completed;
         this.estado_suscripcion = res.subscription_state;
+        this.subscripcion_days = res.subscription_days;
+        this.subscripcion_time = res.subscription_time;
+
+        this.percentagePlan =
+          (this.subscripcion_days / this.subscripcion_time) * 100;
+        this.differenceDaysPlan =
+          this.subscripcion_time - this.subscripcion_days;
+        console.log(this.differenceDaysPlan);
+        this.calcularFechaFutura(this.differenceDaysPlan);
       }
     });
+  }
+
+  calcularFechaFutura(differenceDaysPlan: number) {
+    const hoy = new Date();
+    const fechaFutura = new Date(
+      hoy.getTime() + differenceDaysPlan * 24 * 60 * 60 * 1000
+    );
+    this.fechaFormateada = this.datePipe.transform(
+      fechaFutura,
+      "dd 'de' MMMM 'de' y",
+      'es-PE'
+    );
   }
 
   cargarResponseActual() {
@@ -103,6 +137,7 @@ export class TransferComponent implements OnInit {
         this.rol = this.responseActual.data.rol;
         this.usuario = this.responseActual.data.username;
         this.id_user = this.responseActual?.data.id;
+        console.log(this.responseActual);
 
         this.getProfileDetails(this.responseActual.data.id);
       } else {
@@ -159,25 +194,33 @@ export class TransferComponent implements OnInit {
   }
 
   abrirModal(typeStateModal: string, banco: string, ncuenta: string) {
-    this.modalServiceTransfer.abrirModal(
-      typeStateModal,
-      banco,
-      ncuenta,
-      true,
-      '',
-      ''
-    );
+    if (this.nombre_plan != null) {
+      this.modalServiceTransfer.abrirModal(
+        typeStateModal,
+        banco,
+        ncuenta,
+        true,
+        '',
+        '',
+        this.nombre_plan
+      );
+    }
   }
 
   abrirModalHistorial(typeStateModal: string, metodPayment: string) {
-    if (this.estado_suscripcion != null && this.nombreCompleto != null) {
+    if (
+      this.estado_suscripcion != null &&
+      this.nombreCompleto != null &&
+      this.nombre_plan != null
+    ) {
       this.modalServiceTransfer.abrirModal(
         typeStateModal,
         '',
         '',
         this.estado_suscripcion,
         metodPayment,
-        this.nombreCompleto
+        this.nombreCompleto,
+        this.nombre_plan
       );
     }
   }
@@ -185,12 +228,13 @@ export class TransferComponent implements OnInit {
   sendImage() {
     this.loading = true;
     this.errorAlProcesarImagen = false;
-    if (this.id_user && this.planValueT && this.timeValueT) {
+    if (this.id_user && this.planValueT && this.timeValueT && this.dolarValue) {
       this.responseImage = this.transferservice.setImage(
         this.imagenSeleccionada,
         this.id_user,
         this.planValueT,
-        this.timeValueT
+        this.timeValueT,
+        this.dolarValue
       );
       this.responseImage.subscribe(
         (res: any) => {
@@ -198,8 +242,7 @@ export class TransferComponent implements OnInit {
           this.imageName = 'Pago Enviado con Éxito';
           this.loading = false;
           this.imagenEnviada = true;
-          console.log(res);
-          console.log('##############');
+
 
           if (res.status === 400) {
             this.modalService.cerrarModalTransfer('transferencia-local');
@@ -266,5 +309,14 @@ export class TransferComponent implements OnInit {
     this.imagenSeleccionada = null;
     this.imageName = '';
     this.imgStatus = false;
+  }
+
+  public getValorDolar() {
+    this.response = this.transferservice.getValorDolar();
+    this.response.subscribe((res: ResponseChangedDolar) => {
+      if (res != null) {
+        this.dolarValue = res.data.venta;
+      }
+    });
   }
 }

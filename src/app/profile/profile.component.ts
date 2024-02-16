@@ -17,6 +17,10 @@ import {
   ListActivities,
   ResponseProgressProfile,
 } from './models/response.interface';
+import { DashboardService } from '../dashboard/services/dashboard.service';
+import { DetailStatusResponse } from '../dashboard/models/response.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-profile',
@@ -26,6 +30,7 @@ import {
 export class ProfileComponent implements OnInit {
   public responseActual: ResponseI | null = null;
   public response: any;
+  status: boolean | null = null;
 
   nombreCompleto: string | null = null;
   rol: string | null = null;
@@ -34,12 +39,13 @@ export class ProfileComponent implements OnInit {
   operatorKey: string | null = null;
   user_id: number | null = null;
   usuario: string | null = null;
-  cursos_adquiridos: number | null = null;
-  cursos_pendientes: number | null = null;
-  cursos_terminados: number | null = null;
+  cursos_activos: number | null = null;
+  cursos_completados: number | null = null;
+  cursos_poriniciar: number | null = null;
   nombre_plan: string | null = null;
   historial: UserHistory[] | null = null;
   list_activities: ListActivities[] | null = null;
+  dashboardid: number | null = null;
 
   porcentaje_plan: number | null = null;
   estado_suscripcion: boolean | null = null;
@@ -50,7 +56,8 @@ export class ProfileComponent implements OnInit {
     private modalService: ModalService,
     private loginservice: LoginservicesService,
     private profileservice: ProfileService,
-    private sanitizer: DomSanitizer
+    private dashboardservice: DashboardService,
+    public dialog: MatDialog
   ) {
     this.user_id = this.responseActual?.data.id ?? null;
     this.usuario = this.responseActual?.data.username ?? null;
@@ -76,7 +83,8 @@ export class ProfileComponent implements OnInit {
         this.correo = this.responseActual.data.email;
         this.rol = this.responseActual.data.rol;
         this.usuario = this.responseActual.data.username;
-
+        this.dashboardid = this.responseActual.data.dashboardId;
+        this.getDashboardStatusAccount(this.dashboardid);
         this.getProfileDetails(this.responseActual.data.id);
         this.getProfileProgress(this.responseActual.data.id);
       } else {
@@ -89,9 +97,9 @@ export class ProfileComponent implements OnInit {
     this.response = this.profileservice.getProfileDetails(user_id);
     this.response.subscribe((res: User) => {
       if (res != null) {
-        this.cursos_adquiridos = res.courses_acquired;
-        this.cursos_pendientes = res.courses_pending;
-        this.cursos_terminados = res.courses_completed;
+        this.cursos_activos = res.courses_acquired;
+        this.cursos_poriniciar = res.courses_pending;
+        this.cursos_completados = res.courses_completed;
         this.nombre_plan = res.subscription_plan.name;
         this.porcentaje_plan = res.percentage_completed;
         this.estado_suscripcion = res.subscription_state;
@@ -108,13 +116,35 @@ export class ProfileComponent implements OnInit {
     this.response.subscribe((res: ResponseProgressProfile) => {
       if (res != null) {
         this.list_activities = res.data;
+        console.log(this.list_activities);
       }
     });
   }
 
   abrirModal(typeStateModal: string) {
     if (this.list_activities !== null) {
-      this.modalService.abrirModal(typeStateModal, this.list_activities);
+      console.log(this.status);
+
+      if (this.status == false) {
+        const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+          width: '400px',
+          data: {
+            title: 'Confirmación',
+            message: 'Aún no ha activado su cuenta ¿Desea Activarla?',
+          },
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result) {
+            this.redirectTransferProfile('dashboard');
+            console.log(result);
+          } else {
+            console.log('#####NO##############');
+          }
+        });
+      } else {
+        this.modalService.abrirModal(typeStateModal, this.list_activities);
+      }
     }
   }
 
@@ -138,5 +168,18 @@ export class ProfileComponent implements OnInit {
     this.profileservice.redirectTransferProfile(opcion);
 
     // Puedes realizar acciones adicionales aquí según la opción seleccionada
+  }
+
+  public getDashboardStatusAccount(dashboardid: number) {
+    this.response =
+      this.dashboardservice.getDashboardStatusAccount(dashboardid);
+
+    this.response.subscribe((res: DetailStatusResponse) => {
+      if (res != null) {
+        this.status = res.status;
+        console.log(this.status);
+        console.log('##!#!#!');
+      }
+    });
   }
 }

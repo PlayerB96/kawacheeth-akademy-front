@@ -49,6 +49,9 @@ export class ProfileService {
     this.router.navigate(['profile/transfer']);
   }
 
+  public redirectPlan(): void {
+    this.router.navigate(['profile/plan']);
+  }
   public redirectTransferProfile(codeRedirect: string): void {
     switch (codeRedirect) {
       case 'historial':
@@ -56,7 +59,7 @@ export class ProfileService {
         break;
       case 'progress':
         this.router.navigate(['profile/progress']);
-        break; 
+        break;
       case 'dashboard':
         this.router.navigate(['dashboard']);
         break;

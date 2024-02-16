@@ -45,6 +45,9 @@ import { DatePipe } from '@angular/common';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { ValidateProgressComponent } from './progress/models-validateProgress/validate-progress.component';
 import { ModalsCtokensComponent } from './dashboard/modals-ctokens/modals-ctokens.component';
+import { PlandetailComponent } from './profile/plandetail/plandetail.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 // import { JwtModule } from '@auth0/angular-jwt';
 // export function tokenGetter() {
 //   return localStorage.getItem("token");
@@ -72,6 +75,8 @@ import { ModalsCtokensComponent } from './dashboard/modals-ctokens/modals-ctoken
     ValidationActivitiesComponent,
     ValidateProgressComponent,
     ModalsCtokensComponent,
+    PlandetailComponent,
+    ConfirmationDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -97,6 +102,7 @@ import { ModalsCtokensComponent } from './dashboard/modals-ctokens/modals-ctoken
     MatChipsModule,
     DatePipe,
     MatMenuModule,
+    MatDialogModule,
     // JwtModule.forRoot({
     //   config: {
     //     tokenGetter: tokenGetter,

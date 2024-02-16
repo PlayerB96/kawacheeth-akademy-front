@@ -19,7 +19,7 @@ export class ModalsCtokensComponent implements OnInit {
     private loginservice: LoginservicesService,
     private modalService: ModalService,
     private transferservice: TransferService
-  ) { }
+  ) {}
   selectedOptionPlan: string = '0';
   calculatedAmount: number | null = null;
   planValue: number | null = null;
@@ -35,15 +35,15 @@ export class ModalsCtokensComponent implements OnInit {
   nombreCompleto: string | null = null;
   id_user: number | null = null;
   planValueT: number | null = null;
-  public response: any
-  dolarValue: number | null = null
-
+  public response: any;
+  dolarValue: number | null = null;
 
   @ViewChild('fileInput') fileInput: any;
 
   ngOnInit(): void {
     this.disabledDepositar = true;
-
+    this.getValorDolar();
+    this.cargarResponseActual();
   }
 
   cargarResponseActual() {
@@ -56,46 +56,37 @@ export class ModalsCtokensComponent implements OnInit {
           ' ' +
           this.responseActual.data.lastname;
         this.id_user = this.responseActual?.data.id;
-
       } else {
         // No hay respuesta disponible
       }
     });
   }
 
-
   cerrarModal(typeStateModal: string) {
     this.modalService.cerrarModal(typeStateModal);
   }
 
-
-
   calculateAmount() {
-    if (this.selectedOptionPlan) {
-      let discount = 0.5;
+    if (this.selectedOptionPlan && this.dolarValue) {
       this.planValue = parseFloat(this.selectedOptionPlan.toString());
-      this.calculatedAmount = this.planValue * discount;
+      this.calculatedAmount = this.planValue;
       this.planValueT = this.planValue;
 
-      console.log(this.selectedOptionPlan.toString())
+      console.log(this.selectedOptionPlan.toString());
       if (this.planValue == 500) {
-        this.planValue = this.planValue + 50
+        this.planValue = this.planValue + 50;
       } else if (this.planValue == 1000) {
-        this.planValue = this.planValue + 100
-
+        this.planValue = this.planValue + 100;
       }
-
     }
 
     if (this.planValue == 0) {
       this.calculatedAmount = null;
       this.disabledDepositar = true;
-
     } else if (this.calculatedAmount != 0) {
       this.disabledDepositar = false;
     }
   }
-
 
   cargarImagen(event: any) {
     const files = event.target.files;
@@ -119,18 +110,20 @@ export class ModalsCtokensComponent implements OnInit {
     }
   }
 
-
   sendImage() {
     this.loading = true;
     this.errorAlProcesarImagen = false;
-
+    console.log(this.id_user);
+    console.log(this.planValueT);
 
     if (this.id_user && this.planValueT) {
+      this.planValueT;
       this.responseImage = this.dashboardService.setImage(
         this.imagenSeleccionada,
         this.id_user,
-        this.planValueT,
+        this.planValueT
       );
+
       this.responseImage.subscribe(
         (res: any) => {
           // Lógica de éxito
@@ -185,12 +178,11 @@ export class ModalsCtokensComponent implements OnInit {
   }
 
   public getValorDolar() {
-    this.response = this.transferservice.getValorDolar()
+    this.response = this.transferservice.getValorDolar();
     this.response.subscribe((res: ResponseChangedDolar) => {
       if (res != null) {
-        this.dolarValue = res.data.venta
+        this.dolarValue = res.data.venta;
       }
     });
   }
-
 }

@@ -11,13 +11,12 @@ import { ResponseI } from '../profile/models/profile-models';
 import { DatePipe } from '@angular/common';
 import { ReportPaymentValidation } from '../validation-activities/models/response.interface';
 
-let ELEMENT_DATAV2: DataItem[] = []
+let ELEMENT_DATAV2: DataItem[] = [];
 
 @Component({
   selector: 'app-report-payment',
   templateUrl: './report-payment.component.html',
   styleUrls: ['./report-payment.component.scss'],
-
 })
 export class ReportPaymentComponent implements OnInit {
   private subscription: Subscription | undefined;
@@ -28,9 +27,14 @@ export class ReportPaymentComponent implements OnInit {
   maxDate: Date;
   fechaInicio: string | undefined;
   fechaFin: string | undefined;
-  usuario: string | null = null
+  usuario: string | null = null;
 
-  constructor(private datePipe: DatePipe, private _liveAnnouncer: LiveAnnouncer, private reportService: ReportPaymentService, private loginservice: LoginservicesService) {
+  constructor(
+    private datePipe: DatePipe,
+    private _liveAnnouncer: LiveAnnouncer,
+    private reportService: ReportPaymentService,
+    private loginservice: LoginservicesService
+  ) {
     this.fechaInicio = this.getFormattedDate(new Date());
     this.fechaFin = this.getFormattedDate(new Date(), true);
     // this.responseActual = this.loginservice.getResponseActual();
@@ -43,14 +47,16 @@ export class ReportPaymentComponent implements OnInit {
     this.cargarResponseActual();
 
     // Formatear la fecha al formato 'yyyy-MM-dd'
-    this.fechaInicio = this.datePipe.transform(fechaActual, 'yyyy-MM-dd') + 'T00:00:00';
-    this.fechaFin = this.datePipe.transform(fechaActual, 'yyyy-MM-dd') + 'T23:59:59';
+    this.fechaInicio =
+      this.datePipe.transform(fechaActual, 'yyyy-MM-dd') + 'T00:00:00';
+    this.fechaFin =
+      this.datePipe.transform(fechaActual, 'yyyy-MM-dd') + 'T23:59:59';
 
     if (this.fechaInicio != null && this.fechaFin) {
       this.getDataPayment(this.fechaInicio, this.fechaFin);
 
       // Suscribe a cambios en el dataSourceSubject
-      this.dataSourceSubject.subscribe(data => {
+      this.dataSourceSubject.subscribe((data) => {
         this.dataSource.data = data;
       });
 
@@ -62,22 +68,32 @@ export class ReportPaymentComponent implements OnInit {
     }
   }
 
-
   ngOnDestroy(): void {
     // Importante: Cancela la suscripción al destruir el componente
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
-  displayedColumns: string[] = ['usuario', 'fecha_utc', 'state_payment', 'status_payment', 'plan', 'monto_usd', 'actions'];
-  public response: any
+  displayedColumns: string[] = [
+    'usuario',
+    'fecha_utc',
+    'state_payment',
+    'status_payment',
+    'time',
+    'plan',
+    'monto_usd',
+    'actions',
+  ];
+  public response: any;
   dataSource = new MatTableDataSource<DataItem>(ELEMENT_DATAV2);
   private getFormattedDate(date: Date, endOfMonth: boolean = false): string {
     const year = date.getFullYear();
     const month = this.padZero(date.getMonth() + 1); // Mes comienza desde 0
 
     let day = '01';
-    let lastDay = this.padZero(new Date(year, date.getMonth() + 1, 0).getDate()); // Último día del mes
+    let lastDay = this.padZero(
+      new Date(year, date.getMonth() + 1, 0).getDate()
+    ); // Último día del mes
 
     if (endOfMonth) {
       return `${lastDay}-${month}-${year} 23:59`;
@@ -86,22 +102,19 @@ export class ReportPaymentComponent implements OnInit {
     }
   }
 
-
   cargarResponseActual() {
     this.loginservice.getResponseActual().then((response) => {
       this.responseActual = response;
-      console.log(this.responseActual)
-      console.log("#####")
+      console.log(this.responseActual);
+      console.log('#####');
 
       if (this.responseActual) {
-        this.usuario = this.responseActual.data.username
-
+        this.usuario = this.responseActual.data.username;
       } else {
         // No hay respuesta disponible
       }
     });
   }
-
 
   private padZero(num: number): string {
     return num < 10 ? `0${num}` : `${num}`;
@@ -118,14 +131,12 @@ export class ReportPaymentComponent implements OnInit {
   }
 
   announceSortChange(sortState: Sort) {
-
     if (sortState.direction) {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
     } else {
       this._liveAnnouncer.announce('Sorting cleared');
     }
   }
-
 
   showImage(element: ReportPaymentValidation) {
     console.log('Delete:', element.image);
@@ -134,9 +145,9 @@ export class ReportPaymentComponent implements OnInit {
     // Lógica para eliminar el elemento y abrir el modal con la imagen
   }
 
-
   public getDataPayment(fecha_inicio: string, fecha_fin: string) {
-    this.response = this.reportService.getReportPaymentValidations(fecha_inicio, fecha_fin)
+    this.response = this.reportService
+      .getReportPaymentValidations(fecha_inicio, fecha_fin)
       .subscribe((res: ReportPaymentValidation[]) => {
         if (res != null) {
           this.dataSourceSubject.next(res);
@@ -145,52 +156,65 @@ export class ReportPaymentComponent implements OnInit {
       });
   }
 
-
-
   public changedStatePayment(element: any) {
-    console.log("###################11")
-
     if (this.usuario != null) {
       element.loadingState = true;
+      let montoEntero: number = parseInt(element['monto_usd'], 10);
 
-      console.log(element)
-      this.response = this.reportService.changedStateValidate(element["user"]["id"], element["state"], true);
+      this.response = this.reportService.changedStateValidate(
+        element['user']['id'],
+        element['state'],
+        true,
+        montoEntero,
+        element['time'],
+        element['plan']
+      );
 
-      this.response.subscribe((res: ResponseReport) => {
-        if (res != null) {
-          this.getDataPayment(this.fechaInicio!, this.fechaFin!);
-        }
-      }).add(() => {
-        element.loadingState = false;
-      });
+      this.response
+        .subscribe((res: ResponseReport) => {
+          if (res != null) {
+            this.getDataPayment(this.fechaInicio!, this.fechaFin!);
+          }
+        })
+        .add(() => {
+          element.loadingState = false;
+        });
     }
   }
 
   public changedRefusedStatePayment(element: any) {
-
     if (this.usuario != null) {
       element.loadingState = true;
 
-      console.log(element)
-      this.response = this.reportService.changedStateValidate(element["user"]["id"], element["state"], false);
+      console.log(element);
+      this.response = this.reportService.changedStateValidate(
+        element['user']['id'],
+        element['state'],
+        false,
+        element['monto_usd'],
+        element['time'],
+        element['plan']
+      );
 
-      this.response.subscribe((res: ResponseReport) => {
-        if (res != null) {
-          this.getDataPayment(this.fechaInicio!, this.fechaFin!);
-        }
-      }).add(() => {
-        element.loadingState = false;
-      });
+      this.response
+        .subscribe((res: ResponseReport) => {
+          if (res != null) {
+            this.getDataPayment(this.fechaInicio!, this.fechaFin!);
+          }
+        })
+        .add(() => {
+          element.loadingState = false;
+        });
     }
   }
-
 
   onDateInput(event: any, tipoFecha: string): void {
     const selectedDate: Date | null = event.value;
 
     if (selectedDate) {
       // Formatear la fecha de inicio con hora '00:00:00'
-      const formattedDate: string = this.datePipe.transform(selectedDate, 'yyyy-MM-ddTHH:mm:ss') ?? '';
+      const formattedDate: string =
+        this.datePipe.transform(selectedDate, 'yyyy-MM-ddTHH:mm:ss') ?? '';
 
       if (tipoFecha === 'inicio') {
         // Manejar la fecha de inicio
@@ -202,7 +226,8 @@ export class ReportPaymentComponent implements OnInit {
         fechaFin.setHours(23, 59, 59);
 
         // Formatear la fecha de fin
-        this.fechaFin = this.datePipe.transform(fechaFin, 'yyyy-MM-ddTHH:mm:ss') ?? '';
+        this.fechaFin =
+          this.datePipe.transform(fechaFin, 'yyyy-MM-ddTHH:mm:ss') ?? '';
         console.log('Fecha fin:', this.fechaFin);
       }
     }
@@ -210,14 +235,10 @@ export class ReportPaymentComponent implements OnInit {
 
   buscar(): void {
     if (this.fechaFin != null && this.fechaInicio != null) {
-      console.log(this.fechaInicio)
-      console.log(this.fechaFin)
+      console.log(this.fechaInicio);
+      console.log(this.fechaFin);
 
       this.getDataPayment(this.fechaInicio, this.fechaFin);
-
     }
   }
-
-
-
 }

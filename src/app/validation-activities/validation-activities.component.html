@@ -1,99 +1,172 @@
 <div class="body-table">
-    <mat-form-field class="example-full-width mb-5" appearance="fill">
-        <mat-label>Selecciona una Fecha</mat-label>
-        <input matInput [matDatepicker]="pickerInicio" (dateInput)="onDateInput($event, 'inicio')">
-        <mat-hint>Fecha Inicio</mat-hint>
-        <mat-datepicker-toggle matSuffix [for]="pickerInicio"></mat-datepicker-toggle>
-        <mat-datepicker #pickerInicio></mat-datepicker>
-    </mat-form-field>
+  <mat-form-field class="example-full-width mb-5" appearance="fill">
+    <mat-label>Selecciona una Fecha</mat-label>
+    <input
+      matInput
+      [matDatepicker]="pickerInicio"
+      (dateInput)="onDateInput($event, 'inicio')"
+    />
+    <mat-hint>Fecha Inicio</mat-hint>
+    <mat-datepicker-toggle
+      matSuffix
+      [for]="pickerInicio"
+    ></mat-datepicker-toggle>
+    <mat-datepicker #pickerInicio></mat-datepicker>
+  </mat-form-field>
 
-    <mat-form-field class="example-full-width mb-5 mx-4" appearance="fill">
-        <mat-label>Selecciona una Fecha</mat-label>
-        <input matInput [matDatepicker]="pickerFin" (dateInput)="onDateInput($event, 'fin')">
-        <mat-hint>Fecha Fin</mat-hint>
-        <mat-datepicker-toggle matSuffix [for]="pickerFin"></mat-datepicker-toggle>
-        <mat-datepicker #pickerFin></mat-datepicker>
-    </mat-form-field>
-    <button mat-raised-button color="primary" (click)="buscar()">Buscar</button>
-    <table mat-table [dataSource]="dataSource" matSort #table (matSortChange)="announceSortChange($event)"
-        class="mat-elevation-z8">
+  <mat-form-field class="example-full-width mb-5 mx-4" appearance="fill">
+    <mat-label>Selecciona una Fecha</mat-label>
+    <input
+      matInput
+      [matDatepicker]="pickerFin"
+      (dateInput)="onDateInput($event, 'fin')"
+    />
+    <mat-hint>Fecha Fin</mat-hint>
+    <mat-datepicker-toggle matSuffix [for]="pickerFin"></mat-datepicker-toggle>
+    <mat-datepicker #pickerFin></mat-datepicker>
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="buscar()">Buscar</button>
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    matSort
+    #table
+    (matSortChange)="announceSortChange($event)"
+    class="mat-elevation-z8"
+  >
+    <ng-container matColumnDef="usuario">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+        sortActionDescription="Sort by number"
+      >
+        Usuario
+      </th>
+      <td mat-cell *matCellDef="let element">{{ element.user.name }}</td>
+    </ng-container>
 
-        <ng-container matColumnDef="usuario">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
-                Usuario
-            </th>
-            <td mat-cell *matCellDef="let element"> {{element.user.name}} </td>
-        </ng-container>
+    <ng-container matColumnDef="fecha_utc">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+        sortActionDescription="Sort by number"
+      >
+        Fecha
+      </th>
+      <td mat-cell *matCellDef="let element">{{ element.date_created }}</td>
+    </ng-container>
 
-        <ng-container matColumnDef="fecha_utc">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
-                Fecha
-            </th>
-            <td mat-cell *matCellDef="let element"> {{element.date_created}} </td>
-        </ng-container>
+    <ng-container matColumnDef="status_validation">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+        sortActionDescription="Sort by number"
+      >
+        Status
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <div *ngIf="element.name == 'Rechazado'; else redCircle">
+          <!-- Green Circle -->
+          <div
+            style="
+              width: 20px;
+              height: 20px;
+              border-radius: 50%;
+              background-color: red;
+            "
+          ></div>
+        </div>
+        <ng-template #redCircle>
+          <!-- Orange Circle -->
+          <div
+            style="
+              width: 20px;
+              height: 20px;
+              border-radius: 50%;
+              background-color: green;
+            "
+          ></div>
+        </ng-template>
+      </td>
+    </ng-container>
 
-        <ng-container matColumnDef="status_validation">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
-                Status
-            </th>
-            <td mat-cell *matCellDef="let element">
-                <div *ngIf="element.state; else redCircle">
-                    <!-- Green Circle -->
-                    <div style="width: 20px; height: 20px; border-radius: 50%; background-color: green;"></div>
-                </div>
-                <ng-template #redCircle>
-                    <!-- Orange Circle -->
-                    <div style="width: 20px; height: 20px; border-radius: 50%; background-color: orange;"></div>
-                </ng-template>
-            </td>
-        </ng-container>
+    <ng-container matColumnDef="nivel">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+        sortActionDescription="Sort by number"
+      >
+        Nivel
+      </th>
+      <td mat-cell *matCellDef="let element">{{ element.level }}</td>
+    </ng-container>
 
+    <ng-container matColumnDef="code_activity">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+        sortActionDescription="Sort by number"
+      >
+        Nombre
+      </th>
+      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    </ng-container>
 
-        <ng-container matColumnDef="nivel">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
-                Nivel
-            </th>
-            <td mat-cell *matCellDef="let element"> {{element.level}} </td>
-        </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+      <td mat-cell *matCellDef="let element" style="white-space: nowrap">
+        <button
+          mat-icon-button
+          [color]="
+            element.status_validation === true
+              ? 'primary'
+              : element.status_validation === false
+              ? 'primary'
+              : 'warn'
+          "
+          [disabled]="element.state === true || element.loadingState"
+          (click)="changedStateValidate(element)"
+        >
+          <i
+            class="fa fa-bolt"
+            [ngClass]="{
+              'blue-icon': element.status_validation === true,
+              'green-icon': element.status_validation === false,
+              'spinner-border': element.loadingState,
+              'spinner-border-sm': element.loadingState,
+              'me-2': element.loadingState
+            }"
+          >
+          </i>
+        </button>
 
-        <ng-container matColumnDef="code_activity">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
-                Nombre
-            </th>
-            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-        </ng-container>
+        <button mat-icon-button color="warn" (click)="showImage(element)">
+          <i class="fa fa-image"></i>
+        </button>
+        <button
+          mat-icon-button
+          color="warn"
+          (click)="changedRefusedState(element)"
+          [disabled]="element.state === true"
+        >
+          <i class="fa fa-times"></i>
+        </button>
+      </td>
+    </ng-container>
 
-        <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef> Acciones </th>
-            <td mat-cell *matCellDef="let element" style="white-space: nowrap;">
-                <button mat-icon-button
-                    [color]="element.status_validation === true ? 'primary' : (element.status_validation === false ? 'primary' : 'warn')"
-                    [disabled]="element.status_validation === true || element.loadingState"
-                    (click)="changedStateValidate(element)">
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
 
-                    <i class="fa fa-bolt"
-                        [ngClass]="{'blue-icon': element.status_validation === true, 'green-icon': element.status_validation === false, 'spinner-border': element.loadingState, 'spinner-border-sm': element.loadingState, 'me-2': element.loadingState}">
-                    </i>
-                </button>
-
-
-
-
-
-                <button mat-icon-button color="warn" (click)="showImage(element)">
-                    <i class="fa fa-image"></i>
-                </button>
-            </td>
-        </ng-container>
-
-
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-
-    </table>
-
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
-    </mat-paginator>
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+    aria-label="Select page of periodic elements"
+  >
+  </mat-paginator>
 </div>

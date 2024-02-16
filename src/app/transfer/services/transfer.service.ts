@@ -19,6 +19,7 @@ export class TransferService {
   public responseActual!: Response;
   discountMount: string | null = null;
   calculatedAmount: number | null = null;
+  timePlan: number | null = null;
 
   constructor(private http: HttpClient, private configService: ConfigService) {}
 
@@ -48,7 +49,8 @@ export class TransferService {
     image: File,
     usuario: number,
     planValue: number,
-    timeValue: number
+    timeValue: number,
+    dolarValue: number
   ): Observable<ResponseImage> {
     switch (planValue) {
       case 9:
@@ -80,8 +82,8 @@ export class TransferService {
         discount = 0.75;
         break;
     }
-    this.calculatedAmount = planValue * timeValue * discount;
-
+    this.calculatedAmount = planValue * timeValue * discount * dolarValue;
+    this.timePlan = timeValue * 30;
     const montoCalculado = this.calculatedAmount.toFixed(2);
 
     console.log(usuario.toString());
@@ -94,6 +96,7 @@ export class TransferService {
     const formData = new FormData();
     formData.append('image', image);
     formData.append('user', usuario.toString());
+    formData.append('time', this.timePlan.toString()); // Usar "" como valor predeterminado si this.planName es null
     formData.append('plan', this.planName ?? ''); // Usar "" como valor predeterminado si this.planName es null
     formData.append('monto_usd', montoCalculado.toString());
     // Convertir FormData a un objeto simple

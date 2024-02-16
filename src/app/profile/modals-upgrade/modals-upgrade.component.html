@@ -1,131 +1,152 @@
 <div>
-    <!-- Primer bloque de contenido -->
+  <!-- Primer bloque de contenido -->
 
-    <div class="modal-body">
-        <!-- Título del modal -->
-        <button class="close-button" (click)="cerrarModal('upgrade')"><i class="fas fa-times"></i></button>
+  <div class="modal-body">
+    <!-- Título del modal -->
+    <button class="close-button" (click)="cerrarModal('upgrade')">
+      <i class="fas fa-times"></i>
+    </button>
 
-        <h1 class="modal-title">Actualizar un plan</h1>
-        <!-- Descripción del modal -->
-        <p class="modal-description">Si necesita más información, consulte
-            <a href="dashboard" class="link-primary fw-bolder">Pautas de planes</a>.
-        </p>
-    </div>
+    <h1 class="modal-title">Actualizar un plan</h1>
+    <!-- Descripción del modal -->
+    <p class="modal-description">
+      Si necesita más información, consulte
+      <!-- En el template de tu componente -->
+      <a
+        routerLink="#"
+        class="link-primary fw-bolder"
+        (click)="redirectPlan('upgrade')"
+        style="cursor: pointer; text-decoration: none"
+        >Detalle de planes</a
+      >
+    </p>
+  </div>
 
-    <div class="body-content">
-        <!--begin::Tabs-->
-        <div class="nav flex-column">
-
-            <!--begin::Tab link-->
-            <div class="nav-link btn btn-outline btn-outline-dashed btn-color-dark btn-active btn-active-primary d-flex flex-stack text-start p-6 active mb-6"
-                data-bs-toggle="tab" data-bs-target="#kt_upgrade_plan_startup">
-                <!--end::Description-->
-                <div class="d-flex align-items-center me-2">
-
-                    <!--begin::Info-->
-                    <div class="flex-grow-1">
-                        <h2 class="d-flex align-items-center fs-2 fw-bolder flex-wrap">Asociado</h2>
-                        <div class="fw-bold opacity-50">Conoce la plataforma a plenitud</div>
-                    </div>
-                    <!--end::Info-->
-                </div>
-                <!--end::Description-->
-                <!--begin::Price-->
-                <div class="ms-5">
-                    <span class="mb-2">$</span>
-                    <span class="fs-3x fw-bolder" data-kt-plan-price-month="9" data-kt-plan-price-annual="399">9</span>
-                    <span class="fs-7 opacity-50">/
-                        <span data-kt-element="period">Mes</span></span>
-                </div>
-                <!--end::Price-->
+  <div class="body-content">
+    <!--begin::Tabs-->
+    <div class="nav flex-column">
+      <!--begin::Tab link-->
+      <div
+        class="nav-link btn btn-outline btn-outline-dashed btn-color-dark btn-active btn-active-primary d-flex flex-stack text-start p-6 active mb-6"
+        data-bs-toggle="tab"
+        data-bs-target="#kt_upgrade_plan_startup"
+      >
+        <!--end::Description-->
+        <div class="d-flex align-items-center me-2">
+          <!--begin::Info-->
+          <div class="flex-grow-1">
+            <h2 class="d-flex align-items-center fs-2 fw-bolder flex-wrap">
+              Asociado
+            </h2>
+            <div class="fw-bold opacity-50">
+              Conoce la plataforma a plenitud
             </div>
-            <!--end::Tab link-->
-            <!--begin::Tab link-->
-            <div class="nav-link btn btn-outline btn-outline-dashed btn-color-dark btn-active btn-active-primary d-flex flex-stack text-start p-6 mb-6"
-                data-bs-toggle="tab" data-bs-target="#kt_upgrade_plan_advanced">
-                <!--end::Description-->
-                <div class="d-flex align-items-center me-2">
-
-                    <!--begin::Info-->
-                    <div class="flex-grow-1">
-                        <h2 class="d-flex align-items-center fs-2 fw-bolder flex-wrap">Profesional</h2>
-                        <div class="fw-bold opacity-50">Desarrollate como experto</div>
-                    </div>
-                    <!--end::Info-->
-                </div>
-                <!--end::Description-->
-                <!--begin::Price-->
-                <div class="ms-5">
-                    <span class="mb-2">$</span>
-                    <span class="fs-3x fw-bolder" data-kt-plan-price-month="339"
-                        data-kt-plan-price-annual="3399">19</span>
-                    <span class="fs-7 opacity-50">/
-                        <span data-kt-element="period">Mes</span></span>
-                </div>
-                <!--end::Price-->
-            </div>
-            <!--end::Tab link-->
-            <!--begin::Tab link-->
-            <div class="nav-link btn btn-outline btn-outline-dashed btn-color-dark btn-active btn-active-primary d-flex flex-stack text-start p-6 mb-6"
-                data-bs-toggle="tab" data-bs-target="#kt_upgrade_plan_enterprise">
-                <!--end::Description-->
-                <div class="d-flex align-items-center me-2">
-                    <!--begin::Radio-->
-                    <!--end::Radio-->
-                    <!--begin::Info-->
-                    <div class="flex-grow-1">
-                        <h2 class="d-flex align-items-center fs-2 fw-bolder flex-wrap">Socio
-                            <span class="badge badge-light-success ms-2 fs-7">Mejor Opción</span>
-                        </h2>
-                        <div class="fw-bold opacity-50">Acceso Total a CheethAkademy</div>
-                    </div>
-                    <!--end::Info-->
-                </div>
-                <!--end::Description-->
-                <!--begin::Price-->
-                <div class="ms-5">
-                    <span class="mb-2">$</span>
-                    <span class="fs-3x fw-bolder" data-kt-plan-price-month="999"
-                        data-kt-plan-price-annual="9999">25</span>
-                    <span class="fs-7 opacity-50">/
-                        <span data-kt-element="period">Mes</span></span>
-                </div>
-                <!--end::Price-->
-            </div>
-            <!--end::Tab link-->
-            <!--begin::Tab link-->
-            <div class="nav-link btn btn-outline btn-outline-dashed btn-color-dark d-flex flex-stack text-start p-6">
-                <!--end::Description-->
-                <div class="d-flex align-items-center me-2">
-                    <!--begin::Radio-->
-                    <div class="form-check form-check-custom form-check-solid form-check-success me-6">
-                        <input class="form-check-input" type="radio" name="plan" value="custom">
-                    </div>
-                    <!--end::Radio-->
-                    <!--begin::Info-->
-                    <div class="flex-grow-1">
-                        <h2 class="d-flex align-items-center fs-2 fw-bolder flex-wrap">Personalizado</h2>
-                        <div class="fw-bold opacity-50">Elige un plan de acuerdo a tus necesidades</div>
-                    </div>
-                    <!--end::Info-->
-                </div>
-                <!--end::Description-->
-                <!--begin::Price-->
-                <div class="ms-1">
-                    <a href="https://forms.gle/iNXy1P5Qr5TKUJGBA" class="btn btn-sm btn-primary"
-                        target="_blank">Contacta</a>
-                </div>
-
-                <!--end::Price-->
-            </div>
-            <!--end::Tab link-->
+          </div>
+          <!--end::Info-->
         </div>
-        <!--end::Tabs-->
+        <!--end::Description-->
+        <!--begin::Price-->
+        <div class="ms-5">
+          <span class="mb-2">$</span>
+          <span
+            class="fs-3x fw-bolder"
+            data-kt-plan-price-month="9"
+            data-kt-plan-price-annual="399"
+            >9</span
+          >
+          <span class="fs-7 opacity-50"
+            >/ <span data-kt-element="period">Mes</span></span
+          >
+        </div>
+        <!--end::Price-->
+      </div>
+      <!--end::Tab link-->
+      <!--begin::Tab link-->
+      <div
+        class="nav-link btn btn-outline btn-outline-dashed btn-color-dark btn-active btn-active-primary d-flex flex-stack text-start p-6 mb-6"
+        data-bs-toggle="tab"
+        data-bs-target="#kt_upgrade_plan_advanced"
+      >
+        <!--end::Description-->
+        <div class="d-flex align-items-center me-2">
+          <!--begin::Info-->
+          <div class="flex-grow-1">
+            <h2 class="d-flex align-items-center fs-2 fw-bolder flex-wrap">
+              Profesional
+            </h2>
+            <div class="fw-bold opacity-50">Desarrollate como experto</div>
+          </div>
+          <!--end::Info-->
+        </div>
+        <!--end::Description-->
+        <!--begin::Price-->
+        <div class="ms-5">
+          <span class="mb-2">$</span>
+          <span
+            class="fs-3x fw-bolder"
+            data-kt-plan-price-month="339"
+            data-kt-plan-price-annual="3399"
+            >19</span
+          >
+          <span class="fs-7 opacity-50"
+            >/ <span data-kt-element="period">Mes</span></span
+          >
+        </div>
+        <!--end::Price-->
+      </div>
+      <!--end::Tab link-->
+      <!--begin::Tab link-->
+      <div
+        class="nav-link btn btn-outline btn-outline-dashed btn-color-dark btn-active btn-active-primary d-flex flex-stack text-start p-6 mb-6"
+        data-bs-toggle="tab"
+        data-bs-target="#kt_upgrade_plan_enterprise"
+      >
+        <!--end::Description-->
+        <div class="d-flex align-items-center me-2">
+          <!--begin::Radio-->
+          <!--end::Radio-->
+          <!--begin::Info-->
+          <div class="flex-grow-1">
+            <h2 class="d-flex align-items-center fs-2 fw-bolder flex-wrap">
+              Socio
+              <span class="badge badge-light-success ms-2 fs-7"
+                >Mejor Opción</span
+              >
+            </h2>
+            <div class="fw-bold opacity-50">Acceso Total a CheethAkademy</div>
+          </div>
+          <!--end::Info-->
+        </div>
+        <!--end::Description-->
+        <!--begin::Price-->
+        <div class="ms-5">
+          <span class="mb-2">$</span>
+          <span
+            class="fs-3x fw-bolder"
+            data-kt-plan-price-month="999"
+            data-kt-plan-price-annual="9999"
+            >25</span
+          >
+          <span class="fs-7 opacity-50"
+            >/ <span data-kt-element="period">Mes</span></span
+          >
+        </div>
+        <!--end::Price-->
+      </div>
+      <!--end::Tab link-->
     </div>
+    <!--end::Tabs-->
+  </div>
 
-    <div class="d-flex flex-center flex-row-fluid pt-12 m-5">
-        <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">Cancel</button>
-        <button class="btn btn-sm btn-primary" (click)="redirectTransfer('upgrade')">Seleccionar</button>
-    </div>
-
+  <div class="d-flex flex-center flex-row-fluid pt-12 m-5">
+    <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">
+      Cancel
+    </button>
+    <button
+      class="btn btn-sm btn-primary"
+      (click)="redirectTransfer('upgrade')"
+    >
+      Seleccionar
+    </button>
+  </div>
 </div>

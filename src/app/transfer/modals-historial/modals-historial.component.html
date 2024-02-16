@@ -1,73 +1,96 @@
 <div class="m-5">
-    <div class="d-print-none border border-dashed border-gray-300 card-rounded h-lg-100 min-w-md-350px p-9 bg-lighten">
-        <!--begin::Labels-->
-        <div class="mb-8">
-            <span *ngIf="this.state_payment=='filled'" class="badge badge-light-success me-2">Completado</span>
-            <span *ngIf="this.state_payment=='validated'" class="badge badge-secondary">Validando</span>
-            <span *ngIf="this.state_payment=='selected'" class="badge badge-light-warning">Pago Pendiente</span>
-            <span *ngIf="this.state_payment=='refused'" class="badge badge-warning">Rechazado</span>
-
-        </div>
-        <!--end::Labels-->
-        <!--begin::Title-->
-        <h6 class="mb-8 fw-boldest text-gray-600 text-hover-primary">DETALLES DE PAGO</h6>
-        <!--end::Title-->
-        <!--begin::Item-->
-        <div class="mb-6">
-            <div class="fw-bold text-gray-600 fs-7">Método de Pago:</div>
-            <div class="fw-bolder text-gray-800 fs-6">{{metodoPago}}</div>
-        </div>
-        <!--end::Item-->
-        <!--begin::Item-->
-        <div class="mb-6">
-            <div class="fw-bold text-gray-600 fs-7">Cuenta:</div>
-            <div class="fw-bolder text-gray-800 fs-6">{{cuenta}}</div>
-        </div>
-        <!--end::Item-->
-        <!--begin::Item-->
-        <div class="mb-15">
-            <div class="fw-bold text-gray-600 fs-7">Tiempo Aproximado de Validación:</div>
-            <div class="fw-bolder fs-6 text-gray-800 d-flex align-items-center">24 Horas
-                <!-- <span class="fs-7 text-danger d-flex align-items-center">
-                    <span class="bullet bullet-dot bg-danger mx-2"></span>Due in 7 days</span> -->
-            </div>
-        </div>
-        <div class="card-body m-5">
-            <!--begin::Timeline-->
-            <div class="timeline-label">
-                <!--begin::Item-->
-                <div class="timeline-item" *ngFor="let item of actualPayment?.hitos">
-                    <!--begin::Label-->
-                    <div class="timeline-label fw-bolder text-gray-800 fs-6"
-                        style="max-width: 100px; white-space: nowrap;"></div>
-                    <!--end::Label-->
-                    <!--begin::Badge-->
-                    <div class="timeline-badge">
-                        <i
-                            [ngClass]="{'fa fa-genderless': true, 'text-success fs-3': item.status, 'text-secondary fs-5': !item.status } "></i>
-                    </div>
-
-
-                    <!--end::Badge-->
-                    <!--begin::Text-->
-                    <div class="timeline-content">
-                        <div [ngClass]="{
-                                'fw-bolder': item.status,
-                                'fw-mormal': !item.status,
-                                'text-gray-800': item.status,
-                                'text-muted': !item.status,
-                                'ps-3': true
-                            }">
-                            {{item.name}} <br>
-                            <span *ngIf="item.date!=''" class="text-gray-600 fs-8">({{item.date}})</span>
-                        </div>
-                    </div>
-
-
-                    <!--end::Text-->
-                </div>
-                <!--end::Item-->
-            </div>
-            <!--end::Timeline-->
-        </div>
+  <div
+    class="d-print-none border border-dashed border-gray-300 card-rounded h-lg-100 min-w-md-350px p-9 bg-lighten"
+  >
+    <!--begin::Labels-->
+    <div class="mb-8">
+      <span
+        *ngIf="this.state_payment == 'filled'"
+        class="badge badge-light-success me-2"
+        >Completado</span
+      >
+      <span
+        *ngIf="this.state_payment == 'validated'"
+        class="badge badge-secondary"
+        >Validando</span
+      >
+      <span
+        *ngIf="this.state_payment == 'selected'"
+        class="badge badge-light-warning"
+        >Pago Pendiente</span
+      >
+      <span *ngIf="this.state_payment == 'refused'" class="badge badge-warning"
+        >Rechazado</span
+      >
     </div>
+    <!--end::Labels-->
+    <!--begin::Title-->
+    <h6 class="mb-8 fw-boldest text-gray-600 text-hover-primary">
+      DETALLES DE PAGO
+    </h6>
+    <!--end::Title-->
+    <div class="mb-6">
+      <div class="fw-bold text-gray-600 fs-7">Cuenta:</div>
+      <div class="fw-bolder text-gray-800 fs-6">{{ cuenta }}</div>
+    </div>
+    <!--end::Item-->
+    <!--begin::Item-->
+    <div class="mb-15">
+      <div class="fw-bold text-gray-600 fs-7">
+        Tiempo Aproximado de Validación:
+      </div>
+      <div class="fw-bolder fs-6 text-gray-800 d-flex align-items-center">
+        5~10 minutos
+        <!-- <span class="fs-7 text-danger d-flex align-items-center">
+                    <span class="bullet bullet-dot bg-danger mx-2"></span>Due in 7 days</span> -->
+      </div>
+    </div>
+    <div class="card-body m-5">
+      <!--begin::Timeline-->
+      <div class="timeline-label">
+        <!--begin::Item-->
+        <div class="timeline-item" *ngFor="let item of actualPayment?.hitos">
+          <!--begin::Label-->
+          <div
+            class="timeline-label fw-bolder text-gray-800 fs-6"
+            style="max-width: 100px; white-space: nowrap"
+          ></div>
+          <!--end::Label-->
+          <!--begin::Badge-->
+          <div class="timeline-badge">
+            <i
+              [ngClass]="{
+                'fa fa-genderless': true,
+                'text-success fs-3': item.status,
+                'text-secondary fs-5': !item.status
+              }"
+            ></i>
+          </div>
+
+          <!--end::Badge-->
+          <!--begin::Text-->
+          <div class="timeline-content">
+            <div
+              [ngClass]="{
+                'fw-bolder': item.status,
+                'fw-mormal': !item.status,
+                'text-gray-800': item.status,
+                'text-muted': !item.status,
+                'ps-3': true
+              }"
+            >
+              {{ item.name }} <br />
+              <span *ngIf="item.date != ''" class="text-gray-600 fs-8"
+                >({{ item.date }})</span
+              >
+            </div>
+          </div>
+
+          <!--end::Text-->
+        </div>
+        <!--end::Item-->
+      </div>
+      <!--end::Timeline-->
+    </div>
+  </div>
+</div>
