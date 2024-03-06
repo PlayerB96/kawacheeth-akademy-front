@@ -16,6 +16,8 @@ export interface DataI {
     operatorId: string;
     operatorKey: string;
     dashboardId: number;
+    referred_state: boolean;
+
 }
 
 export interface PlanDescripcion {

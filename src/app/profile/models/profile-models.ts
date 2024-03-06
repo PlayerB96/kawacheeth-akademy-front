@@ -44,6 +44,8 @@ export interface User {
   subscription_state: boolean;
   subscription_days: number;
   subscription_time: number;
+  referred_state: boolean;
+
 }
 
 export interface ResponseIdetailProfile {

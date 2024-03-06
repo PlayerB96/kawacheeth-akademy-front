@@ -41,15 +41,23 @@ export interface EstadoCursos {
 }
 
 export interface Cursos {
+  estado: string;
+  id: number;
+  progreso: number;
+  user: string;
+  detail_course: DetailCourse;
+
+}
+export interface DetailCourse {
   icono: string;
   name: string;
-  estado: string;
   descripcion: string;
   fecha_actualizacion: string;
   duracion: string;
-  progreso: number;
   plataformas: Plataformas[];
+
 }
+
 
 export interface Plataformas {
   icon: string;
@@ -91,6 +99,26 @@ export interface User {
   subscription_state: boolean;
   subscription_time: number;
   subscription_days: number;
+  referred_state: boolean;
+  user_courses: Cursos[];
+}
+
+export interface Cursos {
+  estado: string;
+  id: number;
+  progreso: number;
+  user: string;
+  detail_course: DetailCourse;
+
+}
+export interface DetailCourse {
+  icono: string;
+  name: string;
+  descripcion: string;
+  fecha_actualizacion: string;
+  duracion: string;
+  plataformas: Plataformas[];
+
 }
 
 export interface SubscriptionPlan {

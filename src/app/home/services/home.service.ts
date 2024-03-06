@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { ResponseIdetailHome } from '../models/response.interface';
+import { HomeUpdates } from '../models/response.interface';
+import { ConfigService } from 'src/config.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,17 +12,15 @@ export class HomeService {
 
   public responseActual!: Response;
 
-  url: string = "http://localhost:8000/api/v1/detailHome"
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private configService: ConfigService
+  ) { }
 
 
-  public getHomeDetails(cod_acceso: any): Observable<ResponseIdetailHome> {
-    const body = {
-      cod_acceso: cod_acceso,
-    };
-    
-    const response = this.http.post<ResponseIdetailHome>(this.url, body);
-   
+  public getHomeDetails(cod_acceso: any): Observable<HomeUpdates> {
+
+    const url = this.configService.apiUrl + 'home_updates_active/';
+
+    const response = this.http.get<HomeUpdates>(url);
     return response;
   }
 }

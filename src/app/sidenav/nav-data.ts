@@ -7,12 +7,12 @@ export const navbarData = [
   {
     routeLink: 'dashboard',
     icon: 'fal fa-solid fa-feather',
-    label: 'Dashboard'
+    label: 'Panel'
   },
   {
     routeLink: 'home',
     icon: 'fal fa-solid fa-home',
-    label: 'Home'
+    label: 'Inicio'
   }
 
 ];

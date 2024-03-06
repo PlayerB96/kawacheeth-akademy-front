@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import {
   AsociateResponse,
   BalanceResponse,
+  Cursos,
   DetailStatusResponse,
   ResponseIallUsersDashboard,
   ResponseIdetailDashboard,
@@ -33,7 +34,7 @@ export class DashboardService {
     private http: HttpClient,
     private router: Router,
     private configService: ConfigService
-  ) {}
+  ) { }
 
   public getDashboardDetails(
     operatorId: string,
@@ -67,6 +68,7 @@ export class DashboardService {
     console.log(response);
     return response;
   }
+
 
   public validationAccount(
     operatorId: string,
@@ -122,11 +124,6 @@ export class DashboardService {
 
     const montoCalculado = planValue.toFixed(2);
 
-    console.log(usuario.toString());
-    console.log(montoCalculado.toString());
-    console.log(image);
-
-    console.log('####');
 
     const formData = new FormData();
     formData.append('image', image);

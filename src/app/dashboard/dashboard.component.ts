@@ -47,6 +47,8 @@ export class DashboardComponent implements OnInit {
   correo: string | null = null;
   id: number | null = null;
   dashboardid: number | null = null;
+  referred_state: boolean | null = null;
+
 
   tokens: string | null = null;
   hbars: number | null = null;
@@ -74,10 +76,14 @@ export class DashboardComponent implements OnInit {
   public getProfileDetails(user_id: any) {
     this.response = this.profileservice.getProfileDetails(user_id);
     this.response.subscribe((res: User) => {
+
       if (res != null) {
         this.cursos_activos = res.courses_acquired;
         this.cursos_poriniciar = res.courses_pending;
         this.cursos_completados = res.courses_completed;
+        this.lista_cursos = res.user_courses;
+        this.referred_state = res.referred_state;
+        console.log(this.referred_state)
       }
     });
   }
@@ -89,8 +95,7 @@ export class DashboardComponent implements OnInit {
     );
     this.response.subscribe((res: BalanceResponse) => {
       if (res != null) {
-        console.log(res);
-        console.log('##');
+
         const balanceCtokensString = res.balanceCtokens;
         const balanceCtokensNumber = parseInt(balanceCtokensString, 10);
 
@@ -153,7 +158,7 @@ export class DashboardComponent implements OnInit {
   cargarResponseActual() {
     this.loginservice.getResponseActual().then((response) => {
       this.responseActual = response;
-      console.log(this.responseActual);
+
       if (this.responseActual) {
         this.nombreCompleto =
           this.responseActual.data.name +
@@ -164,6 +169,7 @@ export class DashboardComponent implements OnInit {
         this.id = this.responseActual.data.id;
         this.operatorKey = this.responseActual.data.operatorKey;
         this.dashboardid = this.responseActual.data.dashboardId;
+
         this.getProfileDetails(this.responseActual.data.id);
 
         this.getDashboardStatusAccount(
@@ -176,7 +182,6 @@ export class DashboardComponent implements OnInit {
     this.responseUser = this.dashboardservice.getDashboardUsers();
     this.responseUser.subscribe((res: User[]) => {
       this.data_total_estudiantes = res;
-      console.log('Datos recibidos:', this.data_total_estudiantes);
     });
   }
   public getDashboardStatusAccount(
@@ -195,6 +200,12 @@ export class DashboardComponent implements OnInit {
         }
       }
     });
+  }
+
+  opcionSeleccionada(opcion: string): void {
+    this.profileservice.redirectTransferProfile(opcion);
+
+    // Puedes realizar acciones adicionales aquí según la opción seleccionada
   }
 
 

@@ -17,5 +17,7 @@ export interface DataI {
   operatorKey: string;
   operatorStatus: boolean;
   dashboardId: number;
+  referred_state: boolean;
+
 
 }

@@ -48,6 +48,7 @@ import { ModalsCtokensComponent } from './dashboard/modals-ctokens/modals-ctoken
 import { PlandetailComponent } from './profile/plandetail/plandetail.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { FooterComponent } from './body-t/footer/footer.component';
 // import { JwtModule } from '@auth0/angular-jwt';
 // export function tokenGetter() {
 //   return localStorage.getItem("token");
@@ -77,6 +78,7 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
     ModalsCtokensComponent,
     PlandetailComponent,
     ConfirmationDialogComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

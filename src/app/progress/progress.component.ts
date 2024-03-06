@@ -40,6 +40,7 @@ export class ProgressComponent implements OnInit {
   list_activities: ListActivities[] | null = null;
   usermd5: string | null = null;
   copied: boolean = false;
+  referred_state: boolean | null = null;
 
   nombreValidation: string = '';
   nivelValidation: string = '';
@@ -55,7 +56,7 @@ export class ProgressComponent implements OnInit {
     private loginservice: LoginservicesService,
     private profileservice: ProfileService,
     private sanitizer: DomSanitizer
-  ) {}
+  ) { }
   @Output()
   emitter = new Subject<any>();
   errorMsj: any = '';
@@ -105,6 +106,8 @@ export class ProgressComponent implements OnInit {
         this.nombre_plan = res.subscription_plan.name;
         this.porcentaje_plan = res.percentage_completed;
         this.estado_suscripcion = res.subscription_state;
+        this.referred_state = res.referred_state;
+
         // this.historial = res.data.historial;
       }
     });

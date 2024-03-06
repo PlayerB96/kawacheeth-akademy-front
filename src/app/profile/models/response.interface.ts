@@ -28,6 +28,7 @@ export interface DetailProfile {
   courses_pending: number;
   courses_completed: number;
   subscription_state: boolean;
+
 }
 
 export interface ListActivities {

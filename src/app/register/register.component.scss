@@ -1,5 +1,8 @@
 :root {
-	--main-bg-color: #ecf0f3;
+	--main-bg-color: #0e79ca;
+	/* Color principal */
+	--body-bg-color: #f0f0f0;
+	/* Nuevo color para el body */
 }
 
 * {
@@ -8,24 +11,26 @@
 
 html,
 body {
-	height: 100%;
+	margin: 0;
+	padding: 0;
 	width: 100%;
 	display: flex;
-	background-color: var(--main-bg-color);
+	background-color: var(--body-bg-color);
+	/* Aplicar nuevo color al body */
 }
 
 .container {
-	margin: 10rem auto; // Ajusta el margen según sea necesario
+	margin-top: 10rem;
+	margin-bottom: 10rem;
 	width: 50rem;
 	padding: 2rem;
 	border-radius: 2.5rem;
-	background-color: var(--main-bg-color);
+	background: var(--main-bg-color);
 	box-shadow: 13px 13px 20px #cbced1,
 		-13px -13px 20px #ffffff;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-
 }
 
 .logo {
@@ -42,9 +47,7 @@ body {
 	display: flex;
 	border-radius: 9999px;
 	background-color: #E9D985;
-	/* 	border: 1px solid black; */
-	box-shadow:
-		0px 0px 2px #5F5F5F,
+	box-shadow: 0px 0px 2px #5F5F5F,
 		0px 0px 0px 5px #ECF0F3,
 		8px 8px 15px #A7AAAF,
 		-8px -8px 15px #FFFFFF;
@@ -94,22 +97,18 @@ body {
 	padding-left: 2.5rem;
 	width: 100%;
 	border-radius: 1.5rem;
-	box-shadow:
-		inset 2px 2px 2px #c5c5c5,
-		inset -4px -4px 4px #FFFFFF;
+	box-shadow: inset 2px 2px 2px #c5c5c5,
+		inset -8px -8px 8px #FFFFFF;
 }
 
 .form__control:focus {
 	outline: none;
-	box-shadow:
-
-		inset 3px 3px 3px #CBCED1,
-		inset -4px -4px 4px #FFFFFF;
+	box-shadow: inset 3px 3px 3px #CBCED1,
+		inset -8px -8px 8px #FFFFFF;
 }
 
 .form__control:focus::placeholder {
 	color: #d3d3d3;
-	// letter-spacing: 0.15em;
 }
 
 .form__control::placeholder {
@@ -122,25 +121,30 @@ body {
 	border: none;
 	font-size: 0.875rem;
 	color: #FFFFFF;
-	background-color: #BCD8C1;
+	background-color: #1B1B1E;
 	width: 100%;
 	display: block;
 	padding: 0.875rem 1rem;
 	border-radius: 1.5rem;
-	box-shadow:
-		2px 2px 4px #B1B1B1,
-		-1px -1px 8px #FFFFFF;
+	box-shadow: 2px 2px 4px #B1B1B1,
+		-3px -3px 8px #FFFFFF;
 }
 
 .form__button:focus {
 	outline: none;
-	background-color: #999e9a;
-
-	box-shadow:
-		2px 2px 8px #B1B1B1,
+	box-shadow: 3px 3px 20px #B1B1B1,
 		-3px -3px 20px #FFFFFF;
 }
 
 .form__button:hover {
 	opacity: 0.85;
+}
+
+.alert {
+	max-width: 240px;
+	/* Ancho máximo deseado en píxeles */
+	margin-top: 1rem;
+	/* Espacio superior para separarlo del formulario */
+	word-wrap: break-word;
+	/* Trunca las palabras largas */
 }

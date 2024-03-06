@@ -1,7 +1,7 @@
 <div class="container">
   <div class="logo">
     <div class="logo__circle">
-      <img class="logo__img" src="assets/anonymous.png" alt="Descripción de la imagen">
+      <img class="logo__img" src="assets/logo-cheethakademy.png" alt="Descripción de la imagen">
     </div>
 
   </div>
@@ -40,15 +40,18 @@
             d="M4 8V6a6 6 0 1 1 12 0v2h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h1zm5 6.73V17h2v-2.27a2 2 0 1 0-2 0zM7 6v2h6V6a3 3 0 0 0-6 0z" />
         </svg></div>
       <input class="form__control" type="password" placeholder="contraseña" formControlName="contrasena" required>
+    
     </div>
-    <div class="alert alert-danger" role="alert" *ngIf="errorStatus">
+    <div [ngClass]="typeAlert" *ngIf="errorStatus">
       {{errorMsj}}
     </div>
-
+    
     <button class="form__button" type="button" (click)="toggleCampoAdicional()">
       <i class="fas fa-plus fa-inverse"></i> Código
     </button>
     <br>
+
+    
     <div *ngIf="mostrarCampoAdicional" class="form__group">
       <div class="form__icon">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -57,17 +60,19 @@
       </div>
       <input class="form__control" type="text" placeholder="Código referido" formControlName="codigoReferido">
     </div>
-
+   
     <div>
 
-      <button class="form__button" type="submit">
+      <button class="form__button" type="submit" [disabled]="registerStatus || loading">
+        <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+
         Registrarse
       </button>
       <br>
       <button class="form__button" type="submit" (click)="redirigir()">
         <i class="fas fa-arrow-left fa-inverse"></i> Regresar
       </button>
-
+      
     </div>
   </form>
 </div>

@@ -1,9 +1,11 @@
 <div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed': '' ">
   <div class="logo-container">
-    <img class="logo" (click)="toggleCollapse()" src="../../assets/anonymous.png" />
+    <img class="logo" (click)="toggleCollapse()" src="../../assets/logo-cheethakademy.png" />
     <div class="logo-text" *ngIf="collapsed">CheethAkademy</div>
-    <button class="btn-close" *ngIf="collapsed" (click)="closeSidenav()">
-      <i class="fal fa-times close-icon"></i>
+    <button class="btn" *ngIf="collapsed" (click)="closeSidenav()">
+      <!-- <i class="fal fa-times close-icon"></i> -->
+      <i class="fal fa-solid fa-chevron-left"></i>
+
     </button>
   </div>
   <ul class="sidenav-nav">

@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { RegisterI } from '../modelos/register.interface';
 import { ResponseI } from 'src/app/register/modelos/response.interface';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { switchMap, catchError } from 'rxjs/operators';
+import { switchMap, catchError, map } from 'rxjs/operators';
 import { ConfigService } from 'src/config.service';
 import { User } from 'src/app/profile/models/profile-models';
 
@@ -23,7 +23,7 @@ export class RegisterService {
     private http: HttpClient,
     private router: Router,
     private configService: ConfigService
-  ) {}
+  ) { }
 
   public registeUser(form: RegisterI): Observable<User> {
     const body = {
@@ -33,7 +33,7 @@ export class RegisterService {
       lastname: form.apellido,
       name: form.nombreCompleto,
       rol: 'Estudiante',
-      // codigoReferido: form.codigoReferido
+      referred: form.codigoReferido,
       activities: [
         {
           title: 'Iniciando CheethAkademy',
@@ -109,28 +109,7 @@ export class RegisterService {
     console.log(JSON.stringify(body, null, 2)); // El tercer parámetro (2) es para indentación
     console.log('######');
 
-    return this.http.post<User>(url, body).pipe(
-      catchError((error) => {
-        if (error.status === 400) {
-          // Manejar el caso de usuario ya en uso
-          Swal.fire({
-            icon: 'warning',
-            title: 'Este usuario ya está en uso',
-            width: 400,
-            padding: '3em',
-            color: '#716add',
-            backdrop: `
-              rgba(0, 139, 123, 0.4)
-              left top
-              no-repeat
-            `,
-          });
-        } else {
-          // Manejar otros errores de la llamada HTTP o cualquier otro error
-          console.error('Error en la llamada HTTP', error);
-        }
-        return of(); // Devuelve un observable vacío en caso de error
-      })
-    );
+    return this.http.post<User>(url, body).pipe();
+
   }
 }

@@ -11,10 +11,18 @@ import Swal from 'sweetalert2';
 })
 export class RegisterComponent implements OnInit {
   public mostrarCampoAdicional = false;
+  typeAlert: string; // Declaración de la propiedad typeAlert
+  errorStatus: boolean;
+  errorMsj: string;
+  loading: boolean = false; // Añade esta línea para definir la propiedad loading
+  registerStatus: boolean = false
 
-  constructor(private serviceRegister: RegisterService, private router: Router) { }
-  errorStatus: boolean = false;
-  errorMsj: any = "";
+  constructor(private serviceRegister: RegisterService, private router: Router) {
+    this.typeAlert = ''; // Inicialización opcional
+    this.errorStatus = false;
+    this.errorMsj = '';
+  }
+
   ngOnInit(): void {
   }
 
@@ -29,46 +37,69 @@ export class RegisterComponent implements OnInit {
 
   registeUser(form: any) {
     if (this.registerForm.valid) {
-      this.serviceRegister.registeUser(form).subscribe(data => {
-        console.log(data.user)
-        Swal.fire({
-          icon: "success",
-          title: "Cuenta Creado con Éxito",
-          showConfirmButton: false,
-          timer: 1500
-        });
-        // this.router.navigate(["login"]);
-      });
+      this.loading = true;
+      this.registerStatus = true;
+
+      this.serviceRegister.registeUser(form).subscribe(
+        (data) => {
+          console.log(data.user);
+          this.registerStatus = false;
+
+          this.loading = false;
+          this.typeAlert = 'alert alert-success';
+          this.errorStatus = true;
+          this.errorMsj = 'Cuenta creada con éxito.';
+        },
+        (error) => {
+          this.loading = false;
+          this.typeAlert = 'alert alert-danger';
+          this.errorStatus = true;
+          if (error.status === 400) {
+            // Manejar el caso de usuario ya en uso
+            this.errorMsj = 'Este usuario ya está en uso.';
+          } else {
+            // Manejar otros errores de la llamada HTTP o cualquier otro error
+            this.errorMsj = 'Error con el Servidor.';
+          }
+        }
+      );
     } else {
+      this.typeAlert = 'alert alert-danger';
+      this.errorStatus = true;
       if (this.registerForm.get('correo')?.hasError('email')) {
-        Swal.fire({
-          title: 'Error',
-          text: 'El formato del correo electrónico no es válido.',
-          width: 400,
-          padding: "3em",
-          color: "#716add",
-          backdrop: `
-            rgba(0, 139, 123, 0.4)
-            left top
-            no-repeat
-          `
-        });
+        this.errorMsj = 'El formato del correo electrónico no es válido.';
       } else {
-        Swal.fire({
-          title: 'Error',
-          text: 'Por favor, complete todos los campos antes de enviar el formulario.',
-          width: 400,
-          padding: "3em",
-          color: "#716add",
-          backdrop: `
-            rgba(0, 139, 123, 0.4)
-            left top
-            no-repeat
-          `
-        });
+        this.errorMsj = 'Por favor, complete todos los campos antes de enviar el formulario.';
       }
     }
   }
+
+
+  // registeUser(form: any) {
+
+  //   if (this.registerForm.valid) {
+  //     this.loading = true;
+
+  //     this.serviceRegister.registeUser(form).subscribe(data => {
+  //       console.log(data.user)
+  //       this.loading = false;
+  //       this.typeAlert = 'alert alert-success';
+  //       this.errorStatus = true;
+  //       this.errorMsj = 'Cuenta creada con éxito.';
+
+  //       // this.router.navigate(["login"]);
+  //     });
+  //   } else {
+  //     this.typeAlert = 'alert alert-danger';
+  //     this.errorStatus = true;
+  //     if (this.registerForm.get('correo')?.hasError('email')) {
+  //       this.errorMsj = 'El formato del correo electrónico no es válido.';
+  //     } else {
+  //       this.errorMsj = 'Por favor, complete todos los campos antes de enviar el formulario.';
+  //     }
+  //   }
+  // }
+
 
   redirigir() {
     this.router.navigate(['/login']);

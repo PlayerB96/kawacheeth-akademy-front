@@ -164,10 +164,8 @@ export class ProfileComponent implements OnInit {
   ];
 
   opcionSeleccionada(opcion: string): void {
-    console.log(`Opción seleccionada: ${opcion}`);
     this.profileservice.redirectTransferProfile(opcion);
 
-    // Puedes realizar acciones adicionales aquí según la opción seleccionada
   }
 
   public getDashboardStatusAccount(dashboardid: number) {
