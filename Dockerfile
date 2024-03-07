@@ -1,26 +1,15 @@
 # Usa una imagen base de Node.js
-FROM node:14.17.2 AS build
-
-# Establece el directorio de trabajo dentro del contenedor
+FROM node:14.17.2 as build
 WORKDIR /usr/src/app
-
-# Instala Angular CLI globalmente
 RUN npm install -g @angular/cli@14.2.13
-
-# Copia los archivos de la aplicación al contenedor
 COPY . .
-
-# Instala las dependencias
 RUN npm install
-
-# Construye la aplicación
-RUN ng build
-
+RUN npm run build
 RUN ls -alt
 
-FROM nginx:1.17.1-alpine
-
-COPY --from=build /app/dist/your-project-name/ /usr/share/nginx/html
-
+FROM nginx:alpine
+ADD ./config/default.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/dist/ /var/www/app
 EXPOSE 80
+CMD ["nginx","-g","daemon off;"]
 
