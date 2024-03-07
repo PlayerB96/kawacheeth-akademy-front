@@ -1,15 +1,12 @@
-version: '3.8'  # Utilizar la versión adecuada de Docker Compose
-
-services:
-  kawa-front-nginx:  # Cambia 'your-project-name' por 'kawa-front-nginx'
-    container_name: kawa-front-nginx
-    build: .
-    image: kawa-front:v1
-    ports:
-      - "80:80"  # Utilizar comillas para definir puertos
-    networks:
-      - internalnet  # Referenciar la red definida más adelante
+kawa-front-nginx:
+  container_name: kawa-front-nginx
+  build: .
+  image: kawa-front:v1
+  ports:
+    - "80:80"
+  networks:
+    - internalnet
 
 networks:
   internalnet:
-    driver: bridge  # Especificar el driver de red
+    driver: bridge
