@@ -1,0 +1,15 @@
+services: 
+  your-project-name:
+    container_name: kawa-front-nginx
+    build: .
+    image: kawa-front:v1
+    ports:
+      - 80:80
+    expose:
+      - 80
+    networks:
+      - internalnet
+
+networks:
+  internalnet:
+    driver: bridge

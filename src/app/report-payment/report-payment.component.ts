@@ -139,8 +139,9 @@ export class ReportPaymentComponent implements OnInit {
   }
 
   showImage(element: ReportPaymentValidation) {
-    console.log('Delete:', element.image);
+    console.log('Image:', element.image);
     window.open(element.image, '_blank', 'width=400,height=400');
+
 
     // Lógica para eliminar el elemento y abrir el modal con la imagen
   }

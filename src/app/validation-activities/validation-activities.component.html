@@ -68,7 +68,19 @@
         Status
       </th>
       <td mat-cell *matCellDef="let element">
-        <div *ngIf="element.name == 'Rechazado'; else redCircle">
+        
+        <div *ngIf="element.state == false;">
+          <!-- Green Circle -->
+          <div
+            style="
+              width: 20px;
+              height: 20px;
+              border-radius: 50%;
+              background-color: orange;
+            "
+          ></div>
+        </div>
+        <div *ngIf="element.name == 'Rechazado';">
           <!-- Green Circle -->
           <div
             style="
@@ -79,7 +91,7 @@
             "
           ></div>
         </div>
-        <ng-template #redCircle>
+        <div *ngIf="element.name != 'Rechazado' && element.state == true;">
           <!-- Orange Circle -->
           <div
             style="
@@ -89,7 +101,7 @@
               background-color: green;
             "
           ></div>
-        </ng-template>
+        </div>
       </td>
     </ng-container>
 

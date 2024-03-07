@@ -138,7 +138,8 @@ export class ValidationActivitiesComponent implements OnInit {
   showImage(element: ReportValidation) {
     console.log('Delete:', element.image);
     window.open(element.image, '_blank', 'width=400,height=400');
-
+    console.log(element)
+    console.log(element.state)
     // Lógica para eliminar el elemento y abrir el modal con la imagen
   }
 
